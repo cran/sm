@@ -1698,12 +1698,21 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     monitor = TRUE, ...)
 {
     opt <- sm.options(list(...))
+    fact <- factor(group)
+    fact.levels <- levels(fact)
+    nlev <- length(fact.levels)
+    ni <- table(fact)
+
     replace.na(opt, ngrid, 50)
     replace.na(opt, display, "lines")
     replace.na(opt, xlab, deparse(substitute(x)))
     replace.na(opt, ylab, "Density")
     replace.na(opt, xlim, c(min(x) - diff(range(x))/4, max(x) +
                             diff(range(x))/4))
+    replace.na(opt, eval.points,
+               seq(opt$xlim[1], opt$xlim[2], length=opt$ngrid))
+    if(length(opt$lty < nlev)) opt$lty <- 1:nlev
+
     band <- opt$band
     ngrid <- opt$ngrid
     xlim <- opt$xlim
@@ -1714,11 +1723,6 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     }
     if (opt$display %in% "none")
         band <- FALSE
-    fact <- factor(group)
-    fact.levels <- levels(fact)
-    nlev <- length(fact.levels)
-    opt$lty <- 1:nlev
-    ni <- table(fact)
     if (band & (nlev > 2)) {
         cat("Reference band available to compare two groups only.", "\n")
         band <- FALSE
@@ -1733,7 +1737,7 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     se <- matrix(0, ncol = opt$ngrid, nrow = nlev)
     for (i in 1:nlev) {
         sm <- sm.density(y[fact == fact.levels[i]], h = h, display = "none",
-            ngrid = opt$ngrid)
+                         eval.points = opt$eval.points)
         estimate[i, ] <- sm$estimate
         se[i, ] <- sm$se
     }
@@ -1786,7 +1790,7 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
             }
         }
         p <- p/nboot
-        cat("\nTest of equal densities:  p-value = ", p, "\n")
+        cat("\nTest of equal densities:  p-value = ", round(p,3), "\n")
         est <- list(p = p, h = h)
     }
     if (model == "equal" & band) {

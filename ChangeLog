@@ -1,3 +1,8 @@
+Version 2.0-13 2004-11-11  Update sm.density.compare to pre-2.1 after
+	                   bug report from Deepayan Sarkar.
+			   Scripts trwlgam[13] now work.
+			   Use "console" pager on Windows.
+
 Version 2.0-12 2004-09-04  sphimage used a[ind] <- b[ind] with NAs in ind.
 	                   Added NAMESPACE.
 			   No longer use .sm.home, but system.file.
@@ -12,7 +17,7 @@ Version 2.0-10 2004-07-29  Remove references to packages modreg and sm.
 
 Version 2.0-9 2003-12-18  Set seed for running scripts.
 
-Version 2.0-8 2003-09-12  Avoid nlevels as var name.q
+Version 2.0-8 2003-09-12  Avoid 'nlevels' as var name.
 
 Version 2.0-7 2003-07-18  Documentation improvements.
 

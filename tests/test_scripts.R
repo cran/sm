@@ -1,12 +1,10 @@
 ## Note: R CMD check may run these scripts from an installed package
 scripts <- list.files(system.file("scripts", package = "sm"), ".*\.q$")
-## these need gam
-omit <- match(c("trwlgam1.q", "trwlgam3.q"), scripts)
 ## these are interactive
 omit2 <- match(c("bissell3.q", "dogs.q"), scripts)
-scripts <- scripts[-c(omit, omit2)]
+scripts <- scripts[-omit2]
 library(sm)
-if(.Platform$OS.type == "unix") options(pager="cat")
+if(.Platform$OS.type == "unix") options(pager="cat") else options(pager="console")
 postscript(file="test_scripts.ps")
 for(z in scripts) {
     cat("\n============ running script `", z, "' ============\n", sep="")
