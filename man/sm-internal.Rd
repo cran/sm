@@ -30,6 +30,8 @@
 \alias{type}
 \alias{wmean}
 \alias{wvar}
+\alias{isInteger}
+\alias{isMatrix}
 \title{Internal sm functions}
 \description{
  Internal \code{sm} functions
@@ -47,6 +49,8 @@ coord2.(x, y, z, theta, phi, sc)
 hidplot(invis, theta, phi)
 incphi(ph, inc)
 inctheta(th, inc)
+isInteger(x)
+isMatrix(x)
 normdens.band(x, h, weights = rep(1, length(x)), options = list())
 np.contour.plot.3d.(coord, data = matrix(), shadow = TRUE, gridsize = 20,
     numpts = 3, xmin = NA, xmax = NA, ymin = NA, ymax = NA, zmin = NA,
@@ -56,7 +60,7 @@ np.contour.plot.3d.(coord, data = matrix(), shadow = TRUE, gridsize = 20,
     cex = NA)
 p.quad.moment(A, Sigma, tobs, ndevs)
 plot.regression(x, y, design.mat, h, r, model, weights, rawdata = list(),
-    options = list())
+    options = list(), ...)
 plot2(latitude2, longitude2, theta, phi)
 plot2d(d, f, theta, phi)
 print.graph(file, ...)

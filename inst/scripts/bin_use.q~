@@ -7,7 +7,7 @@ cat("Examples of use of function binning()\n")
 x  <- rnorm(1000)
 xb <-binning(x)
 h  <-hnorm(x)
-sm.density(xb$x, h=h, weights=xb$x.freq, ylim=c(0,0.5/sqrt(var(x))))
+sm.density(xb$x, h=h, weights=xb$freq, ylim=c(0,0.5/sqrt(var(x))))
 pause()
 
 #     2-d example

@@ -712,7 +712,7 @@ function (x, h, weights = rep(1, length(x)), rawdata = list(x = x),
 }
 "plot.regression" <-
 function (x, y, design.mat, h, r, model, weights, rawdata = list(),
-    options = list())
+    options = list(), ...)
 {
     opt <- sm.options(options)
     rnew <- sm.regression.eval.1d(x, y, design.mat, h, model,

@@ -42,7 +42,7 @@ the maximum value of the above interval.
   representing the modified Rice criterion for bandwidth selection. 
   See reference below for details.
 }
-\item{dots}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:

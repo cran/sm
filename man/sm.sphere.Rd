@@ -27,31 +27,34 @@ sm.sphere(lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
           addpoints = FALSE, ...)
 }
 \arguments{
-\item{lat}{
-a vector giving the latitude component of the data in degrees from the 
-equator.
-}
-\item{long}{
-a vector giving the longitude component of the data in degrees east.
-}
-\item{kappa}{
-the smoothing parameter used to construct the density estimate.  The kernel
-function is a Fisher distribution and \code{kappa} is its scale parameter.
-Larger values of \code{kappa} will produce smaller amounts of smoothing.
-}
-\item{hidden}{
-a logical value which, when set to \code{TRUE}, will display the points which lie
-on the rear side of the displayed sphere.  This argument will be ignored
-if \code{sphim} is set to \code{TRUE}.
-}
-\item{sphim}{
-a logical value which controls whether a density estimate is constructed
-and displayed on the sphere in image form.
-}
-\item{addpoints}{
-a logical value which controls whether the data points are added to the
-plot of the density estimate.
-}
+  \item{lat}{
+    a vector giving the latitude component of the data in degrees from the 
+    equator.
+  }
+  \item{long}{
+    a vector giving the longitude component of the data in degrees east.
+  }
+  \item{kappa}{
+    the smoothing parameter used to construct the density estimate.  The kernel
+    function is a Fisher distribution and \code{kappa} is its scale parameter.
+    Larger values of \code{kappa} will produce smaller amounts of smoothing.
+  }
+  \item{hidden}{
+    a logical value which, when set to \code{TRUE}, will display the points which lie
+    on the rear side of the displayed sphere.  This argument will be ignored
+    if \code{sphim} is set to \code{TRUE}.
+  }
+  \item{sphim}{
+    a logical value which controls whether a density estimate is constructed
+    and displayed on the sphere in image form.
+  }
+  \item{addpoints}{
+    a logical value which controls whether the data points are added to the
+    plot of the density estimate.
+  }
+  \item{\dots}{
+    arguments for \code{\link{sm.options}}.
+  }
 }
 \value{
 a list containing the value of the smoothing parameter and the rotation 
@@ -76,7 +79,7 @@ lat  <- rnorm(50, 10, 15)
 long <- c(rnorm(25, 300, 15), rnorm(25, 240, 15))
 par(mfrow=c(1,2))
 sm.sphere(lat, long)
-sm.sphere(lat, long, sphim=T, kappa=15)
+sm.sphere(lat, long, sphim=TRUE, kappa=15)
 par(mfrow=c(1,1))
 }
 \keyword{nonparametric}
