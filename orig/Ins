@@ -1,0 +1,38 @@
+#! /bin/sh
+S=${S-Splus}
+
+if [ $# -gt 0 ]
+then
+    type=$1
+else
+    PLATFORM=`$S PLATFORM`
+    if [ $PLATFORM = "IRIS4D" -o $PLATFORM = "OSF1_DECALPHA" ]
+    then
+	type="shared"
+    else
+	type="dyn.load"
+    fi
+fi
+echo "Installing sm with loading type $type"
+
+echo "--compiling"
+if [ $type = "dyn.load" ]; then
+    $S COMPILE routines.f
+    mv routines.o sm_l.o
+elif [ $type = "shared" ]; then
+    $S SHLIB -o sm.so routines.f
+else
+    $S < noFort.q
+fi
+
+mkdir .Data .Data/.Help
+echo --reading in S files
+$S < sm.q
+
+echo --Installing help
+for f in *.d
+do
+   mv $f .Data/.Help/`basename $f .d`
+done
+$S help.findsum .Data
+rm -f .Data/.Audit .Data/.Last.value

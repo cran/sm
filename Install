@@ -1,0 +1,10 @@
+This package uses Fortran, and you may need to supply the Makefile for
+your platform. With g77 the standard install works for me, and the
+supplied Makefile.sun works with gcc / f77 SC4.x on Solaris 2.x
+systems here.  The problem on Solaris is __powf, and I had to link
+with f77 _and_ explicitly include -lsunmath to get this included.
+
+The Fortran code is only used in sm.density.3d and in the convex hull
+routine, and Unix/Linux R uses lazy binding, so you need to run
+sm.script("geys_td") to check that installation did work.
+

@@ -1,0 +1,66 @@
+Instructions for installation (Unix)
+------------------------------------
+
+This is the S-plus library `sm' for nonparametric 
+estimation and inference using kernel smoothing methods,
+and related scripts.
+
+Please read the file `Licence' before proceeding,
+
+Execute `SMunpack' to expand the *.shar files and then execute `Ins'.
+(If you don't have a Fortran compiler, execute `Ins nofort'.) 
+The `Example' section below shows steps in more detail. 
+Optional step: follow the instructions of the `Colours' section.
+
+
+System requirements:
+--------------------
+S-Plus 3.3 or later version (S-Plus 3.2 works in most cases)
+Fortran-77 compiler (not for the no-Fortran version)
+
+
+Example:
+-------
+<as S-Plus owner>
+cd `Splus SHOME`/library
+mkdir sm
+cd sm
+uncompress -c <somewhere>/sm.tar.Z | tar xvf -
+SMunpack
+Ins
+rm routines.f *.q *.shar SMunpack Ins
+
+You can also install as a private library as any user, when sm must be
+invoked by
+
+library(sm, lib.loc="<path_to_library">)
+
+
+Scripts
+-------
+There is a set of scripts available to run the examples discussed in
+the book by Bowman & Azzalini (1997).  A complete list of the scripts
+can be obtained by typing
+	sm.script()
+in S-Plus, after the sm library has been installed.  Individual
+scripts can be executed by typing
+	sm.script(scriptname)
+The scripts are text files which can be found in the directory scripts
+under the sm library directory.
+
+
+Colours:
+--------
+If you use a colour monitor and a colour device (e.g. motif),
+the effectiveness of some of the pictures may be affected by the
+colour settings.  The following settings were used during much of the
+development of the sm library and the associated scripts.
+
+  background          : white
+  lines,text,polygons : black red green blue yellow cyan magenta
+  images              : red 20 cyan
+
+Running motif(xcm.SM.motif) or openlook(xcm.SM.openlook) will set this
+colour scheme.
+
+Updated: 1 Sept 1997

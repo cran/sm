@@ -1,0 +1,49 @@
+Version 1.0-2 99/04/02  Modified for 0.64, using R's chull, jitter,
+			inst/* mechanism, data/00Index, file.* functions.
+
+Version 1.0-2 99/02/20:
+
+I altered plot.density (which causes a name clash, and is not a plot method)
+to smplot.density.
+
+All the example scripts work except those depending on gam:
+	trwlgam1 trwlgam2 mackgam trwlgam3 smackgam    
+
+As R has no chull function, I have provided one, called smchull.
+
+
+R discrepancies:
+===============
+
+is.matrix is false for data frames: I used isMatrix in zzz.R instead.
+
+Colours are (mainly) named in the R version.
+
+In polygon() border gives the colour, not a logical for plotting.
+
+points() does not use the current cex and pch in R.
+
+Labels formed by deparse(substitute(x)) need to evaluated before x is altered.
+
+persp() has fewer arguments, and the default viewpoint did not seem a
+good choice for these plots, so I altered it.
+
+glm.fit() has different arguments, and the X matrix must have column names.
+
+jitter() is missing before R 0.63.3, and R's defaults are not helpful here.
+A copy of the 0.63.3 function is in zzz.R.
+
+is.na(x) fails in R if x is NULL.
+
+Some functions used `break' where `return()' was meant: this does not
+work in R.
+
+The uses of unix() and assign() needed revising.
+
+detach() named objects seemed to fail, so I used pos= instead.
+
+There is no function acf() not acf.plot() nor tsplot() but simple
+replacements sufficed.
+
+
+BDR 99/02/20
