@@ -43,7 +43,7 @@ Oxford University Press, Oxford.
 \code{\link{nmise}}
 }
 \examples{
-x <- rnorm(x)
+x <- rnorm(100)
 nise(x)
 }
 \keyword{nonparametric}

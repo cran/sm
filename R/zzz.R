@@ -3,7 +3,8 @@
     if(version$major == 0 && version$minor < 64)
         stop("This package requires R 0.64 or later")
     library.dynam("sm", pkg, library)
-    assign(".sm.home", file.path(library, pkg), envir = .GlobalEnv)
+    assign(".sm.home", file.path(library, pkg),
+           pos=match("package:sm", search()))
     cat("Library `sm'; Copyright (C) 1997 A.W.Bowman & A.Azzalini\n")
     cat("See `Licence' for details and conditions for use\n")
     invisible()

@@ -86,11 +86,12 @@ Oxford University Press, Oxford.
 \code{\link{sm.regression}}, \code{\link{sm.regression.autocor}}
 }
 \examples{
-# assume that Citrate and dogs are matrices
-a <- sm.rm(y=Citrate, display.rice=T)
+provide.data(citrate, describe=FALSE); provide.data(dogs, describe=FALSE)
+# assume that citrate and dogs are matrices
+a <- sm.rm(y=citrate, display.rice=T)
 #
 Time <- c(1,3,5,7,9,11,13)
-gr1  <- as.matrix(dogs[id,2:8])
+gr1  <- as.matrix(dogs[dogs$Group==1,2:8])
 plot(c(1,13), c(3,6),xlab="time", ylab="potassium", type="n") 
 sm1  <- sm.rm(Time, gr1, display="se", add=T)
 }

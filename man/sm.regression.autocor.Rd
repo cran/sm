@@ -67,6 +67,7 @@ Oxford University Press, Oxford.
 \code{\link{sm.regression}}, \code{\link{sm.autoregression}}
 }
 \examples{
+\dontrun{
 	type("Suggested value of h: ", h1)
 	sm1 <- sm.regression.eval.1d(x, y, h = h1, hmult = 1, model = "none")
 	if(missing(x))
@@ -79,7 +80,7 @@ Oxford University Press, Oxford.
 	sm1$aux <- list(h.first = h.first, first.sm = ym, acf = autocorr, 
 		raw.residuals = r)
 	invisible(sm1)
-}
+}}
 }
 \keyword{nonparametric}
 \keyword{smooth}

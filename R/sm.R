@@ -3193,7 +3193,8 @@ provide.data <- function(data, path, describe=TRUE)
   # works both on Unix (SunOS) and MS-windows platforms
   name  <- deparse(substitute(data))
   if(missing(path))
-     path <- file.path(.sm.home,"data")
+     path <- file.path(get(".sm.home", pos=match("package:sm", search())),
+                       "data")
   datafile<- file.path(path,paste(name,".dat",sep=""))
   docfile <- file.path(path,paste(name,".doc",sep=""))
   if(!exists(name)){

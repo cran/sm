@@ -62,7 +62,7 @@ Oxford University Press, Oxford.
 \code{\link{sm.logit}}, \code{\link{sm.poisson.bootstrap}}
 }
 \examples{
-sm.logit.bootstrap(concentration, dead, N, 0.5, nboot=50)
+\dontrun{sm.logit.bootstrap(concentration, dead, N, 0.5, nboot=50)}
 }
 \keyword{nonparametric}
 \keyword{smooth}

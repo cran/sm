@@ -81,11 +81,11 @@ Oxford University Press, Oxford.
 \code{\link{sm.logit.bootstrap}}, \code{\link{sm.poisson}}, \code{\link{sm.poisson.bootstrap}}
 }
 \examples{
-# the next example assumes that all binomial denominators are 1's
+\dontrun{# the next example assumes that all binomial denominators are 1's
 sm.logit(dose, failure, h=0.5)
 # in the next example, (some of) dose levels are replicated 
 sm.logit(dose, failure, n.trials, h=0.5)
-}
+}}
 \keyword{nonparametric}
 \keyword{smooth}
 % Converted by Sd2Rd version 0.3-2.

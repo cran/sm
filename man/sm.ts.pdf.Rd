@@ -49,7 +49,8 @@ Oxford University Press, Oxford.
 \code{\link{sm.density}}, \code{\link{sm.autoregression}}
 }
 \examples{
-a<-sm.ts.pdf(geyser$duration,lags=1:2)
+data(geyser)
+a <- sm.ts.pdf(geyser$duration,lags=1:2)
 }
 \keyword{nonparametric}
 \keyword{smooth}

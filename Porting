@@ -1,3 +1,5 @@
+Version 1.0-2 99/08/15  Moved .sm.home to package:sm, made ts examples work.
+
 Version 1.0-2 99/04/02  Modified for 0.64, using R's chull, jitter,
 			inst/* mechanism, data/00Index, file.* functions.
 

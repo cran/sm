@@ -59,6 +59,8 @@ Oxford University Press, Oxford.
 \code{\link{sm.regression}}, \code{\link{sm.ts.pdf}}
 }
 \examples{
+library(ts)
+data(lynx)
 sm.autoregression(log(lynx), maxlag=3, se=T)
 sm.autoregression(log(lynx), lags=cbind(2:3,4:5))
 }

@@ -77,7 +77,7 @@ Oxford University Press, Oxford.
 \code{\link{sm.logit}}, \code{\link{sm.logit.bootstrap}}, \code{\link{sm.poisson.bootstrap}}
 }
 \examples{
-sm.poisson(exposure.time, N.events, 0.5, display="se")
+\dontrun{sm.poisson(exposure.time, N.events, 0.5, display="se")}
 }
 \keyword{nonparametric}
 \keyword{smooth}
