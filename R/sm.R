@@ -830,7 +830,7 @@ function (data, path, options = list())
                           "data")
     datafile <- file.path(path, paste(name, ".dat", sep = ""))
     docfile <- file.path(path, paste(name, ".doc", sep = ""))
-    if (!exists(name)) {
+    if (!exists(name, where=.GlobalEnv, inherits = FALSE)) {
         if (file.exists(datafile)) {
             cat("Data file being loaded\n")
             assign(name, read.table(datafile, header = TRUE),

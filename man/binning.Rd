@@ -71,5 +71,5 @@ y <- 2*x + 0.5*rnorm(1000)
 x <- cbind(x, y)
 xb<- binning(x, nbins=12)
 }
-\keyword{}
+\keyword{nonparametric}
 % Converted by Sd2Rd version 1.15.

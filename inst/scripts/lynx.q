@@ -1,4 +1,3 @@
-library(ts)
 data(lynx)
 ts.plot(lynx)
 title("Canadian lynx trapping (1821-1934)")

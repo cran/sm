@@ -32,13 +32,11 @@ bandwidth
   if \code{ask=TRUE}, the program pauses after each plot, until <Enter>
   is pressed.
 }
-\item{\dots}{
-additional graphical parameters
-}}
+}
 \value{
 a list of two elements, containing the outcome of the estimation of 
 the marginal density and the last bivariate density, as produced by 
-\code{sm.density}.
+\code{\link{sm.density}}.
 }
 \section{Side Effects}{
 plots are produced on the current graphical device.
@@ -56,7 +54,7 @@ Oxford University Press, Oxford.
 }
 \examples{
 data(geyser)
-a <- sm.ts.pdf(geyser$duration,lags=1:2)
+a <- sm.ts.pdf(geyser$duration, lags=1:2)
 }
 \keyword{nonparametric}
 \keyword{smooth}
