@@ -4,7 +4,7 @@ log.span.3 <- log(Span[Period==3])
 par(mfrow=c(1,2))
 
 subsamp    <- log.span.3[1+seq(1,length(log.span.3),20)]
-hist.info  <- hist(subsamp, plot=F)
+hist.info  <- hist(subsamp, plot=FALSE)
 freq       <- hist.info$counts
 nfreq      <- length(freq)
 hist(subsamp, xlab="Log Span", ylab="Frequency", xlim=c(1,5), col="blue")

@@ -14,6 +14,6 @@ se <- sqrt(sem^2 + sef^2)
 upper <- 1/(1+exp(-(av + se)))
 lower <- 1/(1+exp(-(av - se)))
 polygon(c(agem, rev(agem)), c(upper, rev(lower)),
-      col = "cyan", border = F)
+      col = "cyan", border = FALSE)
 lines(agem, estm)
 lines(agem, estf, lty = 3)

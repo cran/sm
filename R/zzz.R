@@ -7,7 +7,7 @@
       list(
         hmult=1, h.weights=NA, describe=TRUE, diff.ord=2,
         add=FALSE,  band=TRUE,  props = c(75,50,25),
-        nbins=NA, positive=F,  delta=NA, display=NA,
+        nbins=NA, positive=FALSE,  delta=NA, display=NA,
         xlab = NA, ylab = NA, zlab = NA, xlim = NA, ylim = NA, yht = NA,
         panel=FALSE, ngrid = NA, eval.points = NA, rugplot=TRUE,
         lty=1, col=1,  pch=1 , theta=pi/4, phi=pi/4,

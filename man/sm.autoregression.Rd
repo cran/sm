@@ -59,7 +59,7 @@ Oxford University Press, Oxford.
 \examples{
 library(ts)
 data(lynx)
-sm.autoregression(log(lynx), maxlag=3, se=T)
+sm.autoregression(log(lynx), maxlag=3, se=TRUE)
 sm.autoregression(log(lynx), lags=cbind(2:3,4:5))
 }
 \keyword{nonparametric}

@@ -32,7 +32,7 @@ sm.density(pc.bin$x, h = hnorm(pc3), display = "image", ngrid=100,
 plot(pc3, xlab="First Principal Component", ylab="Second Principal Component")
 cat("this time original data rather than grid data are plotted\n")
 sm.density(pc.bin$x, h = hnorm(pc3), display = "slice", ngrid=30,
-          add=T, weights=pc.bin$x.freq)
+          add=TRUE, weights=pc.bin$x.freq)
 par(mfrow=c(1,1))
 
 

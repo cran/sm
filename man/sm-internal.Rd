@@ -38,12 +38,12 @@
 addplot(d, f, theta, phi)
 attach.frame(data, name, ...)
 box1.(theta = pi/6, phi = pi/6, sc, col = par("col"), axes.lim = sc)
-box2(theta = pi/6, phi = pi/6, sc, labels = c("", "", ""),
+box2.(theta = pi/6, phi = pi/6, sc, labels = c("", "", ""),
     col = par("col"), cex = 9/10, axes.lim = sc)
 britmap()
 change(th, ph)
 circle(r)
-coord2(x, y, z, theta, phi, sc)
+coord2.(x, y, z, theta, phi, sc)
 hidplot(invis, theta, phi)
 incphi(ph, inc)
 inctheta(th, inc)

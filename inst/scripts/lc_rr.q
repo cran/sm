@@ -29,7 +29,7 @@ persp(xgrid, ygrid, diff.sm/se,
       theta = -30, phi = 40, d = 4, expand = 0.7,
       xlab="Easting", ylab="Northing", zlab="Std. difference")
 plot(xgrid, ygrid, type = "n", xlab="Easting", ylab="Northing")
-contour(xgrid, ygrid, diff.sm/se, levels = c(-4, -2), col = 2, add = T)
-contour(xgrid, ygrid, diff.sm/se, levels = c( 2,  4), col = 6, add = T)
+contour(xgrid, ygrid, diff.sm/se, levels = c(-4, -2), col = 2, add = TRUE)
+contour(xgrid, ygrid, diff.sm/se, levels = c( 2,  4), col = 6, add = TRUE)
 par(cex=1)
 par(mfrow=c(1,1))
