@@ -24,7 +24,7 @@ can be added as optional parameters of call to specific functions of the \code{s
 library; in this case, their effect is limited  to that function call. 
 See the documentation of specific functions for the list of options 
 which are recognised by that function.
-}
+\itemize{
 \item{add}{
 a logical value which controls whether the density estimate is added to
 the current plot.  Its default value is \code{FALSE}, which creates a new plot.
@@ -56,8 +56,6 @@ based on the squared differences of pairs of neighbouring observations,
 is used.  When the argument is set to 2 (deafult), the method of Gasser, 
 Sroka and Jennen-Steinmetz, based on differences between each observation 
 and a linear interplotation from its two neighbours, is used.
-
-
 }
 \item{display}{
 This argument applies only with one- or two-dimensional data.  
@@ -184,7 +182,7 @@ with three-dimensional data.
 }
 \item{zlab}{
 the label attached to the z-axis (three-dimensional plots only)
-}}
+}}}}
 \value{
 a list with  the updated values of the parameters; if the argument list
 is not empty, the returned list is invisible.

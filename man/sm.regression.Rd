@@ -56,7 +56,7 @@ then be set to 0 or left at its default value \code{NA}.
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{display}{
 The setting \code{"none"} will prevent any graphical output from being produced.
 With one covariate, the default setting \code{"lines"} will produce the density
@@ -133,7 +133,7 @@ a vector of length 3 defining the eye position for the perspective plot
 in the two covariate case.  The interpretation of this argument is similar
 to the argument \code{eye} in the \code{persp} function.  Here the argument
 is automatically scaled to adjust for the different axis scalings.
-}}
+}}}}
 \value{
 a list containing the values of the estimate at the evaluation points,
 the smoothing parameter and the smoothing parameter weights.  If a reference

@@ -36,14 +36,14 @@ possible values are \code{"no.cor"}, \code{"direct"} (default), and \code{"indir
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{ngrid}{
 the number of points to be considered in \code{(minh,maxh)}. Default: \code{ngrid=15}.
 }
 \item{display}{
 if this is not equal to \code{"none"}, graphical output is produced on the
 current graphical device.
-}}
+}}}}
 \value{
 a list as returned from sm.regression called with the new value of
 smoothing parameter, with an additional term \code{$aux} added which contains

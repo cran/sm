@@ -25,7 +25,7 @@ the smoothing parameter; it must be positive.
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{add}{
 if graphical output is produced, this parameter controls whether a 
 new plot is created, or graphical output is added to the existing one.
@@ -60,7 +60,7 @@ label of the x-axis. Default is the name of \code{x} object.
 }
 \item{ylab}{
 label of the y-axis .Default is the name of \code{y} object.
-}}
+}}}}
 \value{
 A list containing vectors with the evaluation points, the corresponding
 probability estimates, the linear predictors, the upper and lower points

@@ -33,10 +33,6 @@ of equality and the display of an appropriate reference band.
 \item{test}{
 a logical flag controlling the production of a bootstrap test of equality.
 }
-\item{band}{
-a logical flag controlling the production of a reference band for equality.  
-A band will be produced only in the case of two groups.
-}
 \item{nboot}{
 the number of bootstrap simulations.
 }

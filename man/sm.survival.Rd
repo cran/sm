@@ -43,7 +43,7 @@ the value of \code{status} which defines a complete survival time.
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{eval.points}{
 the points at which the estimate will be evaluated.
 }
@@ -69,7 +69,7 @@ the line type used to plot the estimate.
 \item{add}{
 a logical value which controls whether the estimate is added to
 the current plot.  Its default value is \code{FALSE}, which creates a new plot.
-}}
+}}}}
 \value{
 a list containing the values of the estimate at the evaluation points
 and the values of the smoothing parameters for the covariate and survival

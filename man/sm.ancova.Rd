@@ -51,7 +51,7 @@ case weights.
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{display}{
 any character setting other than \code{"none"} will cause a plot of the curves,
 distinguished by line type, to be produced.
@@ -67,7 +67,7 @@ the label attached to the x-axis.
 }
 \item{ylab}{
 the label attached to the y-axis.
-}}
+}}}}
 \value{
 a list containing an estimate of the error standard deviation and, where
 appropriate, a p-value and reference model.  If the parallelism model has

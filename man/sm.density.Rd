@@ -50,7 +50,7 @@ This argument does not apply with three-dimensional data.
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{hmult}{
 a factor which can be used to multiply the normal smoothing parameter
 before construction of the density estimate.
@@ -163,7 +163,7 @@ estimate from three-dimensional data.  The default value is \eqn{\pi/4}{pi/4}.
 \item{phi}{
 the vertical rotation (in radians) of the contour plot of the density
 estimate from three-dimensional data.  The default value is \eqn{\pi/4}{pi/4}.
-}}
+}}}}
 \value{
 a list containing the values of the density estimate at the evaluation points,
 the standard error of the estimate, the upper and lower ends of a variability 

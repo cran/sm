@@ -43,28 +43,28 @@ the maximum value of the above interval.
   See reference below for details.
 }
 \item{\dots}{
-other optional parameters are passed to the \code{sm.options} function, through
-a mechanism which limits their effect only to this call of the function; 
-those relevant for this function are the following:
-}
-\item{add}{
-logical value, default is \code{add=FALSE}. If \code{add=TRUE} and display is not set
-to \code{"none"}, then graphical output added to the existing plot, rather than
-starting a new one.
-}
-\item{display}{
-character value controlling the amount of graphical output of the estimated 
-regression curve. It has the same meaning as in \code{sm.regression}. 
-Default value is \code{display="lines"}.
-}
-\item{ngrid}{
-the number of divisions of the above interval to be considered. 
-Default: \code{ngrid=20}.
-}
-\item{poly.index}{
-overall degree  of  locally-fitted  polynomial, as used by \code{sm.regression}.
-Default: \code{ngrid=1}.
-}}
+  other optional parameters are passed to the \code{sm.options}
+  function, through a mechanism which limits their effect only to this
+  call of the function; those relevant for this function are the following:
+  \itemize{
+    \item{add}{
+      logical value, default is \code{add=FALSE}. If \code{add=TRUE} and
+      display is not set to \code{"none"}, then graphical output added
+      to the existing plot, rather than starting a new one.
+    }
+    \item{display}{
+      character value controlling the amount of graphical output of the estimated 
+      regression curve. It has the same meaning as in \code{sm.regression}. 
+      Default value is \code{display="lines"}.
+    }
+    \item{ngrid}{
+      the number of divisions of the above interval to be considered. 
+      Default: \code{ngrid=20}.
+    }
+    \item{poly.index}{
+      overall degree  of  locally-fitted  polynomial, as used by
+      \code{sm.regression}. Default: \code{ngrid=1}.
+}}}}
 \value{
 a list containing the returned value produced by \code{sm.regression} when 
 smoothing the mean response value at each given observation time, 

@@ -20,15 +20,15 @@ a smoothing parameter.  In the two-dimensional case this is multiplied
 by the standard deviation of each component to produce two smoothing
 parameters
 }
-\item{...}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{h.weights}{
 a vector of weights which multiply the smoothing parameter(s) used in the
 kernel function at each observation.
-}}
+}}}}
 \value{
 The value of the cross-validatory criterion.
 }

@@ -32,7 +32,7 @@ for the value of the smoothing parameter.
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
-}
+\itemize{
 \item{h.weights}{
 a vector of weights which multiply the smoothing parameter(s) used in the
 kernel function at each observation.
@@ -48,7 +48,7 @@ value \code{"log"} will use a log scale for the grid values.
 }
 \item{add}{
 controls whether the plot is added to an existing graph. Default: \code{add=F}.
-}}
+}}}}
 \value{
 the value of the smoothing parameter which minimises the cross-validation
 criterion over the selected grid.
