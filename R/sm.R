@@ -1720,7 +1720,6 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     replace.na(opt, ylab, "Density")
     replace.na(opt, xlim, c(min(x) - diff(range(x))/4, max(x) +
                             diff(range(x))/4))
-    replace.na(opt, lty, 1:nlevels)
     band <- opt$band
     ngrid <- opt$ngrid
     xlim <- opt$xlim
@@ -1733,9 +1732,10 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
         band <- FALSE
     fact <- factor(group)
     fact.levels <- levels(fact)
-    nlevels <- length(fact.levels)
+    nlev <- length(fact.levels)
+    opt$lty <- 1:nlev
     ni <- table(fact)
-    if (band & (nlevels > 2)) {
+    if (band & (nlev > 2)) {
         cat("Reference band available to compare two groups only.", "\n")
         band <- FALSE
     }
@@ -1745,9 +1745,9 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     }
     opt$band <- band
     opt$test <- test
-    estimate <- matrix(0, ncol = opt$ngrid, nrow = nlevels)
-    se <- matrix(0, ncol = opt$ngrid, nrow = nlevels)
-    for (i in 1:nlevels) {
+    estimate <- matrix(0, ncol = opt$ngrid, nrow = nlev)
+    se <- matrix(0, ncol = opt$ngrid, nrow = nlev)
+    for (i in 1:nlev) {
         sm <- sm.density(y[fact == fact.levels[i]], h = h, display = "none",
             ngrid = opt$ngrid)
         estimate[i, ] <- sm$estimate
@@ -1757,40 +1757,40 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     if (!(opt$display %in% "none" | band)) {
         plot(xlim, c(0, 1.1 * max(as.vector(estimate))), xlab = opt$xlab,
             ylab = opt$ylab, type = "n")
-        for (i in 1:nlevels) lines(eval.points, estimate[i, ],
+        for (i in 1:nlev) lines(eval.points, estimate[i, ],
             lty = opt$lty[i])
     }
     est <- NULL
     p <- NULL
     if (model == "equal" & test) {
-        if (nlevels == 2) {
+        if (nlev == 2) {
             ts <- sum((estimate[1, ] - estimate[2, ])^2)
         }
         else {
             sm.mean <- sm.density(y, h = h, xlim = opt$xlim,
                 ngrid = opt$ngrid, display = "none")$estimate
             ts <- 0
-            for (i in 1:nlevels) ts <- ts + ni[i] *
+            for (i in 1:nlev) ts <- ts + ni[i] *
                 sum((estimate[i,] - sm.mean)^2)
         }
         p <- 0
-        est.star <- matrix(0, ncol = opt$ngrid, nrow = nlevels)
+        est.star <- matrix(0, ncol = opt$ngrid, nrow = nlev)
         for (i in 1:nboot) {
             ind <- (1:length(y))
-            for (i in 1:nlevels) {
+            for (i in 1:nlev) {
                 indi <- sample((1:length(ind)), ni[i])
                 est.star[i, ] <- sm.density(y[ind[indi]], h = h,
                   ngrid = opt$ngrid, xlim = opt$xlim, display = "none")$estimate
                 ind <- ind[-indi]
             }
-            if (nlevels == 2) {
+            if (nlev == 2) {
                 ts.star <- sum((est.star[1, ] - est.star[2, ])^2)
             }
             else {
                 sm.mean <- sm.density(y, h = h, xlim = opt$xlim,
                   ngrid = opt$ngrid, display = "none")$estimate
                 ts.star <- 0
-                for (i in 1:nlevels) {
+                for (i in 1:nlev) {
                   ts.star <- ts.star + ni[i] * sum((est.star[i,] - sm.mean)^2)
                 }
             }

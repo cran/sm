@@ -1,3 +1,5 @@
+Version 2.0-6 2003-09-12  Avoid generating lty=NA.
+
 Version 2.0-4 2001/10/10  tree.q did not work in R, minor improvements
                           to documentation.
 
