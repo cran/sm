@@ -9,4 +9,4 @@ for(i in 1:6){
       N[i] <- N[i] + Trouts[(i-1)*4+j]
       dead[i] <- dead[i] + Dead[(i-1)*4+j]
   }}
-sm.logit(log(conc), dead, N, 0.5)
+sm.binomial(log(conc), dead, N, 0.5)

@@ -1,5 +1,5 @@
-\name{sm.logit.bootstrap}
-\alias{sm.logit.bootstrap}
+\name{sm.binomial.bootstrap}
+\alias{sm.binomial.bootstrap}
 \title{
 Bootstrap goodness-of-fit test for a logistic regression model. 
 }
@@ -11,7 +11,7 @@ a standard parametric logistic regression of specified \code{degree} in the
 covariate \code{x}.
 }
 \usage{
-sm.logit.bootstrap(x, y, N=rep(1, length(x)), h, nboot=100, 
+sm.binomial.bootstrap(x, y, N=rep(1, length(x)), h, nboot=100, 
          degree=1, \dots)
 }
 \arguments{
@@ -36,7 +36,7 @@ specifies the degree of the fitted polynomial in \code{x} on the logit scale
 (default=1).
 }
 \item{...}{
-additional parameters passed to \code{sm.logit}
+additional parameters passed to \code{sm.binomial}
 }}
 \value{
 a list containing the observed value of the Pseudo-Likelihood Ratio Test
@@ -54,17 +54,19 @@ and the observed significance level are printed.
 see Section 5.4 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{sm.logit}}, \code{\link{sm.poisson.bootstrap}}
+\code{\link{sm.binomial}}, \code{\link{sm.poisson.bootstrap}}
 }
 \examples{
-\dontrun{sm.logit.bootstrap(concentration, dead, N, 0.5, nboot=50)}
+\dontrun{sm.binomial.bootstrap(concentration, dead, N, 0.5, nboot=50)}
 }
 \keyword{nonparametric}
 \keyword{smooth}
 \keyword{htest}
-% Converted by Sd2Rd version 0.3-2.
+\keyword{models}
+% Converted by Sd2Rd version 1.15.

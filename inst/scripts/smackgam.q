@@ -2,7 +2,7 @@ provide.data(smacker)
 Presence <- Density
 Presence[Presence > 0] <- 1
 Position <- cbind(Latitude=smack.lat, Longitude=smack.long)
-Log.depth <- log(Depth)
+Log.depth <- log(smack.depth)
 model1 <- gam(Presence ~ lo(Position) + lo(Log.depth) 
               + lo(Temperature), family = binomial)
 model2 <- gam(Presence ~ lo(Position) + lo(Temperature), 

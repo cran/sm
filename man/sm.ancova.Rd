@@ -10,9 +10,8 @@ model, used to define the null hypothesis, may be either equality or
 parallelism.
 }
 \usage{
-sm.ancova(x, y, group, h, display="lines", model="none", 
-  band=T, test=T, h.alpha=(2 * diff(range(x)))/length(x), 
-  ngrid=50, eval.points=NA, xlab, ylab, \dots)
+sm.ancova(x, y, group, h, model="none", 
+          band=T, test=T, h.alpha=(2 * diff(range(x)))/length(x), \dots)
 }
 \arguments{
 \item{x}{
@@ -27,10 +26,6 @@ a vector of group indicators.
 \item{h}{
 the smoothing parameter to be used in the construction of each of the
 regression curves.
-}
-\item{display}{
-any character setting other than \code{"none"} will cause a plot of the curves,
-distinguished by line type, to be produced.
 }
 \item{model}{
 a character variable which defines the reference model.  The values
@@ -48,6 +43,15 @@ reference model as the null hypothesis.
 the value of the smoothing parameter used when estimating the vertical
 separations of the curves under the parallelism model.
 }
+\item{...}{
+other optional parameters are passed to the \code{sm.options} function, through
+a mechanism which limits their effect only to this call of the function; 
+those relevant for this function are the following:
+}
+\item{display}{
+any character setting other than \code{"none"} will cause a plot of the curves,
+distinguished by line type, to be produced.
+}
 \item{ngrid}{
 the size of the grid used to plot the curves.
 }
@@ -59,9 +63,6 @@ the label attached to the x-axis.
 }
 \item{ylab}{
 the label attached to the y-axis.
-}
-\item{...}{
-additional graphical parameters.
 }}
 \value{
 a list containing an estimate of the error standard deviation and, where
@@ -70,7 +71,7 @@ been selected then a vector of estimates of the vertical separations of the
 underlying regression curves is also returned.
 }
 \section{Side Effects}{
-none.
+a plot on the current graphical device is produced, unless \code{display="none"}
 }
 \details{
 see Sections 6.4 and 6.5 of the book by Bowman \& Azzalini, and
@@ -78,20 +79,25 @@ the papers by Young \& Bowman listed below.
 This function is a developed version of code originally written by Stuart Young.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 
 
-Young, S.G. and Bowman, A.W. (1995).  Nonparametric analysis of covariance.  
-Biometrics 51, 920-931.
+Young, S.G. and Bowman, A.W. (1995).  
+Nonparametric analysis of covariance.  
+\emph{Biometrics}
+\bold{51}, 920--931.
 
 
-Bowman, A.W. and Young, S.G. (1996).  Graphical comparison of nonparametric 
-curves.  Applied Statistics 45, 83-98.
+Bowman, A.W. and Young, S.G. (1996).  
+Graphical comparison of nonparametric curves.  
+\emph{Applied Statistics}
+\bold{45}, 83--98.
 }
 \seealso{
-\code{\link{sm.regression}}, \code{\link{sm.density.compare}}
+\code{\link{sm.regression}}, \code{\link{sm.density.compare}}, \code{\link{sm.options}}
 }
 \examples{
 x <- runif(50, 0, 1)
@@ -101,4 +107,4 @@ sm.ancova(x, y, g, h = 0.15, model = "equal")
 }
 \keyword{nonparametric}
 \keyword{smooth}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

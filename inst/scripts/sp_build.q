@@ -7,7 +7,7 @@ subsamp    <- log.span.3[1+seq(1,length(log.span.3),20)]
 hist.info  <- hist(subsamp, plot=F)
 freq       <- hist.info$counts
 nfreq      <- length(freq)
-hist(subsamp, xlab="Log Span", ylab="Frequency", xlim=c(1,5))
+hist(subsamp, xlab="Log Span", ylab="Frequency", xlim=c(1,5), col="blue")
 for (i in 1:nfreq) {
    if (freq[i] > 1) {
       left  <- rep(hist.info$breaks[i],freq[i]-1)

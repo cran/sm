@@ -11,9 +11,7 @@ the covariate scale.  A small amount of smoothing is then also applied across
 the survival time scale in order to achieve a smooth estimate of the quantile.
 }
 \usage{
-sm.survival(x, y, status, h, hv=0.05, p=0.5, status.code=1, 
-  eval.points=NA, ngrid=50, display="lines", xlab=NA, ylab=NA, 
-  lty=1, add=F, \dots)
+sm.survival(x, y, status, h , hv = 0.05, p = 0.5, status.code = 1, \dots)
 }
 \arguments{
 \item{x}{
@@ -41,12 +39,18 @@ the quantile to be estimated at each covariate value.
 \item{status.code}{
 the value of \code{status} which defines a complete survival time.
 }
+\item{...}{
+other optional parameters are passed to the \code{sm.options} function, through
+a mechanism which limits their effect only to this call of the function; 
+those relevant for this function are the following:
+}
 \item{eval.points}{
 the points at which the estimate will be evaluated.
 }
 \item{ngrid}{
 the number of points in a regular grid over the covariate scale at which
 the estimate will be evaluated, if \code{eval.points} is set to \code{NA}.
+Default: \code{ngrid=50}.
 }
 \item{display}{
 The setting \code{"none"} will prevent any graphical output from being produced.  
@@ -65,9 +69,6 @@ the line type used to plot the estimate.
 \item{add}{
 a logical value which controls whether the estimate is added to
 the current plot.  Its default value is F, which creates a new plot.
-}
-\item{...}{
-additional graphical parameters.
 }}
 \value{
 a list containing the values of the estimate at the evaluation points
@@ -81,12 +82,13 @@ none.
 see Section 3.5 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{sm.regression}}
+\code{\link{sm.regression}}, \code{\link{sm.options}}
 }
 \examples{
 x <- runif(50, 0, 10)
@@ -99,4 +101,5 @@ sm.survival(x, y, status, h=2)
 }
 \keyword{nonparametric}
 \keyword{smooth}
-% Converted by Sd2Rd version 0.3-2.
+\keyword{survival}
+% Converted by Sd2Rd version 1.15.

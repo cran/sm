@@ -5,11 +5,11 @@ Cross-validatory choice of smoothing parameter
 }
 \description{
 This function uses the technique of cross-validation to select a smoothing 
-parameter suitable for constructing a density estimate or nonparametric regression 
-curve in one or two dimensions.
+parameter suitable for constructing a density estimate or nonparametric 
+regression curve in one or two dimensions.
 }
 \usage{
-hcv(x, y=NA, h.weights=NA, ngrid=8, hstart=NA, hend=NA, display="none", add=F, \dots)
+hcv <- function(x, y=NA, hstart = NA, hend = NA, \dots) 
 }
 \arguments{
 \item{x}{
@@ -20,14 +20,6 @@ observations to be used in the construction of a density estimate.  If
 \item{y}{
 a vector of response values for nonparametric regression.
 }
-\item{h.weights}{
-a vector of weights which multiply the smoothing parameter(s) used in the
-kernel function at each observation.
-}
-\item{ngrid}{
-the number of grid points to be used in an initial grid search for the 
-value of the smoothing parameter.
-}
 \item{hstart}{
 the smallest value of the grid points to be used in an initial grid search 
 for the value of the smoothing parameter.
@@ -36,16 +28,26 @@ for the value of the smoothing parameter.
 the largest value of the grid points to be used in an initial grid search 
 for the value of the smoothing parameter.
 }
+\item{...}{
+other optional parameters are passed to the \code{sm.options} function, through
+a mechanism which limits their effect only to this call of the function; 
+those relevant for this function are the following:
+}
+\item{h.weights}{
+a vector of weights which multiply the smoothing parameter(s) used in the
+kernel function at each observation.
+}
+\item{ngrid}{
+the number of grid points to be used in an initial grid search for the 
+value of the smoothing parameter. Default: \code{ngrid=8}.
+}
 \item{display}{
 any character setting other than \code{"none"} will cause the criterion function 
 to be plotted over the search grid of smoothing parameters.  The particular
 value \code{"log"} will use a log scale for the grid values.
 }
 \item{add}{
-controls whether the plot is added to an existing graph.
-}
-\item{...}{
-additional graphical parameters.
+controls whether the plot is added to an existing graph. Default: \code{add=F}.
 }}
 \value{
 the value of the smoothing parameter which minimises the cross-validation
@@ -73,8 +75,9 @@ spaced on a log scale between \code{hstart} and \code{hend}.  A quadratic approx
 is then used to refine this initial estimate.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997).
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
@@ -103,4 +106,4 @@ par(mfrow=c(1,1))
 }
 \keyword{nonparametric}
 \keyword{smooth}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

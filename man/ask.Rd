@@ -18,9 +18,9 @@ a character value, normally something describing the required input
 the object typed in.
 }
 \examples{
-n <- ask("sample size")
+\dontrun{n <- ask("sample size")
 nv <- ask("vector of sample sizes")
 # in the second case, the user could reply eg with `c(5,10,30)'
-}
+}}
 \keyword{utilities}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

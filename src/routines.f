@@ -4,7 +4,7 @@ c     This code was written by Stuart Young in connection with his Ph.D.
 c     thesis, "Graphics and Inference in Nonparametric Modelling",
 c     University of Glasgow, 1996.
 c     For wider distribution, some compiler-specific aspects of the code 
-c     were modified, initially by B.D. Ripley and subsequently by
+c     were modified, initially by B.D. RIpley and subsequently by
 c     A.W. Bowman, August 1997.
 
 
@@ -49,9 +49,9 @@ c     zcoord		- vector of z-coordinates for the polygons
 c     ***************************************************************** 
 c     Initialization
 c     ***************************************************************** 
-      integer lng, size, limit, npoly, a, b, d, i, j, k, l
+
+      integer lng, size, limit, npoly, a, b, d
       integer count, numcub, tri(3)
-      double precision sgn, fli
 
       double precision x(lng), y(lng), z(lng)
       double precision xx(size), yy(size), zz(size), hx, hy, hz
@@ -75,7 +75,6 @@ c     *****************************************************************
                   tmp=tmp+dexp(-0.5*sum)
    4           continue
                dh(i,j,k)=tmp/(lng*hx*hy*hz*(6.283185**1.5))
-c               dh(i,j,k)=tmp/(lng*hx*hy*hz*15.74961)
                dh(i,j,k)=int(dh(i,j,k)*90/fmax)
    3        continue
    2     continue
@@ -184,7 +183,7 @@ c     with density heights s and t respectively, where q is the
 c     required density height.
 c     ***************************************************************** 
 
-      double precision function fli(r,s,t,q)
+      function fli(r,s,t,q)
       integer r
       double precision s, t, q
       fli=(abs(t-q)*r+abs(s-q)*(r+1))/abs(s-t)
@@ -195,11 +194,12 @@ c     *****************************************************************
 c     Sgn function
 c     ***************************************************************** 
 
-      double precision function sgn(w)
+      function sgn(w)
       double precision w
-      if (w.lt.0) sgn=-1
-      if (w.gt.0) sgn=1
-      if (w.eq.0) sgn=0
+      if (w.lt.0) i=-1
+      if (w.gt.0) i=1
+      if (w.eq.0) i=0
+      sgn=i
       return
       end
 
@@ -213,7 +213,7 @@ c     *****************************************************************
 
       subroutine angle(count,temp,tri)
       double precision amax, temp(12,3), vlen(2), v(2,3), dotp, ang
-      integer count, numa(2), tri(3), i, j, k
+      integer count, numa(2), tri(3)
       amax=0.
 
       do 1 i=1,(count-2)

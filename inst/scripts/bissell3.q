@@ -1,9 +1,9 @@
-# run this script immediately after the one
+# run this script immediately after "bissel3"
 # which produces the nonparametric regression estimate
 plot(Length, Flaws, xlim=c(0,1000), pch="o")
 Y <- Flaws[order(Length)]
 X <- sort(Length)
-h <- ask("h")
+h <- ask("Please type a value for the smoothing parameter, h")
 beta <- sum(Y)/sum(X)
 abline(0,beta,col=2)
 dev<-function(y,mu){
@@ -11,16 +11,17 @@ dev<-function(y,mu){
        d[y==0] <- mu[y==0]
        return(2*sum(d))
        }
-W<-sm.weight(X, X, h, poly.index=0) 
+W<-sm.weight(X, X, h, options=list(poly.index=0))
 glm.fitted<- beta*X 
 p.boot <- 0  
 denom <-(W %*% X)
 sm.fitted <- ((W %*% Y)/denom)*X
 disp <- dev(Y,sm.fitted)/(length(Y)-1)
 ts.orig <- (dev(Y,glm.fitted)-dev(Y,sm.fitted))/disp
-type("Dispersion parameter = ", disp)
-type("Test statistic = ", ts.orig) 
+cat("Dispersion parameter = ", disp,"\n")
+cat("Test statistic = ", ts.orig,"\n") 
 nboot <- 500  
+cat("Bootstrap samples: ")
 for (i in 1:nboot) {   
   yboot<-rpois(length(glm.fitted),glm.fitted)
   sm.fitted <- ((W %*% yboot)/denom)*X
@@ -32,6 +33,7 @@ for (i in 1:nboot) {
   }  
 cat("\n")
 lines(x,sm.beta*x,col=1)
-type("Observed significance = ", p.boot/nboot)   
+cat("Observed significance = ", p.boot/nboot,"\n")
+   
   
  

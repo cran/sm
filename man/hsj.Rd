@@ -38,4 +38,4 @@ hsj(x)
 }
 \keyword{nonparametric}
 \keyword{smooth}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

@@ -1,6 +1,6 @@
 provide.data(mildew)
 X <- cbind(rep(1,36),as.matrix(mildew[1:11]))
-e <- lsfit(X,Yield,intercept=F)$residuals
+e <- residuals(lsfit(X,Yield,intercept=F))
 Position <- 1:36
 par(mfrow=c(1,2))
 sig.trace(sm.regression(Position, e, design.mat=X, model = 

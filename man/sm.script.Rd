@@ -1,29 +1,42 @@
 \name{sm.script}
 \alias{sm.script}
-\title{Run or Lists Scripts in Package sm}
+\title{
+Running a script associated to the sm library
+}
+\description{
+This is a utility function to run scripts, usually those associated 
+to the book described below. 
+}
 \usage{
 sm.script(name, path)
 }
 \arguments{
- \item{name}{The name of a script file, without its extension. This can
-     be given with or without quotes.}
- \item{path}{A path to the script.}
+\item{name}{
+the name of the file containing the code; a \code{.q} suffix will be appended
+to the name. If \code{name} is missing, a list of the scripts associated to
+the \code{sm} library will be displayed.
 }
-\description{
-    With arguments, this runs the script \code{name} in directory
-    \code{path}, or the \code{exec} subdirectory of the installed
-    package directory. With no arguments it lists the scripts available.
-}
+\item{path}{
+the name of the path where to look for the script. If \code{path} is missing,
+it is assumed to be the appropriate location for the scripts of the \code{sm}
+library.
+}}
 \details{
-    The scripts should have extension \code{.q}, and there should be a
-    file \code{Index.doc} describing the scripts. On Windows the index
-    file will be displayed in a \code{notepad} window unless
-    \code{options("pager")} is set.
+This utility allows to reproduce easily the illustrations of the refernce 
+below, since each of them is associated to an available script.
 }
-\value{
-    None.
+\references{
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
+Oxford University Press, Oxford.
 }
-\example{
-sm.script(rc_alter)
+\seealso{
+\code{\link{sm}},
 }
-\keyword{utility}
+\examples{
+sm.script()
+sm.script(speed)
+}
+\keyword{utilities}
+% Converted by Sd2Rd version 1.15.

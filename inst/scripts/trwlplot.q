@@ -7,6 +7,7 @@ Zone93    <- (Year == 1 & Zone == 1)
 Position  <- cbind(Longitude - 143, Latitude)
 sm.regression(Latitude[Zone93],  Score1[Zone93], h = 0.1)
 sm.regression(Position[Zone93,], Score1[Zone93], 
-     h= c(0.1, 0.1), eye = c(8,-6,5), xlab="Longitude - 143")
+     h= c(0.1, 0.1), eye.mult = c(8,-6,5), xlab="Longitude - 143")
 sm.regression(Longitude[Zone93], Score1[Zone93], h = 0.1)
 par(mfrow = c(1,1))
+

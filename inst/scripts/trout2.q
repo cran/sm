@@ -6,4 +6,4 @@ for(i in 1:6){
       N[i] <- N[i] + Trouts[(i-1)*4+j]
       dead[i] <- dead[i] + Dead[(i-1)*4+j]
   }}
-sm.logit.bootstrap(log(conc), dead, N, 0.5, nboot=50)
+sm.binomial.bootstrap(log(conc), dead, N, 0.5, nboot=50)

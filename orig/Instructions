@@ -1,66 +1,39 @@
 Instructions for installation (Unix)
 ------------------------------------
 
-This is the S-plus library `sm' for nonparametric 
-estimation and inference using kernel smoothing methods,
-and related scripts.
+This is the S-plus library `sm', version 2 (2000), for 
+nonparametric  estimation and inference using kernel smoothing 
+methods, and related scripts.
 
-Please read the file `Licence' before proceeding,
+Please read the file `Licence' before proceeding.
 
-Execute `SMunpack' to expand the *.shar files and then execute `Ins'.
-(If you don't have a Fortran compiler, execute `Ins nofort'.) 
-The `Example' section below shows steps in more detail. 
-Optional step: follow the instructions of the `Colours' section.
+To proceed with the installation do the following:
 
+- preferably, connect as Splus owner (typically root) and set your 
+  working directory at $SHOME/library/sm;
+  alternatively, connect as regular user and set your working directory
+  where you keep Splus libraries, say /home/myname/spluslibraries;
+- in either case do:
+  	uncompress sm.tar.Z
+	tar xvf sm.tar
+	cd sm
+- look at INSTALLx  where `x` is 3 or 5,  depending on which version of 
+  Splus you have, and modify the variable Splus accordingly to your 
+  system;
+- in same cases you might need to
+	chmod 755 INSTALLx
+- finally, if you have a Fortran-77 compiler, do
+	./INSTALLx
+  or
+	./INSTALLx no-Fortran
+  if you do not have a Fortran-77 compiler; in the latter case, you loose
+  the option to perform density estimation of 3-dimentional data.
 
-System requirements:
---------------------
-S-Plus 3.3 or later version (S-Plus 3.2 works in most cases)
-Fortran-77 compiler (not for the no-Fortran version)
+If everthing goes well, the installation should now be done.
 
+Start Splus as regular user and type
+> library(sm)
+for system-wide installation, or
+> library(sm, lib.loc="/home/myname/spluslibraries")
+for private installation
 
-Example:
--------
-<as S-Plus owner>
-cd `Splus SHOME`/library
-mkdir sm
-cd sm
-uncompress -c <somewhere>/sm.tar.Z | tar xvf -
-SMunpack
-Ins
-rm routines.f *.q *.shar SMunpack Ins
-
-You can also install as a private library as any user, when sm must be
-invoked by
-
-library(sm, lib.loc="<path_to_library">)
-
-
-Scripts
--------
-There is a set of scripts available to run the examples discussed in
-the book by Bowman & Azzalini (1997).  A complete list of the scripts
-can be obtained by typing
-	sm.script()
-in S-Plus, after the sm library has been installed.  Individual
-scripts can be executed by typing
-	sm.script(scriptname)
-The scripts are text files which can be found in the directory scripts
-under the sm library directory.
-
-
-Colours:
---------
-If you use a colour monitor and a colour device (e.g. motif),
-the effectiveness of some of the pictures may be affected by the
-colour settings.  The following settings were used during much of the
-development of the sm library and the associated scripts.
-
-  background          : white
-  lines,text,polygons : black red green blue yellow cyan magenta
-  images              : red 20 cyan
-
-Running motif(xcm.SM.motif) or openlook(xcm.SM.openlook) will set this
-colour scheme.
-
-Updated: 1 Sept 1997

@@ -4,9 +4,9 @@ The data refer to a study on low birthweight in babies, defined
 as "less than 2500 grams", and related factors.
 
 The variables are:
-   	Low:   indicator variable of low weight,
-   	Lwt:   last menstrual weight of the mother,
    	Smoke: indicator of whether the mother is a smoker.
+   	Lwt:   last menstrual weight of the mother,
+   	Low:   indicator variable of low weight,
 
 Source: Hosmer & Lemeshow (1989).  Applied  Logistic Regresion. 
         Wiley, NY.

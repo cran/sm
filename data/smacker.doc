@@ -8,7 +8,7 @@ The variables are:
 	Density:     egg density
 	smack.lat:   latitude of sampling position
 	smack.long:  longitude of sampling position
-	Depth:       bottom depth
+	smack.depth: bottom depth
 	Temperature: surface temperature
 	D200:        distance from the 200m depth contour line
 

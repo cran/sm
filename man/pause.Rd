@@ -11,4 +11,5 @@ allow inspection of the current plot.
 \usage{
 pause()
 }
-% Converted by Sd2Rd version 0.3-2.
+\keyword{misc}
+% Converted by Sd2Rd version 1.15.

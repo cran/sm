@@ -49,12 +49,13 @@ and the observed significance level are printed.
 see Section 5.4 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{sm.poisson}}, \code{\link{sm.logit.bootstrap}}
+\code{\link{sm.poisson}}, \code{\link{sm.binomial.bootstrap}}
 }
 \examples{
 \dontrun{sm.poisson.bootstrap(exposure.time, N.events, 0.5, degree=2)}
@@ -62,4 +63,5 @@ Oxford University Press, Oxford.
 \keyword{nonparametric}
 \keyword{smooth}
 \keyword{htest}
-% Converted by Sd2Rd version 0.3-2.
+\keyword{models}
+% Converted by Sd2Rd version 1.15.

@@ -9,7 +9,7 @@ squared error, for use in selecting a smoothing parameter in nonparametric
 density estimation.
 }
 \usage{
-cv(x, h, h.weights=NA)
+cv(x, h, \dots)
 }
 \arguments{
 \item{x}{
@@ -19,6 +19,11 @@ vector, or two-column matrix, of data.
 a smoothing parameter.  In the two-dimensional case this is multiplied
 by the standard deviation of each component to produce two smoothing
 parameters
+}
+\item{...}{
+other optional parameters are passed to the \code{sm.options} function, through
+a mechanism which limits their effect only to this call of the function; 
+those relevant for this function are the following:
 }
 \item{h.weights}{
 a vector of weights which multiply the smoothing parameter(s) used in the
@@ -36,8 +41,9 @@ automatically by \code{hcv} and does not usually need to be called
 independently.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
@@ -52,4 +58,4 @@ plot(hgrid, cvgrid, type="l")
 }
 \keyword{nonparametric}
 \keyword{smooth}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

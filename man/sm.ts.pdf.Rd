@@ -55,4 +55,4 @@ a <- sm.ts.pdf(geyser$duration,lags=1:2)
 \keyword{nonparametric}
 \keyword{smooth}
 \keyword{ts}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

@@ -1,5 +1,14 @@
 \name{sm.density}
 \alias{sm.density}
+\alias{sm.density.1d}
+\alias{sm.density.2d}
+\alias{sm.density.3d}
+\alias{sm.density.eval.1d}
+\alias{sm.density.eval.2d}
+\alias{sm.density.positive.1d}
+\alias{sm.density.positive.2d}
+\alias{sm.density.positive.grid}
+
 \title{
 Nonparametric density estimation in one, two or three dimensions.
 }
@@ -12,10 +21,7 @@ surface can be plotted.  A number of other features of the construction
 of the estimate, and of its display, can be controlled.
 }
 \usage{
-sm.density(x, h, hmult=1, h.weights=NA, model="none", band=T, 
-  add=F, lty=1, display, props=c(75, 50, 25), xlab=NA, ylab=NA, 
-  zlab=NA, xlim=NA, ylim=NA, yht=NA, ngrid=NA, eval.points=NA, 
-  panel=F, positive=F, delta, weights=rep(1, n), theta, phi, \dots)
+sm.density(x, h, model = "none", weights=rep(1,nobs), \dots)
 }
 \arguments{
 \item{x}{
@@ -26,6 +32,25 @@ a vector of length one, two or three, defining the smoothing parameter.
 A normal kernel function is used and \code{h} is its standard deviation.
 If this parameter is omitted, a normal optimal smoothing parameter is used.
 }
+\item{model}{
+This argument applies only with one-dimensional data.  Its default value
+is \code{"none"}.  If it is set to \code{"Normal"} (or indeed any value other than
+\code{"none"}) then a reference band, indicating where a density estimate is 
+likely to lie when the data are normally distributed, will be superimposed 
+on any plot.
+}
+\item{weights}{
+a vector which allows the kernel functions over the observations to take
+different weights when they are averaged to produce a density estimate.
+Use of this parameter is incompatible with binning; hence \code{nbins} must 
+then be set to 0 or left at its default value \code{NA}.
+This argument does not apply with three-dimensional data.
+}
+\item{...}{
+other optional parameters are passed to the \code{sm.options} function, through
+a mechanism which limits their effect only to this call of the function; 
+those relevant for this function are the following:
+}
 \item{hmult}{
 a factor which can be used to multiply the normal smoothing parameter
 before construction of the density estimate.
@@ -35,20 +60,14 @@ a vector of weights which multiply the smoothing parameter used in the
 kernel function at each observation.  This argument does not apply with 
 three-dimensional data.
 }
-\item{model}{
-This argument applies only with one-dimensional data.  Its default value
-is \code{"none"}.  If it is set to \code{"Normal"} (or indeed any value other than
-\code{"none"}) then a reference band, indicating where a density estimate is 
-likely to lie when the data are normally distributed, will be superimposed 
-on any plot.
-}
 \item{band}{
 a logical value which controls whether the reference band appears on the plot.
-Its default value is T.  This argument applies only with one-dimensional data.
+Its default value is \code{T}.  
+This argument applies only with one-dimensional data.
 }
 \item{add}{
 a logical value which controls whether the density estimate is added to
-the current plot.  Its default value is F, which creates a new plot.
+the current plot.  Its default value is \code{F}, which creates a new plot.
 This argument applies only with one-dimensional data.
 }
 \item{lty}{
@@ -92,12 +111,21 @@ with three-dimensional data.
 \item{yht}{
 the upper limit of the vertical axis in a plot of a one-dimensional density
 estimate.  The lower limit is always set to 0.  This argument does not apply 
-with two- or three-dimensional data.
+with two- or three-dimensional data.           
+}
+\item{nbins}{
+The number of bins used in one-dimensional binning operations;
+in two-dimensional cases, \code{nbins} refers to the number of bins 
+formed along each axis. Bins with 0 observed frequencies are ignored.
+If \code{nbins=0}, binning is not performed; if \code{nbins=NA} (default),
+binning is switched on when the number of observations divided by
+the number of dimensions exceeds 500.
 }
 \item{ngrid}{
 the number of points in the regular grid used to plot the estimate.
 For two- and three-dimensional data, \code{ngrid} refers to the number of points
-along the axis in each dimension.
+along the axis in each dimension. 
+Default: 100, 50 and 20 for 1-, 2- and 3-dimensional data, respectively.
 }
 \item{eval.points}{
 the points at which the density estimate should be evaluated, for the
@@ -126,12 +154,6 @@ when \code{positive} takes the value T.  The default value is the smallest value
 observed in each dimension.  This argument does not apply with 
 three-dimensional data.
 }
-\item{weights}{
-a vector which allows the kernel functions over the observations to take
-different weights when they are averaged to produce a density estimate.  This
-is useful, in particular, for censored data and to construct an estimate
-from binned data.  This argument does not apply with three-dimensional data.
-}
 \item{theta}{
 the horizontal rotation (in radians) of the contour plot of the density
 estimate from three-dimensional data.  The default value is pi/4.
@@ -139,33 +161,31 @@ estimate from three-dimensional data.  The default value is pi/4.
 \item{phi}{
 the vertical rotation (in radians) of the contour plot of the density
 estimate from three-dimensional data.  The default value is pi/4.
-}
-\item{...}{
-additional graphical parameters.
 }}
 \value{
 a list containing the values of the density estimate at the evaluation points,
 the standard error of the estimate, the upper and lower ends of a variability 
 band, the smoothing parameter, the smoothing parameter weights and the kernel 
 weights.  Less information is supplied when the smoothing parameter weights
-or kernel weights are not all 1, or when \code{positive} is set to T.
+or kernel weights are not all 1, or when \code{positive} is set to \code{T}.
 }
 \section{Side Effects}{
-none.
+a plot on the current graphical device is produced, unless \code{display="none"}.
 }
 \details{
 see Chapters 1, 2 and 6 of the reference below.
-The code for drawing contours of a three-dimensional density
-estimate has been amended from an original function written
-by Stuart Young.
+The code for drawing contours of a three-dimensional density estimate has 
+been amended from an original function written by Stuart Young.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{hnorm}}, \code{\link{hsj}}, \code{\link{hcv}}, \code{\link{nise}}, \code{\link{nmise}}, \code{\link{sm.sphere}}, \code{\link{sm.regression}}
+\code{\link{hnorm}}, \code{\link{hsj}}, \code{\link{hcv}}, \code{\link{nise}}, \code{\link{nmise}}, \code{\link{sm}}, \code{\link{sm.sphere}}, \code{\link{sm.regression}},
+\code{\link{sm.options}}
 }
 \examples{
 #  A one-dimensional example
@@ -184,4 +204,4 @@ sm.density(y)
 }
 \keyword{nonparametric}
 \keyword{smooth}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

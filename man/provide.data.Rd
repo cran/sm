@@ -38,19 +38,28 @@ the type of platform where the program is executed.
 \details{
 the data file is assumed to be called \code{data}.dat and the documentation
 file describing the data (if present) is assumed to be called \code{data}.doc.
-If the \code{data.frame} is already attached, it is re-attached in the 2nd
+If the \code{data.frame} is already attached, it is re-attached in the second
 position of the \code{search} list. 
+
+
+To set \code{describe=F} for the rest of the current session,  use 
+\code{sm.options(describe=F)}
+
+
+The function can very easily be adapted to play a similar role for
+other packages.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{data.frame}}, \code{\link{attach}}
+\code{\link{data.frame}}, \code{\link{attach}}, \code{\link{sm}}, \code{\link{sm.options}}
 }
 \examples{
 provide.data(birth)
 }
 \keyword{utilities}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

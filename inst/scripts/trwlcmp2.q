@@ -11,9 +11,9 @@ par(mfrow=c(2,2))
 par(cex=0.7)
 
 sm.regression(position[year == 0,], score1[year == 0],
-		h= c(0.1, 0.1), eye = c(8,-6,5), zlab="Score.92")
+		h= c(0.1, 0.1), eye.mult = c(8,-6,5), zlab="Score.92")
 sm.regression(position[year == 1,], score1[year == 1], zlab="Score.93",
-		h= c(0.1, 0.1), eye = c(8,-6,5), zlim=c(-1,2))
+		h= c(0.1, 0.1), eye.mult = c(8,-6,5), zlim=c(-1,2))
 
 sig  <- 0
 adf  <- 0
@@ -45,8 +45,9 @@ se  <- matrix(sig * sqrt(se), ncol = ngrid)
 
 sdiff <- as.vector((est0 - est1)/se)
 ind   <- !is.na(sdiff)
-sm.regression(evp[ind,], sdiff[ind], h = c(0.01, 0.01), eye = c(8,-6,5))
+sm.regression(evp[ind,], sdiff[ind], h = c(0.01, 0.01), eye.mult = c(8,-6,5))
 contour(x1, x2, (est1 - est0)/se, xlab = "longitude", ylab = "latitude")
 
 par(cex=1)
 par(mfrow = c(1,1))
+

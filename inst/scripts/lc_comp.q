@@ -33,5 +33,5 @@ for (i in 1:nboot) {
   cat(i, " ")
   }
 p <- p/nboot
-cat("p-value = ", p, "\n")
+cat("\np-value = ", p, "\n")
 

@@ -4,7 +4,7 @@ beta <- sum(Flaws)/sum(Length)
 x <- seq(0, 1000, length=50)
 lines(x, beta*x, lty=3)
 h <- 100
-W<-sm.weight(Length, x, h, poly.index=0)   
+W<-sm.weight(Length, x, h, options=list(poly.index=0))  
 sm.beta <- (W %*% Flaws)/(W %*% Length)
 lines(x,sm.beta*x)
 lines(x,sm.beta*x+2*sqrt(sm.beta*x),lty=3)

@@ -14,5 +14,6 @@ for (i in 1:100) {
    	eval.points = x)
    rss <- sum((z - model$estimate)^2)
    if (rss < rss.obs) p <- p + 1
+   cat(i," ")
    }
-cat("Empirical p-value: ", round(p/100, 2),"\n")
+cat("\nEmpirical p-value: ", round(p/100, 2),"\n")

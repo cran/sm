@@ -9,8 +9,7 @@ This function estimates nonparametrically the autoregression function
 assumed to be stationary.
 }
 \usage{
-sm.autoregression(x, h=hnorm(x), d=1, maxlag=d, lags, se=F, 
-                  ask=T, \dots)
+sm.autoregression(x, h=hnorm(x), d=1, maxlag=d, lags, se=F, ask=T, \dots)
 }
 \arguments{
 \item{x}{
@@ -51,8 +50,9 @@ graphical output is producved on the current device.
 see Section 7.3 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). 
+\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
@@ -67,4 +67,4 @@ sm.autoregression(log(lynx), lags=cbind(2:3,4:5))
 \keyword{nonparametric}
 \keyword{smooth}
 \keyword{ts}
-% Converted by Sd2Rd version 0.3-2.
+% Converted by Sd2Rd version 1.15.

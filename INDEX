@@ -1,10 +1,3 @@
-Library 'sm'  (C) A.W.Bowman & A.Azzalini, 1997
-
-This is software linked to the book 
-`Applied Smoothing Techniques for Data Analysis: 
-The Kernel Approach with S-Plus Illustrations' 
-Oxford University Press
-
 ask                      Ask data to be typed on the keyboard.
 binning                  Construct frequency table from raw data
 cv                       Cross-validation criterion for nonparametric
@@ -25,15 +18,17 @@ provide.data             Making data available as data.frame
 sig.trace                A significance trace for a hypothesis test
 sj                       Sheather-Jones criterion for nonparametric
                          density estimation
+sm                       The library sm: summary information
 sm.ancova                Nonparametric analysis of covariance
 sm.autoregression        Nonparametric estimation of the autoregression
                          function
+sm.binomial              Nonparametric logistic regression
+sm.binomial.bootstrap    Bootstrap goodness-of-fit test for a logistic
+                         regression model.
 sm.density               Nonparametric density estimation in one, two or
                          three dimensions.
 sm.density.compare       Comparison of univariate density estimates
-sm.logit                 Nonparametric logistic regression
-sm.logit.bootstrap       Bootstrap goodness-of-fit test for a logistic
-                         regression model.
+sm.options               Set or return options of sm library
 sm.poisson               Nonparametric Poisson regression
 sm.poisson.bootstrap     Bootstrap goodness-of-fit test for a Poisson
                          regression model
@@ -43,8 +38,7 @@ sm.regression.autocor    Nonparametric regression with autocorrelated
                          errors
 sm.rm                    Nonparametric analysis of repeated measurements
                          data
-sm.sigma                 Estimation of the error standard deviation in
-                         nonparametric regression
+sm.script                Running a script associated to the sm library
 sm.sphere                Nonparametric density estimation for spherical
                          data.
 sm.survival              Nonparametric regression with survival data.
