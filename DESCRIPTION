@@ -1,6 +1,6 @@
 Package: sm
-Version: 2.0-4
-Date: 2001-10-10
+Version: 2.0-5
+Date: 2002-03-28
 Author:  Adrian W. Bowman and Adelchi Azzalini. 
          Ported to R by B.D. Ripley <ripley@stats.ox.ac.uk>.
 Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>

@@ -1,11 +1,19 @@
+Version 2.0-5 2002-03-28  avoid == tests on possibly missing char variables
+
+Version 2.0-4 2001/10/10  minor improvements to documentation, QA issues
+
+Version 2.0-3 2001/08/08  QA changes, e.g. T -> TRUE in scripts.
+
+Version 2.0-2 2001/06/12  Many help-file improvements.
+
 Version 2.0-1 2000/12/08  Version 2 of sm, sm.rm(optimize=TRUE) works.
 
-Version 1.0-3 99/08/15  Moved .sm.home to package:sm, made ts examples work.
+Version 1.0-3 1999/08/15  Moved .sm.home to package:sm, made ts examples work.
 
-Version 1.0-2 99/04/02  Modified for 0.64, using R's chull, jitter,
+Version 1.0-2 1999/04/02  Modified for 0.64, using R's chull, jitter,
 			inst/* mechanism, data/00Index, file.* functions.
 
-Version 1.0-1 99/02/20:
+Version 1.0-1 1999/02/20:
 
 I altered plot.density (which causes a name clash, and is not a plot method)
 to smplot.density.

@@ -326,14 +326,14 @@ function (x, y = NA, hstart = NA, hend = NA, ...)
         stop()
     }
     ind <- (1:ngrid)[cvgrid == min(cvgrid)]
-    if (!(display == "none")) {
+    if (!(display %in% "none")) {
         if (!opt$add) {
-            if (display == "log")
+            if (display %in% "log")
                 plot(hgrid, cvgrid, type = "l", xlab = "Log h", ylab = "CV")
             else plot(exp(hgrid), cvgrid, type = "l", xlab = "h", ylab = "CV")
         }
         else {
-            if (display == "log")
+            if (display %in% "log")
                 lines(hgrid, cvgrid)
             else lines(exp(hgrid), cvgrid)
         }
@@ -699,7 +699,7 @@ function (x, h, weights = rep(1, length(x)), rawdata = list(x = x),
     lines(est$eval.points, est$estimate, lty = opt$lty, col = opt$col)
     if (opt$rugplot && !opt$add)
         rug(jitter(rawdata$x, amount = 0), 0.015)
-    if (opt$display == "se" & all(opt$h.weights == rep(1, length(x)))) {
+    if (opt$display %in% "se" & all(opt$h.weights == rep(1, length(x)))) {
         se <- sqrt(dnorm(0, sd = sqrt(2))/(4 * h * sum(weights)))
         upper <- sqrt(est$estimate) + 2 * se
         lower <- pmax(sqrt(est$estimate) - 2 * se, 0)
@@ -726,7 +726,7 @@ function (x, y, design.mat, h, r, model, weights, rawdata = list(),
             polygon(c(r$eval.points, rev(r$eval.points)), c(lower, rev(upper)),
                     col = 0, border = 0)
         }
-        if (opt$display == "se") {
+        if (opt$display %in% "se") {
             upper <- r$estimate + 2 * r$se
             upper <- pmin(pmax(upper, par()$usr[3]), par()$usr[4])
             lower <- r$estimate - 2 * r$se
@@ -745,7 +745,7 @@ function (x, y, design.mat, h, r, model, weights, rawdata = list(),
             rev(upper)), col = "cyan", border = 0)
     }
     lines(rnew$eval.points, rnew$estimate, lty = opt$lty, col = opt$col)
-    if ((model == "none") & (opt$display == "se")) {
+    if ((model %in% "none") & (opt$display %in% "se")) {
         upper <- rnew$estimate + 2 * rnew$se
         upper <- pmin(pmax(upper, par()$usr[3]), par()$usr[4])
         lower <- rnew$estimate - 2 * rnew$se
@@ -880,7 +880,7 @@ function (expn, hvec, ...)
         result <- eval(parse(text = extn.char))
         pvec[i] <- result$p
     }
-    if (!(opt$display == "none")) {
+    if (!(opt$display %in% "none")) {
         plot(hvec, pvec, type = "l", ylim = c(0, max(pvec)),
             xlab = "Smoothing parameter, h", ylab = "p-value")
         if (max(pvec) >= 0.05)
@@ -951,7 +951,7 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
         }
     }
     replace.na(opt, nbins, round((nobs > 500) * 8 * log(nobs)/ndim))
-    if (model == "none") {
+    if (model %in% "none") {
         band <- FALSE
         test <- FALSE
     }
@@ -999,7 +999,7 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
         stop.eval <- min(tapply(x, fac, max))
         eval.points <- seq(start.eval, stop.eval, length = opt$ngrid)
     }
-    if (!(opt$display == "none")) {
+    if (!(opt$display %in% "none")) {
         plot(rawdata$x, rawdata$y, type = "n", xlab = opt$xlab,
             ylab = opt$ylab)
         text(rawdata$x, rawdata$y, as.character(rawdata$fac))
@@ -1024,13 +1024,13 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
     }
     Ss <- sm.weight(x, x, h, weights = weights, options = opt)
     sigma <- sqrt((y %*% B %*% y)[1, 1] + sum(rawdata$devs))
-    if (model == "equal") {
+    if (model %in% "equal") {
         Q <- Sd - Ss
         Q <- t(Q) %*% diag(weights) %*% Q
         obs <- ((y %*% Q %*% y)/sigma^2)[1, 1]
         covar <- diag(1/weights)
     }
-    if (model == "parallel") {
+    if (model %in% "parallel") {
         D <- matrix(0, ncol = nlevels - 1, nrow = sum(n))
         istart <- n[1] + 1
         for (i in 2:nlevels) {
@@ -1056,14 +1056,14 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
             1), B))
     }
     p <- NULL
-    if (!(model == "none")) {
+    if (!(model %in% "none")) {
         p <- p.quad.moment(Q - B * obs, covar, obs, sum(weights) -
             length(weights))
         cat("Test of ", model, " lines:   h = ", signif(h), "   p-value = ",
             round(p, 4), "\n")
     }
     sigma <- sigma/sqrt(sum(weights) - 2 * nlevels)
-    if (opt$band & !(opt$display == "none")) {
+    if (opt$band & !(opt$display %in% "none")) {
         if (nlevels > 2)
             print("Band available only to compare two groups.")
         else {
@@ -1078,7 +1078,7 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
                 weights = weights[ind], options = opt, display = "none",
                 ngrid = opt$ngrid, add = TRUE, lty = 2)
             model.y <- (model1$estimate + model2$estimate)/2
-            if (model == "parallel") {
+            if (model %in% "parallel") {
                 model.y <- cbind(model.y - alpha/2, model.y +
                   alpha/2)
             }
@@ -1086,13 +1086,13 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
             se <- se * sigma
             upper <- model.y + se
             lower <- model.y - se
-            if (model == "equal") {
+            if (model %in% "equal") {
                 upper <- pmin(pmax(upper, par()$usr[3]), par()$usr[4])
                 lower <- pmin(pmax(lower, par()$usr[3]), par()$usr[4])
                 polygon(c(eval.points, rev(eval.points)), c(lower,
                   rev(upper)), border = 0, col = "cyan")
             }
-            else if (model == "parallel") {
+            else if (model %in% "parallel") {
                 upper[, 1] <- pmin(pmax(upper[, 1], par()$usr[3]),
                   par()$usr[4])
                 lower[, 1] <- pmin(pmax(lower[, 1], par()$usr[3]),
@@ -1112,7 +1112,7 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
         }
     }
     r <- list(p = p, model = model, sigma = sigma)
-    if (model == "parallel")
+    if (model %in% "parallel")
         r <- list(p = p, model = model, sigma = sigma, alphahat = alpha)
     r$data <- list(x = x, y = y, group = fac, nbins = rawdata$nbins,
         devs = rawdata$devs, weights = weights)
@@ -1259,7 +1259,7 @@ function (x, y, N = rep(1, length(y)), h, ...)
     result$call <- match.call()
     if (display != "none") {
         lines(result$eval.points, result$estimate, col = opt$col)
-        if (display == "se") {
+        if (display %in% "se") {
             lines(result$eval.points, result$lower, lty = 3, col = opt$col)
             lines(result$eval.points, result$upper, lty = 3, col = opt$col)
         }
@@ -1439,9 +1439,9 @@ function (x, h = hnorm(x, weights), model = "none", weights,
     if (any(is.na(opt$h.weights)))
         replace.na(opt, h.weights, rep(1, length(x)))
     else band <- panel <- FALSE
-    if (model == "none")
+    if (model %in% "none")
         band <- FALSE
-    if (opt$add | opt$display == "none")
+    if (opt$add | opt$display %in% "none")
         panel <- FALSE
     a <- if (opt$positive) c(0, max(x) * 1.05)
     else c(min(x) - diff(range(x))/4, max(x) + diff(range(x))/4)
@@ -1454,11 +1454,11 @@ function (x, h = hnorm(x, weights), model = "none", weights,
     replace.na(opt, yht, a)
     replace.na(opt, ylim, c(0, opt$yht))
     replace.na(opt, ngrid, 100)
-    if (!opt$add & !(opt$display == "none"))
+    if (!opt$add & !(opt$display %in% "none"))
         plot(opt$xlim, opt$ylim, type = "n", xlab = opt$xlab, ylab = opt$ylab)
     opt$band <- band
     opt$panel <- panel
-    if (!(opt$display == "none"))
+    if (!(opt$display %in% "none"))
         est <- smplot.density(x, h, weights, rawdata, options = opt)
     if (panel) {
         save.rug <- opt$rugplot
@@ -1470,11 +1470,11 @@ function (x, h = hnorm(x, weights), model = "none", weights,
         hcv.flag <- FALSE
         ind <- menu(items, graphics = TRUE, title = "Density estimation")
         while (items[ind] != "Exit") {
-            if (items[ind] == "  - normal optimal") {
+            if (items[ind] %in% "  - normal optimal") {
                 h <- hnorm(x, weights)
                 hmult <- 1
             }
-            if (items[ind] == "  - plug-in") {
+            if (items[ind] %in% "  - plug-in") {
                 if (!hsj.flag) {
                   h.sj <- hsj(x)
                   hsj.flag <- TRUE
@@ -1482,7 +1482,7 @@ function (x, h = hnorm(x, weights), model = "none", weights,
                 h <- h.sj
                 hmult <- 1
             }
-            if (items[ind] == "  - xval") {
+            if (items[ind] %in% "  - xval") {
                 if (!hcv.flag) {
                   h.cv <- hcv(x)
                   hcv.flag <- TRUE
@@ -1490,13 +1490,13 @@ function (x, h = hnorm(x, weights), model = "none", weights,
                 h <- h.cv
                 hmult <- 1
             }
-            else if (items[ind] == "  - increase") {
+            else if (items[ind] %in% "  - increase") {
                 hmult <- hmult * 1.1
             }
-            else if (items[ind] == "  - decrease") {
+            else if (items[ind] %in% "  - decrease") {
                 hmult <- hmult/1.1
             }
-            else if (items[ind] == "  - movie up") {
+            else if (items[ind] %in% "  - movie up") {
                 for (i in 1:6) {
                   hmult <- hmult * 1.1
                   opt$hmult <- hmult
@@ -1505,7 +1505,7 @@ function (x, h = hnorm(x, weights), model = "none", weights,
                 }
                 hmult <- hmult * 1.1
             }
-            else if (items[ind] == "  - movie down") {
+            else if (items[ind] %in% "  - movie down") {
                 for (i in 1:6) {
                   hmult <- hmult/1.1
                   opt$hmult <- hmult
@@ -1514,10 +1514,10 @@ function (x, h = hnorm(x, weights), model = "none", weights,
                 }
                 hmult <- hmult/1.1
             }
-            else if (items[ind] == "Add Normal band" | items[ind] ==
+            else if (items[ind] %in% "Add Normal band" | items[ind] %in%
                 "Remove Normal band") {
                 band <- !band
-                if (items[ind] == "Add Normal band") {
+                if (items[ind] %in% "Add Normal band") {
                   items[ind] <- "Remove Normal band"
                 }
                 else (items[ind] <- "Add Normal band")
@@ -1535,7 +1535,7 @@ function (x, h = hnorm(x, weights), model = "none", weights,
             est <- sm.density.positive.1d(x, h, weights, options = opt)
         else est <- sm.density.eval.1d(x, h, weights, options = opt)
     }
-    else if (opt$display == "none")
+    else if (opt$display %in% "none")
         est <- sm.density.eval.1d(x, h, weights = weights, options = opt)
     if (all(opt$h.weights == rep(1, length(x))) & opt$positive ==
         FALSE) {
@@ -1564,15 +1564,15 @@ function (X, h = hnorm(X, weights), weights = rep(1, length(x)),
     replace.na(opt, xlim, range(X[, 1]))
     replace.na(opt, ylim, range(X[, 2]))
     display <- opt$display
-    if (display == "none") opt$panel <- FALSE
+    if (display %in% "none") opt$panel <- FALSE
     replace.na(opt, h.weights, rep(1, length(x)))
     hmult <- opt$hmult
-    if (display == "persp")
+    if (display %in% "persp")
         est <- sm.persplot(x, y, h, weights, rawdata, options = opt)
     else {
-        if (display == "image")
+        if (display %in% "image")
             est <- sm.imageplot(x, y, h, weights, rawdata, options = opt)
-        else if (display == "slice")
+        else if (display %in% "slice")
             est <- sm.sliceplot(x, y, h, weights, rawdata, options = opt)
     }
     if (opt$panel) {
@@ -1580,22 +1580,22 @@ function (X, h = hnorm(X, weights), weights = rep(1, length(x)),
             "  - decrease", "Exit")
         ind <- menu(items, graphics = TRUE, title = "2-d density estimation")
         while (items[ind] != "Exit") {
-            if (items[ind] == "  - Normal optimal") {
+            if (items[ind] %in% "  - Normal optimal") {
                 hmult <- 1
             }
-            else if (items[ind] == "  - increase") {
+            else if (items[ind] %in% "  - increase") {
                 hmult <- hmult * 1.1
             }
-            else if (items[ind] == "  - decrease") {
+            else if (items[ind] %in% "  - decrease") {
                 hmult <- hmult/1.1
             }
-            if (display == "persp")
+            if (display %in% "persp")
                 est <- sm.persplot(x, y, h, weights, rawdata,
                   options = opt)
             else {
-                if (display == "image")
+                if (display %in% "image")
                   est <- sm.imageplot(x, y, h, weights, rawdata, options = opt)
-                else if (display == "slice")
+                else if (display %in% "slice")
                   est <- sm.sliceplot(x, y, h, weights, rawdata, options = opt)
             }
             ind <- menu(items, graphics = TRUE,
@@ -1607,7 +1607,7 @@ function (X, h = hnorm(X, weights), weights = rep(1, length(x)),
             1], ynew = opt$eval.points[, 2], eval.type = "points",
             weights = weights, options = opt)
     else {
-        if (display == "none")
+        if (display %in% "none")
             est <- sm.density.eval.2d(x, y, h, eval.type = "grid",
                 weights = weights, options = opt)
     }
@@ -1724,11 +1724,11 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     ngrid <- opt$ngrid
     xlim <- opt$xlim
     y <- x
-    if (model == "none") {
+    if (model %in% "none") {
         band <- FALSE
         test <- FALSE
     }
-    if (opt$display == "none")
+    if (opt$display %in% "none")
         band <- FALSE
     fact <- factor(group)
     fact.levels <- levels(fact)
@@ -1753,7 +1753,7 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
         se[i, ] <- sm$se
     }
     eval.points <- sm$eval.points
-    if (!(opt$display == "none" | band)) {
+    if (!(opt$display %in% "none" | band)) {
         plot(xlim, c(0, 1.1 * max(as.vector(estimate))), xlab = opt$xlab,
             ylab = opt$ylab, type = "n")
         for (i in 1:nlevels) lines(eval.points, estimate[i, ],
@@ -1761,7 +1761,7 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     }
     est <- NULL
     p <- NULL
-    if (model == "equal" & test) {
+    if (model %in% "equal" & test) {
         if (nlevels == 2) {
             ts <- sum((estimate[1, ] - estimate[2, ])^2)
         }
@@ -1804,7 +1804,7 @@ function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
         cat("\nTest of equal densities:  p-value = ", p, "\n")
         est <- list(p = p, h = h)
     }
-    if (model == "equal" & band) {
+    if (model %in% "equal" & band) {
         av <- (sqrt(estimate[1, ]) + sqrt(estimate[2, ]))/2
         se <- sqrt(se[1, ]^2 + se[2, ]^2)
         upper <- (av + se)^2
@@ -1867,7 +1867,7 @@ function (x, y, h, xnew, ynew, eval.type = "points", weights = rep(1, n),
     W1 <- matrix(rep(ynew, rep(n, nnew)), ncol = n, byrow = TRUE)
     W1 <- W1 - matrix(rep(y, nnew), ncol = n, byrow = TRUE)
     Wy <- exp(-0.5 * (W1/(opt$hmult * h[2] * W2))^2)/W2
-    if (eval.type == "points")
+    if (eval.type %in% "points")
         est <- as.vector(((Wx * Wy) %*% weights)/(sum(weights) *
             2 * pi * h[1] * h[2] * hmult^2))
     else est <- (Wx %*% (weights * t(Wy)))/(sum(weights) * 2 *
@@ -1932,7 +1932,7 @@ function (X, h = c(hnorm(log(X[, 1] + delta[1]), weights), hnorm(log(X[,
     pdf <- sm.density.eval.2d(log(x1 + delta[1]), log(x2 + delta[2]),
         h = h, xnew = log(eval1 + delta[1]), ynew = log(eval2 +
             delta[2]), eval.type = eval.type, weights = weights)
-    if (eval.type == "points")
+    if (eval.type %in% "points")
         est <- pdf$estimate/((eval1 + delta[1]) * (eval2 + delta[2]))
     else est <- pdf$estimate/outer(eval1 + delta[1], eval2 +
         delta[2])
@@ -1981,7 +1981,7 @@ function (x, y, family, h, eval.points, start, offset)
         cat(fit$iter)
         cat(" ")
         s <- W[k, ]
-#         if (family$family[1] == "Binomial")
+#         if (family$family[1] %in% "Binomial")
 #             w <- apply(Y, 1, sum)[1:n]
 #         else w <- rep(1, n)
         mu <- fit$fitted.values[1:n]
@@ -2142,7 +2142,7 @@ function (x, y, h, ...)
     result$call <- match.call()
     if (display != "none") {
         lines(result$eval.points, result$estimate, col = opt$col)
-        if (display == "se") {
+        if (display %in% "se") {
             lines(result$eval.points, result$lower, lty = 3, col = opt$col)
             lines(result$eval.points, result$upper, lty = 3, col = opt$col)
         }
@@ -2275,7 +2275,7 @@ function (x, y, h, design.mat = NA, model = "none", test = TRUE,
     else {
         replace.na(opt, ngrid, 20)
         dimn <- dimnames(x)[[2]]
-        name.comp <- if (!is.null(dimn) & !all(dimn == "")) dimn
+        name.comp <- if (!is.null(dimn) & !all(dimn %in% "")) dimn
         else {
             if (!is.null(attributes(x)$names))
                 attributes(x)$names
@@ -2299,20 +2299,20 @@ function (x, y, h, design.mat = NA, model = "none", weights = rep(1,
     replace.na(opt, ngrid, 50)
     replace.na(opt, display, "lines")
     hmult <- opt$hmult
-    if (model == "none") {
+    if (model %in% "none") {
         opt$band <- FALSE
         opt$test <- FALSE
     }
-    if (opt$add | opt$display == "none")
+    if (opt$add | opt$display %in% "none")
         opt$panel <- FALSE
-    if (!(model == "none") & opt$panel == FALSE)
+    if (!(model %in% "none") & opt$panel == FALSE)
         opt$test <- TRUE
     r <- list(x = NA, y = NA, model.y = NA, se = NA, sigma = NA,
         h = h * hmult, hweights = opt$h.weights, weights = weights)
-    if (!opt$add & !(opt$display == "none"))
+    if (!opt$add & !(opt$display %in% "none"))
         plot(rawdata$x, rawdata$y, xlab = opt$xlab, ylab = opt$ylab,
             type = "n")
-    if (!(opt$display == "none")) {
+    if (!(opt$display %in% "none")) {
         opt1 <- opt
         opt1$test <- FALSE
         r <- plot.regression(x, y, design.mat, h, r, model, weights,
@@ -2326,13 +2326,13 @@ function (x, y, h, design.mat = NA, model = "none", weights = rep(1,
             "  - movie up", "  - movie down", "Exit")
         ind <- menu(items, graphics = TRUE, title = "Nonparametric regression")
         while (items[ind] != "Exit") {
-            if (items[ind] == "  - increase") {
+            if (items[ind] %in% "  - increase") {
                 hmult <- hmult * 1.1
             }
-            else if (items[ind] == "  - decrease") {
+            else if (items[ind] %in% "  - decrease") {
                 hmult <- hmult/1.1
             }
-            else if (items[ind] == "  - movie up") {
+            else if (items[ind] %in% "  - movie up") {
                 for (i in 1:6) {
                   hmult <- hmult * 1.1
                   opt1 <- opt
@@ -2343,7 +2343,7 @@ function (x, y, h, design.mat = NA, model = "none", weights = rep(1,
                 }
                 opt1$hmult <- hmult <- hmult * 1.1
             }
-            else if (items[ind] == "  - movie down") {
+            else if (items[ind] %in% "  - movie down") {
                 for (i in 1:6) {
                   hmult <- hmult/1.1
                   opt1 <- opt
@@ -2354,13 +2354,13 @@ function (x, y, h, design.mat = NA, model = "none", weights = rep(1,
                 }
                 opt1$hmult <- hmult <- hmult/1.1
             }
-            else if (items[ind] == "Add linear band" | items[ind] ==
+            else if (items[ind] %in% "Add linear band" | items[ind] %in%
                 "Remove linear band") {
                 bandflag <- !bandflag
                 if (!bandflag)
                   polygon(c(r$x, rev(r$x)), c(mean(y) - 2 * r$se,
                     mean(y) + 2 * rev(r$se)), col = 0)
-                if (items[ind] == "Add linear band") {
+                if (items[ind] %in% "Add linear band") {
                   items[ind] <- "Remove linear band"
                 }
                 else (items[ind] <- "Add linear band")
@@ -2378,7 +2378,7 @@ function (x, y, h, design.mat = NA, model = "none", weights = rep(1,
     if (!(any(is.na(opt$eval.points))))
         r <- sm.regression.eval.1d(x, y, design.mat, h, model,
             weights, rawdata, options = opt)
-    else if ((opt$display == "none") & (model == "none")) {
+    else if ((opt$display %in% "none") & (model %in% "none")) {
         opt$eval.points <- seq(min(x), max(x), length = opt$ngrid)
         r <- sm.regression.eval.1d(x, y, design.mat, h, model,
             weights, rawdata, options = opt)
@@ -2398,7 +2398,7 @@ function (x, y, h, model = "none", weights = rep(1, n), rawdata,
     replace.na(opt, h.weights, rep(1, length(y)))
     replace.na(opt, display, "persp")
     replace.na(opt, ngrid, 20)
-    if (model == "none")
+    if (model %in% "none")
         opt$test <- FALSE
     n <- length(y)
     ev.points <- NA
@@ -2406,7 +2406,7 @@ function (x, y, h, model = "none", weights = rep(1, n), rawdata,
     x1grid <- seq(min(x[, 1]), max(x[, 1]), length = opt$ngrid)
     x2grid <- seq(min(x[, 2]), max(x[, 2]), length = opt$ngrid)
     e.points <- cbind(x1grid, x2grid)
-    if (!(opt$display == "none")) {
+    if (!(opt$display %in% "none")) {
         est <- sm.regression.eval.2d(x, y, h, model, e.points,
             opt$hull, weights, options = opt)
         ev.points <- e.points
@@ -2423,7 +2423,7 @@ function (x, y, h, model = "none", weights = rep(1, n), rawdata,
             options = opt)
         est <- as.vector(w %*% y)
     }
-    else if ((opt$display == "none") & (model == "none")) {
+    else if ((opt$display %in% "none") & (model %in% "none")) {
         est <- sm.regression.eval.2d(x, y, h, model, e.points,
             opt$hull, weights, options = opt)
         ev.points <- e.points
@@ -2560,11 +2560,11 @@ function (x, y, design.mat, h, model = "none", weights = rep(1,
     sig <- sm.sigma(x, y, rawdata = rawdata, weights = weights)
     n <- length(x)
     ne <- length(eval.points)
-    if (model == "none") {
+    if (model %in% "none") {
         model.y <- est
         se <- as.vector(sig * sqrt(((w^2) %*% (1/weights))))
     }
-    else if ((model == "no.effect") | (model == "no effect")) {
+    else if ((model %in% "no.effect") | (model %in% "no effect")) {
         if (is.na(as.vector(design.mat)[1])) {
             X <- matrix(rep(1, n), ncol = 1)
             model.y <- rep(wmean(y, weights), ne)
@@ -2578,7 +2578,7 @@ function (x, y, design.mat, h, model = "none", weights = rep(1,
         se <- sig * sqrt(diag(w %*% X %*% diag(1/weights) %*%
             t(w)))
     }
-    else if (model == "linear") {
+    else if (model %in% "linear") {
         e <- cbind(rep(1, ne), eval.points - mean(x))
         l <- cbind(rep(1, n), x - mean(x))
         l <- e %*% solve(t(l) %*% diag(weights) %*% l) %*% t(l) %*%
@@ -2683,12 +2683,12 @@ function (x, y, design.mat = NA, h, model = "no.effect", weights = rep(1,
         W <- sm.weight(x, x, h, weights = weights, options = opt)
         S <- cbind(rep(1, n), x - mean(x))
     }
-    if ((model == "no.effect") | (model == "no effect")) {
+    if ((model %in% "no.effect") | (model %in% "no effect")) {
         if (is.na(as.vector(design.mat)[1]))
             S <- matrix(rep(1, n), ncol = 1)
         else S <- design.mat
     }
-    if ((model == "linear") | (model == "no.effect") | (model ==
+    if ((model %in% "linear") | (model %in% "no.effect") | (model ==
         "no effect")) {
         S <- diag(n) - S %*% solve(t(S) %*% diag(weights) %*%
             S) %*% t(S) %*% diag(weights)
@@ -2780,13 +2780,13 @@ function (Time, y, minh = 0.1, maxh = 2, optimize = FALSE,
         h.opt <- optimum$par
     }
     cat("h: ", h.opt, "\n")
-    if (opt$display == "se")
+    if (opt$display %in% "se")
         display1 <- "lines"
     else display1 <- opt$display
     sm <- sm.regression(Time, ym, h = h.opt, hmult = 1, display = display1,
         ylab = paste(deparse(substitute(y)), "(mean values)",
             collapse = NULL), add = opt$add)
-    if (opt$display == "se") {
+    if (opt$display %in% "se") {
         W <- sm.weight(Time, sm$eval.points, h = h.opt, options = list())
         V <- (var/nSubj) * r
         se <- sqrt(diag(W %*% V %*% t(W)))
@@ -2927,52 +2927,52 @@ function (lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
             "  - decrease s.p.", "  - add data points", "Exit")
         ind <- menu(items, graphics = TRUE, title = "Sphere")
         while (items[ind] != "Exit") {
-            if (items[ind] == "Set theta and phi") {
+            if (items[ind] %in% "Set theta and phi") {
                 a <- change(theta, phi)
                 theta <- a$theta
                 phi <- a$phi
                 invis <- plot2d(lat, long, theta, phi)
                 sphdraw(theta, phi)
             }
-            else if (items[ind] == "  - increase theta") {
+            else if (items[ind] %in% "  - increase theta") {
                 theta <- inctheta(theta, 30)
                 invis <- plot2d(lat, long, theta, phi)
                 sphdraw(theta, phi)
             }
-            else if (items[ind] == "  - decrease theta") {
+            else if (items[ind] %in% "  - decrease theta") {
                 theta <- inctheta(theta, -30)
                 invis <- plot2d(lat, long, theta, phi)
                 sphdraw(theta, phi)
             }
-            else if (items[ind] == "  - increase phi") {
+            else if (items[ind] %in% "  - increase phi") {
                 phi <- incphi(phi, 30)
                 invis <- plot2d(lat, long, theta, phi)
                 sphdraw(theta, phi)
             }
-            else if (items[ind] == "  - decrease phi") {
+            else if (items[ind] %in% "  - decrease phi") {
                 phi <- incphi(phi, -30)
                 invis <- plot2d(lat, long, theta, phi)
                 sphdraw(theta, phi)
             }
-            else if (items[ind] == "Add hidden points") {
+            else if (items[ind] %in% "Add hidden points") {
                 hidplot(invis, theta, phi)
             }
-            else if (items[ind] == "Add density estimate") {
+            else if (items[ind] %in% "Add density estimate") {
                 sphimage(lat, long, kap, theta, phi, ngrid)
             }
-            else if (items[ind] == "  - increase s.p.") {
+            else if (items[ind] %in% "  - increase s.p.") {
                 kap <- kap * 2
                 sphimage(lat, long, kap, theta, phi, ngrid)
             }
-            else if (items[ind] == "  - decrease s.p.") {
+            else if (items[ind] %in% "  - decrease s.p.") {
                 kap <- kap/2
                 sphimage(lat, long, kap, theta, phi, ngrid)
             }
-            else if (items[ind] == "  - add data points") {
+            else if (items[ind] %in% "  - add data points") {
                 par(pch = "*")
                 addplot(lat, long, theta, phi)
             }
-            else if (items[ind] == "Add 2nd data set") {
+            else if (items[ind] %in% "Add 2nd data set") {
                 par(pch = "x")
                 addplot(lat2, long2, theta, phi)
             }
@@ -2995,7 +2995,7 @@ function (x, y, status, h, hv = 0.05, p = 0.5, status.code = 1,
     replace.na(opt, ylab, deparse(substitute(y)))
     replace.na(opt, eval.points, seq(min(x), max(x), length = opt$ngrid))
     eval.points <- opt$eval.points
-    if (!(opt$display == "none" | opt$add == TRUE)) {
+    if (!(opt$display %in% "none" | opt$add == TRUE)) {
         plot(x, y, type = "n", xlab = opt$xlab, ylab = opt$ylab, ...)
         text(x[status == status.code], y[status == status.code], "x")
         text(x[status != status.code], y[status != status.code], "o")
@@ -3034,7 +3034,7 @@ function (x, y, status, h, hv = 0.05, p = 0.5, status.code = 1,
     w <- w/(matrix(rep(s2, ns), ncol = ns) * matrix(rep(s0, ns),
         ncol = ns) - matrix(rep(s1, ns), ncol = ns)^2)
     estimate <- w %*% yw
-    if (!(opt$display == "none"))
+    if (!(opt$display %in% "none"))
         lines(eval.points, estimate, lty = opt$lty)
     invisible(list(estimate = estimate, eval.points = eval.points,
         h = h, hv = hv, call = match.call()))
