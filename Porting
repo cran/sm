@@ -1,6 +1,5 @@
-Version 2.0-5 2002-03-28  avoid == tests on possibly missing char variables
-
-Version 2.0-4 2001/10/10  minor improvements to documentation, QA issues
+Version 2.0-4 2001/10/10  tree.q did not work in R, minor improvements
+                          to documentation.
 
 Version 2.0-3 2001/08/08  QA changes, e.g. T -> TRUE in scripts.
 
