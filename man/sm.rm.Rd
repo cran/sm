@@ -9,8 +9,8 @@ This function estimates nonparametrically the mean profile from a matrix
 data) from a set of individuals.
 }
 \usage{
-sm.rm(Time, y, minh=0.1, maxh=2, optimize=FALSE,
-      rice.display=FALSE, \dots)
+sm.rm(Time, y, minh = 0.1, maxh = 2, optimize = FALSE,
+      rice.display = FALSE, \dots)
 }
 \arguments{
 \item{y}{

@@ -8,7 +8,8 @@ This function estimates nonparametrically the regression function
 of \code{y} on \code{x} when the error terms are serially correlated.
 }
 \usage{
-sm.regression.autocor(x=1:n, y, h.first, minh, maxh, method="direct", \dots)
+sm.regression.autocor(x = 1:n, y, h.first, minh, maxh,
+                      method = "direct", \dots)
 }
 \arguments{
 \item{y}{

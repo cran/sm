@@ -1,3 +1,4 @@
+library(gam)
 provide.data(smacker)
 Presence <- Density
 Presence[Presence > 0] <- 1

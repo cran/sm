@@ -11,7 +11,7 @@ a standard parametric Poisson regression of specified \code{degree} in the
 covariate \code{x}.
 }
 \usage{
-sm.poisson.bootstrap(x, y, h, nboot=100, degree=1, \dots)
+sm.poisson.bootstrap(x, y, h, nboot = 100, degree = 1, \dots)
 }
 \synopsis{
 sm.poisson.bootstrap(x, y, h, nboot = 99, degree = 1,

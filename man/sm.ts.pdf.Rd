@@ -10,7 +10,7 @@ in all cases; bivariate densities of pairs of lagged values are estimated
 depending on the parameter \code{lags}.
 }
 \usage{
-sm.ts.pdf(x, h = hnorm(x), lags, maxlag=1, ask=TRUE)
+sm.ts.pdf(x, h = hnorm(x), lags, maxlag = 1, ask = TRUE)
 }
 \arguments{
 \item{x}{

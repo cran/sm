@@ -188,26 +188,27 @@ a list with  the updated values of the parameters; if the argument list
 is not empty, the returned list is invisible.
 }
 \details{
-the parameter values set via a call to this function will remain in effect
-for the rest of the session, affecting the subsequent behaviour of the other 
-functions of the \code{sm} library for which the given parameters are relevant.
+  The parameter values set via a call to this function will remain in
+  effect for the rest of the session, affecting the subsequent behaviour
+  of the other functions of the \code{sm} library for which the given
+  parameters are relevant.
 
-This offers the possibility of customizing the functioning of the \code{sm}
-library, for instance by insertions of approriate calls to \code{sm.options}
-in \code{.First}. However, assignements of \code{sm.options} are done at frame 0,
-hence this must be done using a call as shown in the example below.
+  This offers the possibility of customizing the functioning of the \code{sm}
+  library, for instance by insertions of approriate calls to \code{sm.options}
+  in a load hook for package \pkg{sm}.
 }
 \examples{
-\dontrun{sm.options(poly.index=0)
+\dontrun{sm.options(poly.index = 0)
 # subsequent regression estimations will be performed using local means
 # instead of local regression
 #
-sm.options(describe=F)  
+sm.options(describe = FALSE)  
 # turns off typing documentation files of data loaded by `sm.script'
 # (works from command-line)
 # 
-assign(".sm.Options", sm.options(describe = FALSE), envir=.GlobalEnv)
-# this line can be inserted in `.First' for permanent customisation
+setHook(packageEvent("sm", "onLoad"),
+        function(...) sm.options(describe = FALSE))) 
+# this line can be inserted in `.Rprofile' for permanent customisation
 }}
 \keyword{nonparametric}
 \keyword{smooth}

@@ -1,10 +1,10 @@
 \name{sm.regression}
 \alias{sm.regression}
-\alias{sm.regression.1d}
-\alias{sm.regression.2d}
-\alias{sm.regression.eval.1d}
-\alias{sm.regression.eval.2d}
-\alias{sm.regression.test}
+% \alias{sm.regression.1d}
+% \alias{sm.regression.2d}
+% \alias{sm.regression.eval.1d}
+% \alias{sm.regression.eval.2d}
+% \alias{sm.regression.test}
 \title{
 Nonparametric regression with one or two covariates.
 }

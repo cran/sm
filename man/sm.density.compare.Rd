@@ -9,8 +9,8 @@ compared, both graphically and formally in a bootstrap hypothesis test of
 equality.
 }
 \usage{
-sm.density.compare(x, group, h=NA, model="none", test=TRUE,
-                   nboot=100, monitor=TRUE, \dots)
+sm.density.compare(x, group, h = NA, model  ="none", test = TRUE,
+                   nboot = 100, monitor = TRUE, \dots)
 }
 \arguments{
 \item{x}{

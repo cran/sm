@@ -1,3 +1,4 @@
+library(gam)
 provide.data(trawl)
 ind       <- (Year == 0 & Zone == 1)
 score1    <- Score1[ind]

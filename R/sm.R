@@ -218,8 +218,6 @@ function (x, y, z, theta, phi, sc)
 "cv" <-
 function (x, h, ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     if (!isMatrix(x)) {
         n <- length(x)
@@ -269,7 +267,6 @@ function (x, h, ...)
 "hcv" <-
 function (x, y = NA, hstart = NA, hend = NA, ...)
 {
-    if (!exists(".sm.Options")) stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     replace.na(opt, ngrid, 8)
     replace.na(opt, display, "none")
@@ -518,8 +515,6 @@ function (alpha, theta, phi)
 "nise" <-
 function (y, ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     n <- length(y)
     opt <- sm.options(list(...))
     replace.na(opt, nbins, round((n > 500) * 8 * log(n)))
@@ -826,8 +821,7 @@ function (data, path, options = list())
     describe <- sm.options(options)$describe
     name <- deparse(substitute(data))
     if (missing(path))
-        path <- file.path(get(".sm.home", pos = match("package:sm", search())),
-                          "smdata")
+        path <- system.file("smdata", package="sm")
     datafile <- file.path(path, paste(name, ".dat", sep = ""))
     docfile <- file.path(path, paste(name, ".doc", sep = ""))
     if (!exists(name, where=.GlobalEnv, inherits = FALSE)) {
@@ -867,8 +861,6 @@ function (List, comp, value)
 "sig.trace" <-
 function (expn, hvec, ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     replace.na(opt, display, "lines")
     expn.char <- paste(deparse(substitute(expn)), collapse = "")
@@ -918,8 +910,6 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
     h.alpha = 2 * diff(range(x))/length(x), weights = as.integer(rep(1,
         length(x))), ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     x.name <- deparse(substitute(x))
     y.name <- deparse(substitute(y))
@@ -1204,8 +1194,6 @@ function (x, y, N = rep(1, length(y)), h, ...)
     n <- length(y)
     x.name <- deparse(substitute(x))
     y.name <- deparse(substitute(y))
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     if (any(is.na(c(x, y)))) {
         xy <- cbind(x, y)
@@ -1322,8 +1310,6 @@ function (x, y, N = rep(1, length(x)), h, nboot = 99, degree = 1,
 "sm.density" <-
 function (x, h, model = "none", weights = rep(1, nobs), ...)
 {
-   if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     x.name <- deparse(substitute(x))
     opt <- sm.options(list(...))
     positive <- opt$positive
@@ -1711,8 +1697,6 @@ function (data, h = hnorm(data), contour = 75, shadow = TRUE, colour = TRUE,
 function (x, group, h = NA, model = "none", test = TRUE, nboot = 100,
     monitor = TRUE, ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     replace.na(opt, ngrid, 50)
     replace.na(opt, display, "lines")
@@ -2037,14 +2021,12 @@ function (...)
 {
     if (nargs() == 0) return(.sm.Options)
     current <- .sm.Options
-    if (is.character(...))
-        temp <- eval(parse(text = paste(c("list(", ..., ")"))))
-    else temp <- list(...)
+    temp <- list(...)
     if (length(temp) == 1 && is.null(names(temp))) {
         arg <- temp[[1]]
         switch(mode(arg),
                list = temp <- arg,
-               character = return(.Options[arg]),
+               character = return(.sm.Options[arg]),
                stop(paste("invalid argument:", arg)))
     }
     if (length(temp) == 0) return(current)
@@ -2052,8 +2034,7 @@ function (...)
     if (is.null(n)) stop("options must be given by name")
     changed <- current[n]
     current[n] <- temp
-    if (sys.parent() == 0) env <- pos.to.env( match("package:sm", search()) )
-    else env <- parent.frame()
+    if (sys.parent() == 0) env <- asNamespace("sm") else env <- parent.frame()
     assign(".sm.Options", current, envir = env)
     invisible(current)
 }
@@ -2093,8 +2074,6 @@ function (x, y, h = hnorm(cbind(x, y), weights), weights, rawdata = list(),
 "sm.poisson" <-
 function (x, y, h, ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     x.name <- deparse(substitute(x))
     y.name <- deparse(substitute(y))
     opt <- sm.options(list(...))
@@ -2215,8 +2194,6 @@ function (x, y, h, nboot = 99, degree = 1, fixed.disp = FALSE,
 function (x, y, h, design.mat = NA, model = "none", test = TRUE,
     weights = rep(1, nobs), ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     x.name <- deparse(substitute(x))
     y.name <- deparse(substitute(y))
     opt <- sm.options(list(...))
@@ -2461,8 +2438,6 @@ function (x = 1:n, y, h.first, minh, maxh, method = "direct",
         gcv.ri <- sum(rw^2)/(1 - Trace/length(x))^2
         c(gcv.0, gcv.r, gcv.ri)
     }
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     replace.na(opt, display, "plot")
     replace.na(opt, ngrid, 15)
@@ -2902,8 +2877,6 @@ function (x, y, h, weights, rawdata = list(), options = list())
 function (lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
           addpoints = FALSE, ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     replace.na(opt, ngrid, 32)
     ngrid <- opt$ngrid
@@ -2987,8 +2960,6 @@ function (lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
 function (x, y, status, h, hv = 0.05, p = 0.5, status.code = 1,
     ...)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
     opt <- sm.options(list(...))
     replace.na(opt, display, "lines")
     replace.na(opt, ngrid, 50)
@@ -3210,16 +3181,15 @@ function (latitude, longitude, kap, theta, phi, ngrid = 32)
     xyzok <- (((x/sqrt(x^2 + z^2)) * (sqrt(1 - y^2)) * sin(radtheta) *
         cos(radphi)) + (y * sin(radphi)) - ((-z/sqrt(x^2 + z^2)) *
         (sqrt(1 - y^2)) * cos(radphi) * cos(radtheta)))
-    z[xyzok < 0] <- (za - zb)[xyzok < 0]
-    x[xyzok < 0] <- ((xgrid + (z * sin(radtheta)))/cos(radtheta))[xyzok <
-        0]
-    y[xyzok < 0] <- ((ygrid + ((x * sin(radtheta)) + (z * cos(radtheta))) *
-        sin(radphi))/cos(radphi))[xyzok < 0]
+    other <- !is.na(xyzok) & xyzok < 0
+    z[other] <- (za - zb)[other]
+    x[other] <- ((xgrid + (z * sin(radtheta)))/cos(radtheta))[other]
+    y[other] <- ((ygrid + ((x * sin(radtheta)) + (z * cos(radtheta))) *
+        sin(radphi))/cos(radphi))[other]
     xj <- cos(xlong) * cos(xlat)
     yj <- sin(xlat)
     zj <- -sin(xlong) * cos(xlat)
-    dvec <- exp(kap * cbind(x, y, z) %*% rbind(xj, yj, zj)) %*%
-        rep(1/n, n)
+    dvec <- exp(kap * cbind(x, y, z) %*% rbind(xj, yj, zj)) %*% rep(1/n, n)
     dvec[is.na(xgrid)] <- 0
     dvec <- dvec/max(dvec)
     fmat <<- matrix(dvec, ngrid, ngrid, byrow = TRUE)

@@ -11,8 +11,8 @@ a standard parametric logistic regression of specified \code{degree} in the
 covariate \code{x}.
 }
 \usage{
-sm.binomial.bootstrap(x, y, N=rep(1, length(x)), h, nboot=99, 
-                      degree=1, \dots)
+sm.binomial.bootstrap(x, y, N = rep(1, length(x)), h, nboot = 99, 
+                      degree = 1, \dots)
 }
 \synopsis{
 sm.binomial.bootstrap(x, y, N = rep(1, length(x)), h, nboot = 99, degree = 1,

@@ -1,3 +1,4 @@
+library(gam)
 provide.data(mackerel)
 depth     <- mack.depth
 latitude  <- mack.lat

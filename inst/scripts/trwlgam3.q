@@ -1,3 +1,4 @@
+library(gam)
 provide.data(trawl)
 ind       <- (Year == 0 & Zone == 1)
 score1    <- Score1[ind]
@@ -13,7 +14,7 @@ print(anova(model2, model1))
 print(anova(model3, model2))
 
 par(mfrow = c(1,2))
-model4  <- sm.regression(position, score1, h = c(0.1, 0.1), 
+model4  <- sm.regression(position, score1, h = c(0.1, 0.1),
               display = "none")
 ex      <- model4$eval.points[,1]
 ey      <- model4$eval.points[,2]

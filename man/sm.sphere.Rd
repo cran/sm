@@ -1,11 +1,11 @@
 \name{sm.sphere}
 \alias{sm.sphere}
-\alias{latlines}
-\alias{longlines}
-\alias{latlines.e}
-\alias{longlines.e}
-\alias{sphdraw}
-\alias{sphimage}
+% \alias{latlines}
+% \alias{longlines}
+% \alias{latlines.e}
+% \alias{longlines.e}
+% \alias{sphdraw}
+% \alias{sphimage}
 \title{
 Nonparametric density estimation for spherical data.
 }
@@ -19,8 +19,8 @@ Only modest amounts of data may be used.  The limit will depend on the
 memory available.
 }
 \usage{
-sm.sphere(lat, long, kappa = 20, hidden=FALSE, sphim=FALSE,
-          addpoints=FALSE, \dots)
+sm.sphere(lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
+          addpoints = FALSE, \dots)
 }
 \synopsis{
 sm.sphere(lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,

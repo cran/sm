@@ -9,7 +9,8 @@ This function estimates nonparametrically the autoregression function
 assumed to be stationary.
 }
 \usage{
-sm.autoregression(x, h=hnorm(x), d=1, maxlag=d, lags, se=FALSE, ask=TRUE)
+sm.autoregression(x, h = hnorm(x), d = 1, maxlag = d, lags,
+                  se = FALSE, ask = TRUE)
 }
 \arguments{
 \item{x}{
@@ -57,7 +58,7 @@ Oxford University Press, Oxford.
 \code{\link{sm.regression}}, \code{\link{sm.ts.pdf}}
 }
 \examples{
-library(ts)
+library(stats)
 data(lynx)
 sm.autoregression(log(lynx), maxlag=3, se=TRUE)
 sm.autoregression(log(lynx), lags=cbind(2:3,4:5))

@@ -21,7 +21,7 @@ surface can be plotted.  A number of other features of the construction
 of the estimate, and of its display, can be controlled.
 }
 \usage{
-sm.density(x, h, model = "none", weights=rep(1,nobs), \dots)
+sm.density(x, h, model = "none", weights = rep(1,nobs), \dots)
 }
 \arguments{
 \item{x}{
