@@ -21,7 +21,7 @@ vector of the response values; they must be nonnegative integers.
 \item{h}{
 the smoothing parameter; it must be positive.
 }
-\item{...}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:

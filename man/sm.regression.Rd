@@ -18,7 +18,7 @@ features of the construction of the estimate, and of its display, can be
 controlled.
 }
 \usage{
-sm.regression(x, y, h, design.mat = NA, model = "none", test = T, 
+sm.regression(x, y, h, design.mat = NA, model = "none", test = TRUE, 
               weights = rep(1, nobs), \dots)
 }
 \arguments{
@@ -52,7 +52,7 @@ case of one covariate.
 Use of this parameter is incompatible with binning; hence \code{nbins} must 
 then be set to 0 or left at its default value \code{NA}.
 }
-\item{...}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
@@ -109,7 +109,7 @@ the label attached to the z-axis (two covariate case only).
 \item{hull}{
 a logical value which controls whether the estimate is evaluated and plotted
 only on grid points which fall within the convex hull of the data.  When
-this argument is set to \code{F}, evaluation and plotting take place at all grid 
+this argument is set to \code{FALSE}, evaluation and plotting take place at all grid 
 points where the contribution from at least one kernel function is 
 non-negligible.  Both of these settings ensure that the estimate is not 
 evaluated at points where there are no observations nearby.  This argument 
@@ -158,7 +158,7 @@ Bowman, A.W. and Azzalini, A. (1997).
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{hcv}}, \code{\link{sm}}, \code{\link{sm.ancova}}, \code{\link{sm.binomial}}, \code{\link{sm.poisson}}, 'sm.regression.autocor',
+\code{\link{hcv}}, \code{\link{sm}}, \code{\link{sm.ancova}}, \code{\link{sm.binomial}}, \code{\link{sm.poisson}}, \code{\link{sm.regression.autocor}},
 \code{\link{sm.survival}}, \code{\link{sm.options}}
 }
 \examples{

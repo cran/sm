@@ -39,7 +39,7 @@ the quantile to be estimated at each covariate value.
 \item{status.code}{
 the value of \code{status} which defines a complete survival time.
 }
-\item{...}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
@@ -68,7 +68,7 @@ the line type used to plot the estimate.
 }
 \item{add}{
 a logical value which controls whether the estimate is added to
-the current plot.  Its default value is F, which creates a new plot.
+the current plot.  Its default value is \code{FALSE}, which creates a new plot.
 }}
 \value{
 a list containing the values of the estimate at the evaluation points

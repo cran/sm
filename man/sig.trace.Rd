@@ -4,12 +4,15 @@
 A significance trace for a hypothesis test
 }
 \description{
-This functions creates a significance trace for a hypothesis test based
+This function creates a significance trace for a hypothesis test based
 on a nonparametric smoothing procedure.  The p-value of the test is
 plotted against a range of smoothing parameters.
 }
 \usage{
 sig.trace(expn, hvec, display="lines")
+}
+\synopsis{
+sig.trace(expn, hvec, ...)
 }
 \arguments{
 \item{expn}{
@@ -38,8 +41,8 @@ see Section 5.2 of the reference below.
 Only tests involving a univariate smoothing parameter may be used.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). \emph{Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{

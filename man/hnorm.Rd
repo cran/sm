@@ -24,11 +24,8 @@ from binned data.
 \value{
 the value of the Normal optimal smoothing parameter.
 }
-\section{Side Effects}{
-none
-}
 \details{
-see Section 2.4.2 of the reference below.
+See Section 2.4.2 of the reference below.
 }
 \references{
 Bowman, A.W. and Azzalini, A. (1997). 

@@ -12,7 +12,7 @@ sm.regression.autocor(x=1:n, y, h.first, minh, maxh, method="direct", \dots)
 }
 \arguments{
 \item{y}{
-vector of the reponse values
+vector of the response values
 }
 \item{h.first}{
 the smoothing parameter used for the initial smoothing stage.
@@ -32,7 +32,7 @@ is searched for (default is 10).
 character value which specifies the optimality criterium adopted;
 possible values are \code{"no.cor"}, \code{"direct"} (default), and \code{"indirect"}.
 }
-\item{...}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:

@@ -1,5 +1,11 @@
 \name{sm.sphere}
 \alias{sm.sphere}
+\alias{latlines}
+\alias{longlines}
+\alias{latlines.e}
+\alias{longlines.e}
+\alias{sphdraw}
+\alias{sphimage}
 \title{
 Nonparametric density estimation for spherical data.
 }
@@ -13,8 +19,12 @@ Only modest amounts of data may be used.  The limit will depend on the
 memory available.
 }
 \usage{
-sm.sphere(lat, long, phi=0, theta=0, kappa=20, panel=F, hidden=F, 
-   sphim=F, addpoints=F, ngrid=32)
+sm.sphere(lat, long, kappa = 20, hidden=FALSE, sphim=FALSE,
+          addpoints=FALSE, \dots)
+}
+\synopsis{
+sm.sphere(lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
+          addpoints = FALSE, ...)
 }
 \arguments{
 \item{lat}{
@@ -24,29 +34,15 @@ equator.
 \item{long}{
 a vector giving the longitude component of the data in degrees east.
 }
-\item{phi}{
-the vertical rotation of the displayed sphere in degrees.  The viewing 
-position moves from the equator.
-}
-\item{theta}{
-the horizontal rotation of the displayed sphere.  The viewing position moves
-in an easterly direction.  When \code{theta} is set to 0, the origin of the
-spherical scales lies in the middle of the right hand side of the plot.
-}
 \item{kappa}{
 the smoothing parameter used to construct the density estimate.  The kernel
 function is a Fisher distribution and \code{kappa} is its scale parameter.
 Larger values of \code{kappa} will produce smaller amounts of smoothing.
 }
-\item{panel}{
-a logical value which controls the appearance of a panel display.  This
-panel may be used to alter a variety of aspects of the estimate and the
-plot in an interactive manner.
-}
 \item{hidden}{
-a logical value which, when set to T, will display the points which lie
+a logical value which, when set to \code{TRUE}, will display the points which lie
 on the rear side of the displayed sphere.  This argument will be ignored
-if \code{sphim} is set to T.
+if \code{sphim} is set to \code{TRUE}.
 }
 \item{sphim}{
 a logical value which controls whether a density estimate is constructed
@@ -56,10 +52,7 @@ and displayed on the sphere in image form.
 a logical value which controls whether the data points are added to the
 plot of the density estimate.
 }
-\item{ngrid}{
-the number of points on each side of the regular grid over which the
-density estimate is evaluated.
-}}
+}
 \value{
 a list containing the value of the smoothing parameter and the rotation 
 angles of the displayed plot.
@@ -71,8 +64,8 @@ none.
 see Section 1.5 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). \emph{Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{

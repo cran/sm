@@ -7,7 +7,7 @@ The library sm: summary information
 This library implements nonparametric smoothing methods described 
 in the book of Bowman & Azzalini (1997)
 }
-\section{MAIN FEATURES}{
+\section{Main Features}{
 The functions in the library use kernel methods to construct nonparametric 
 estimates of density functions and regression curves in a variety of
 settings, and to perform some inferential operations.
@@ -18,7 +18,7 @@ one or two covariates, and a variety of goodness-of-fit test for linear models
 can be carried out. Many other data types can be handled; these include
 survival data, time series, count and binomial data. 
 }
-\section{FUNCTIONS}{
+\section{Functions}{
 The main functions are \code{sm.density} and \code{sm.regression}; other
 functions intended for direct access by the user are: \code{binning},
 \code{sm.ancova}, \code{sm.autoregression}, \code{sm.binomial},
@@ -34,17 +34,17 @@ the associated variates from the same case, if any.
 Datasets of arbitrary size can be handled by the current version of  
 \code{sm.density},  \code{sm.regression} and \code{sm.ancova}, using binning operations.
 }
-\section{REQUIREMENTS}{
+\section{REquirements}{
 The library has been tested on S-plus 3.x, 4.0, 5.1
 }
-\section{VERSION}{
+\section{Version}{
 You are using version 2 (November 2000). 
 The most recent version of the library can be obtained from either of 
 the WWW pages:
 \url{http://www.stats.gla.ac.uk/~adrian/sm}
 \url{http://www.stat.unipd.it/~azzalini/Book\_sm}
 }
-\section{MANUAL}{
+\section{Manual}{
 There is no manual except for on-line documentation.
 The book by Bowman and Azzalini (1997) provides more detailed and 
 background information.
@@ -52,13 +52,13 @@ Algorithmic aspects of the software are discussed by Bowman & Azzalini (2001).
 Differences between the first version  of the library and the current one are 
 summarized in the file \code{history.txt} which is distributed with the library.
 }
-\section{AUTHORS}{
+\author{
 Adrian Bowman (Dept Statistics, University of Glasgow, UK) and
 Adelchi Azzalini (Dept Statistical Sciences, University of Padua, Italy).
 Please send comments, error reports, etc. to the authors via the
 abovementioned WWW page.
 }
-\section{ACKNOWLEDGEMENTS}{
+\section{Acknowledgements}{
 Important contributions to prototype versions of functions for some specific 
 techniques included here were made by a succession of students; these
 include Stuart Young, Eileen Wright, Peter Foster, Angela Diblasi, 
@@ -82,7 +82,7 @@ Computational aspects of nonparametric smoothing,
 with illustrations from the \code{sm} library.
 To appear.
 }
-\section{LICENCE}{
+\section{Licence}{
 This library and its documentation are usable under the terms of the "GNU 
 General Public License", a copy of which is distributed with the package.
 }

@@ -16,17 +16,14 @@ hsj(x)
 a vector of data.
 }}
 \value{
-the value of the smoothing parameter localted by the Sheather-Jones method.
-}
-\section{Side Effects}{
-none.
+the value of the smoothing parameter located by the Sheather-Jones method.
 }
 \details{
-see Section 2.4.4 of the reference below.
+See Section 2.4.4 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). \emph{Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{

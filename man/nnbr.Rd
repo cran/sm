@@ -22,15 +22,12 @@ the required order of nearest neighbour.
 \value{
 the vector of nearest neighbour distances.
 }
-\section{Side Effects}{
-none.
-}
 \details{
 see Section 1.7.1 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). \emph{Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{

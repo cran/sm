@@ -11,8 +11,12 @@ a standard parametric logistic regression of specified \code{degree} in the
 covariate \code{x}.
 }
 \usage{
-sm.binomial.bootstrap(x, y, N=rep(1, length(x)), h, nboot=100, 
-         degree=1, \dots)
+sm.binomial.bootstrap(x, y, N=rep(1, length(x)), h, nboot=99, 
+                      degree=1, \dots)
+}
+\synopsis{
+sm.binomial.bootstrap(x, y, N = rep(1, length(x)), h, nboot = 99, degree = 1,
+    fixed.disp = FALSE, family = binomial(logit), ...)
 }
 \arguments{
 \item{x}{
@@ -35,8 +39,8 @@ number of bootstrap samples (default=100).
 specifies the degree of the fitted polynomial in \code{x} on the logit scale
 (default=1).
 }
-\item{...}{
-additional parameters passed to \code{sm.binomial}
+\item{\dots}{
+additional parameters passed to \code{\link{sm.binomial}}.
 }}
 \value{
 a list containing the observed value of the Pseudo-Likelihood Ratio Test

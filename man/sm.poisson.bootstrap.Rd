@@ -13,6 +13,11 @@ covariate \code{x}.
 \usage{
 sm.poisson.bootstrap(x, y, h, nboot=100, degree=1, \dots)
 }
+\synopsis{
+sm.poisson.bootstrap(x, y, h, nboot = 99, degree = 1,
+                     fixed.disp = FALSE, intercept = TRUE,
+                     family = poisson(link = log), ...)
+}
 \arguments{
 \item{x}{
 vector of the covariate values
@@ -30,8 +35,8 @@ number of bootstrap samples (default=100).
 specifies the degree of the fitted polynomial in \code{x} on the logit scale
 (default=1).
 }
-\item{...}{
-additional parameters passed to \code{sm.poisson}
+\item{\dots}{
+additional parameters passed to \code{\link{sm.poisson}}.
 }}
 \value{
 a list containing the observed value of the Pseudo-Likelihood Ratio Test
@@ -58,10 +63,12 @@ Oxford University Press, Oxford.
 \code{\link{sm.poisson}}, \code{\link{sm.binomial.bootstrap}}
 }
 \examples{
-\dontrun{sm.poisson.bootstrap(exposure.time, N.events, 0.5, degree=2)}
+## takes a while: extend sm.script(muscle)
+provide.data(muscle, options=list(describe=FALSE))
+TypeI <- TypeI.P + TypeI.R + TypeI.B
+sm.poisson.bootstrap(log(TypeI), TypeII, h = 0.5)
 }
 \keyword{nonparametric}
 \keyword{smooth}
 \keyword{htest}
 \keyword{models}
-% Converted by Sd2Rd version 1.15.

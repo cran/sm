@@ -5,13 +5,13 @@ Construct frequency table from raw data
 }
 \description{
 Given a vector or a matrix \code{x}, this function constructs a frequency table
-associated to appropriate intervals covering the range of x.
+associated to appropriate intervals covering the range of \code{x}.
 }
 \usage{
-binning(x, breaks, nbins)
+binning(x, y, breaks, nbins)
 }
 \arguments{
-\item{x}{
+\item{x, y}{
 a vector or a matrix with either one or two columns. 
 If \code{x} is a one-dimentional matrix, this is equivalent to a vector.
 }

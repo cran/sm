@@ -21,7 +21,7 @@ function (d, f, theta, phi)
     points(X, Y)
 }
 "ask" <-
-function (message = "TRUEype in datum")
+function (message = "Type in datum")
 eval(parse(prompt = paste(message, ": ", sep = "")))
 "attach.frame" <-
 function (data, name, ...)
@@ -2151,8 +2151,8 @@ function (x, y, h, ...)
     invisible(result)
 }
 "sm.poisson.bootstrap" <-
-function (x, y, h, nboot = 99, degree = 1, fixed.disp = FALSE, intercept = TRUE,
-    family = poisson(link = log), ...)
+function (x, y, h, nboot = 99, degree = 1, fixed.disp = FALSE,
+          intercept = TRUE, family = poisson(link = log), ...)
 {
     rNegBin <- function(n, mean, disp) {
         if (disp > 1) {
@@ -2164,7 +2164,9 @@ function (x, y, h, nboot = 99, degree = 1, fixed.disp = FALSE, intercept = TRUE,
         else y <- rpois(n, mean)
         return(y)
     }
-    D <- family$deviance
+    D <- function(mu, y, w, residuals = FALSE)
+        sum(family$dev.resids(y, mu, w))
+
     x.name <- deparse(substitute(x))
     y.name <- deparse(substitute(y))
     y <- as.integer(y)

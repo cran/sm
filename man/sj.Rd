@@ -22,17 +22,14 @@ a value of smoothing parameter.
 \value{
 The value of the Sheather-Jones criterion.
 }
-\section{Side Effects}{
-none.
-}
 \details{
 see Section 2.4.4 of the reference below.  The function is called
 automatically by \code{hsj} and does not usually need to be called 
 independently.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). \emph{Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{

@@ -9,7 +9,7 @@ This function estimates nonparametrically the autoregression function
 assumed to be stationary.
 }
 \usage{
-sm.autoregression(x, h=hnorm(x), d=1, maxlag=d, lags, se=F, ask=T, \dots)
+sm.autoregression(x, h=hnorm(x), d=1, maxlag=d, lags, se=FALSE, ask=TRUE)
 }
 \arguments{
 \item{x}{
@@ -34,11 +34,9 @@ values considered for conditioning.
 if \code{se==T}, pointwise confidence bands are computed of approximate level 95\%.
 }
 \item{ask}{
-if \code{ask==T}, the program pauses after each plot until <Enter> is pressed.
+if \code{ask==TRUE}, the program pauses after each plot until <Enter> is pressed.
 }
-\item{...}{
-additional graphical parameters.
-}}
+}
 \value{
 a list with the outcome of the final estimation (corresponding to
 the last value or pairs of values of lags), as returned by \code{sm.regression}.

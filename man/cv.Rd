@@ -32,11 +32,8 @@ kernel function at each observation.
 \value{
 The value of the cross-validatory criterion.
 }
-\section{Side Effects}{
-None
-}
 \details{
-see Section 2.4.3 of the reference below.  The function is called
+See Section 2.4.3 of the reference below.  The function is called
 automatically by \code{hcv} and does not usually need to be called 
 independently.
 }

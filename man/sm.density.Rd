@@ -46,7 +46,7 @@ Use of this parameter is incompatible with binning; hence \code{nbins} must
 then be set to 0 or left at its default value \code{NA}.
 This argument does not apply with three-dimensional data.
 }
-\item{...}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
@@ -62,12 +62,12 @@ three-dimensional data.
 }
 \item{band}{
 a logical value which controls whether the reference band appears on the plot.
-Its default value is \code{T}.  
+Its default value is \code{TRUE}.  
 This argument applies only with one-dimensional data.
 }
 \item{add}{
 a logical value which controls whether the density estimate is added to
-the current plot.  Its default value is \code{F}, which creates a new plot.
+the current plot.  Its default value is \code{FALSE}, which creates a new plot.
 This argument applies only with one-dimensional data.
 }
 \item{lty}{
@@ -142,7 +142,8 @@ does not apply with three-dimensional data.
 }
 \item{positive}{
 a logical value which indicates whether the data should be assumed to take
-positive values only.  When this argument is set to T, a log transformation
+positive values only.  When this argument is set to \code{TRUE}, a log
+transformation
 is applied to the data before construction of a density estimate.  The result
 is transformed back to the original scale.  This argument does not apply with 
 three-dimensional data.
@@ -150,24 +151,25 @@ three-dimensional data.
 \item{delta}{
 a value which will be added to the data before they are log transformed in
 the procedure to handle positive data.  The value of \code{delta} is used only
-when \code{positive} takes the value T.  The default value is the smallest value
+when \code{positive} takes the value \code{TRUE}.  The default value is
+the smallest value
 observed in each dimension.  This argument does not apply with 
 three-dimensional data.
 }
 \item{theta}{
 the horizontal rotation (in radians) of the contour plot of the density
-estimate from three-dimensional data.  The default value is pi/4.
+estimate from three-dimensional data.  The default value is \eqn{\pi/4}{pi/4}.
 }
 \item{phi}{
 the vertical rotation (in radians) of the contour plot of the density
-estimate from three-dimensional data.  The default value is pi/4.
+estimate from three-dimensional data.  The default value is \eqn{\pi/4}{pi/4}.
 }}
 \value{
 a list containing the values of the density estimate at the evaluation points,
 the standard error of the estimate, the upper and lower ends of a variability 
 band, the smoothing parameter, the smoothing parameter weights and the kernel 
 weights.  Less information is supplied when the smoothing parameter weights
-or kernel weights are not all 1, or when \code{positive} is set to \code{T}.
+or kernel weights are not all 1, or when \code{positive} is set to \code{TRUE}.
 }
 \section{Side Effects}{
 a plot on the current graphical device is produced, unless \code{display="none"}.

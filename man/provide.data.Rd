@@ -12,7 +12,7 @@ of each variable listed in the first row of the file.
 This function reads the files and makes the data available as a data frame.
 }
 \usage{
-provide.data(data, path, describe=T)
+provide.data(data, path, options = list())
 }
 \arguments{
 \item{data}{
@@ -22,16 +22,17 @@ name of the data to be loaded and attached as \code{data.frame}
 the path where the data and its documentation should be searched for,
 The default value is an appropriate sub-directory of the \code{sm} package. 
 }
-\item{describe}{
-logical flag; if \code{describe=T} (default), a documentation file of the data
-is searched and printed, if available.
+\item{options}{
+  A list of options.  The one used is \code{describe}, a
+  logical flag.  If \code{describe=TRUE} (default), a documentation file
+  of the data is searched and printed, if available.
 }}
 \value{
 none
 }
 \section{Side Effects}{
 messages are printed on the command window, describing  progress of
-the operation. If \code{describe=T} and a documentation file exists, this
+the operation. If \code{describe=TRUE} and a documentation file exists, this
 is printed on the command windows or another windows, depending on
 the type of platform where the program is executed.
 }

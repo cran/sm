@@ -9,7 +9,7 @@ parameter suitable for constructing a density estimate or nonparametric
 regression curve in one or two dimensions.
 }
 \usage{
-hcv <- function(x, y=NA, hstart = NA, hend = NA, \dots) 
+hcv(x, y = NA, hstart = NA, hend = NA, \dots) 
 }
 \arguments{
 \item{x}{
@@ -28,7 +28,7 @@ for the value of the smoothing parameter.
 the largest value of the grid points to be used in an initial grid search 
 for the value of the smoothing parameter.
 }
-\item{...}{
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
@@ -60,12 +60,10 @@ then a warning message is printed.  In these circumstances altering the
 values of \code{hstart} and \code{hend} may improve performance.
 }
 \details{
-see Sections 2.4 and 4.5 of the reference below.
-
+See Sections 2.4 and 4.5 of the reference below.
 
 The two-dimensional case uses a smoothing parameter derived from a single 
 value, scaled by the standard deviation of each component.
-
 
 This function does not employ a sophisticated algorithm and some adjustment
 of the search parameters may be required for different sets of data.
@@ -86,16 +84,13 @@ Oxford University Press, Oxford.
 \examples{
 #  Density estimation
 
-
 x <- rnorm(50)
 par(mfrow=c(1,2))
 h.cv <- hcv(x, display="lines", ngrid=32)
 sm.density(x, h=hcv(x))
 par(mfrow=c(1,1))
 
-
 #  Nonparametric regression
-
 
 x <- seq(0, 1, length = 50)
 y <- rnorm(50, sin(2 * pi * x), 0.2)

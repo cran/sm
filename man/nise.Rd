@@ -11,6 +11,9 @@ estimate constructed from a standardised version of the univariate data
 \usage{
 nise(y, hmult=1)
 }
+\synopsis{
+nise(y, ...)
+}
 \arguments{
 \item{y}{
 a vector of data.
@@ -22,21 +25,17 @@ before construction of the density estimate.
 \value{
 the integrated squared error.
 }
-\section{Side Effects}{
-none.
-}
 \details{
 the data \code{y} are first standardised to have sample mean 0 and sample
 variance 1.  The integrated squared error between a density estimate
 constructed from these standardised data and a standard normal distribution
 is then evaluated.
 
-
 see Section 2.5 of the reference below.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). Applied Smoothing Techniques for
-Data Analysis: the Kernel Approach with S-Plus Illustrations.
+Bowman, A.W. and Azzalini, A. (1997). \emph{Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{

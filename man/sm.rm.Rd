@@ -9,7 +9,8 @@ This function estimates nonparametrically the mean profile from a matrix
 data) from a set of individuals.
 }
 \usage{
-sm.rm(Time, y, minh=0.1, maxh=2, optimize=F, display.rice=F, \dots)
+sm.rm(Time, y, minh=0.1, maxh=2, optimize=FALSE,
+      rice.display=FALSE, \dots)
 }
 \arguments{
 \item{y}{
@@ -30,22 +31,24 @@ See reference below for details.
 the maximum value of the above interval.
 }
 \item{optimize}{
-Logical value, default is \code{optimize=F}. If \code{optimize=T}, then a full 
-optimization is performed after searching the interval \code{(minh,maxh)}
-using the optimizer \code{optim}.
+  Logical value, default is \code{optimize=FALSE}. If
+  \code{optimize=TRUE}, then a full 
+  optimization is performed after searching the interval \code{(minh,maxh)}
+  using the optimizer \code{optim}.
 }
 \item{rice.display}{
-If this set to \code{T} (default is \code{F}), a plot is produced of the curve 
-representing the modified Rice criterion for bandwidth selection. 
-See reference below for details.
+  If this set to \code{TRUE} (default is \code{FALSE}), a plot is
+  produced of the curve 
+  representing the modified Rice criterion for bandwidth selection. 
+  See reference below for details.
 }
-\item{...}{
+\item{dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
 }
 \item{add}{
-logical value, default is \code{add=F}. If \code{add=T} and display is not set
+logical value, default is \code{add=FALSE}. If \code{add=TRUE} and display is not set
 to \code{"none"}, then graphical output added to the existing plot, rather than
 starting a new one.
 }
@@ -75,7 +78,7 @@ the value \code{h} of the chosen smoothing parameter.
 if the parameter display is not set to \code{"none"}, a plot of the estimated 
 regression curve is produced; 
 other aspects are controlled by the optional parameters (\code{\dots}). 
-If \code{rice.display=T}, a plot of the modified Rice criterion is shown.
+If \code{rice.display=TRUE}, a plot of the modified Rice criterion is shown.
 }
 \details{
 see Section 7.4 of the reference below.
@@ -92,12 +95,12 @@ Oxford University Press, Oxford.
 \examples{
 provide.data(citrate, options=list(describe=FALSE))
 provide.data(dogs, options=list(describe=FALSE))
-a <- sm.rm(y=citrate, display.rice=T)
+a <- sm.rm(y=citrate, display.rice=TRUE)
 #
 Time <- seq(1,13,by=2)
 gr1  <- as.matrix(dogs[dogs$Group==1,2:8])
 plot(c(1,13), c(3,6),xlab="time", ylab="potassium", type="n") 
-sm1  <- sm.rm(Time, gr1, display="se", add=T)
+sm1  <- sm.rm(Time, gr1, display="se", add=TRUE)
 }
 \keyword{nonparametric}
 \keyword{smooth}

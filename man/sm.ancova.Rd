@@ -10,8 +10,9 @@ model, used to define the null hypothesis, may be either equality or
 parallelism.
 }
 \usage{
-sm.ancova(x, y, group, h, model="none", 
-          band=T, test=T, h.alpha=(2 * diff(range(x)))/length(x), \dots)
+sm.ancova(x, y, group, h, model="none", band=TRUE, test=TRUE,
+          h.alpha=2 * diff(range(x))/length(x),
+          weights = as.integer(rep(1, length(x))), \dots)
 }
 \arguments{
 \item{x}{
@@ -43,7 +44,10 @@ reference model as the null hypothesis.
 the value of the smoothing parameter used when estimating the vertical
 separations of the curves under the parallelism model.
 }
-\item{...}{
+\item{weights}{
+case weights.
+}
+\item{\dots}{
 other optional parameters are passed to the \code{sm.options} function, through
 a mechanism which limits their effect only to this call of the function; 
 those relevant for this function are the following:
