@@ -1,4 +1,5 @@
-scripts <- list.files("../sm/scripts", ".*\.q$")
+## Note: R CMD check may run these scripts from an installed package
+scripts <- list.files(system.file("scripts", package = "sm"), ".*\.q$")
 ## these need gam
 omit <- match(c("trwlgam1.q", "trwlgam2.q", "mackgam.q", "trwlgam3.q",
                 "smackgam.q"), scripts)
@@ -10,6 +11,7 @@ if(.Platform$OS.type == "unix") options(pager="cat")
 postscript(file="test_scripts.ps")
 for(z in scripts) {
     cat("\n============ running script `", z, "' ============\n", sep="")
-    source(file.path("../sm/scripts", z), echo=TRUE)
+    set.seed(123)
+    source(system.file("scripts", z, package = "sm"), echo=TRUE)
     rm(list = ls(all = TRUE))
 }
