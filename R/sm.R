@@ -827,7 +827,7 @@ function (data, path, options = list())
     name <- deparse(substitute(data))
     if (missing(path))
         path <- file.path(get(".sm.home", pos = match("package:sm", search())),
-                          "data")
+                          "smdata")
     datafile <- file.path(path, paste(name, ".dat", sep = ""))
     docfile <- file.path(path, paste(name, ".doc", sep = ""))
     if (!exists(name, where=.GlobalEnv, inherits = FALSE)) {

@@ -1,3 +1,5 @@
+Version 2.0-11 2004-08-04  One .Rd error, data -> smdata, remake INDEX
+
 Version 2.0-10 2004-07-29  Remove references to packages modreg and sm.
 			   Make provide_data more careful about where
 			   (as 'trees' duplicates a base dataset).

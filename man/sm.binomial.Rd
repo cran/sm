@@ -12,62 +12,65 @@ of covariate values.
 sm.binomial(x, y, N = rep(1, length(y)), h, \dots)
 }
 \arguments{
-\item{x}{
-vector of the covariate values
+  \item{x}{
+    vector of the covariate values
+  }
+  \item{y}{
+    vector of the response values; they must be nonnegative integers not larger
+    than those of \code{N}.
+  }
+  \item{h}{
+    the smoothing parameter; it must be positive.
+  }
+  \item{N}{
+    a vector containing the binomial denominators.
+    If missing, it is assumed to contain all 1's.
+  }
+  \item{\dots}{
+    other optional parameters are passed to the \code{sm.options}
+    function, through a mechanism which limits their effect only to this
+    call of the function; those relevant for this function are the following:
+    \itemize{
+      \item{add}{
+	if graphical output is produced, this parameter controls whether a 
+	new plot is created, or graphical output is added to the existing one.
+	Default: \code{add=F}.
+      }
+      \item{col}{
+	colour used for plotting curves and points. Default: \code{col=1}.
+      }
+      \item{display}{
+	controls the type of graphical output; possible values are
+	\code{"estimate"} (default), \code{"se"}, \code{"none"}.
+      }
+      \item{eval.points}{
+	the vector of points on the \code{x} axis where the regression
+	must be estimated. If the parameter \code{eval.points} is not
+	given, this vector is chosen to be formed by \code{ngrid}
+	equally spaced points between \code{min(x)} and `max(x)}.
+    }
+    \item{nbins}{
+      The number of bins used when binning operation is performed. If
+      \code{nbins=0}, binning is not performed; if \code{nbins=NA}
+      (default), binning is switched on when the number of design points
+      exceeds 100. See the documentation of \code{binning} for more
+      details.
+    }
+    \item{ngrid}{
+      the number of points where the regression curve must be estimated
+      (only used if \code{eval.points} is not given). Default: \code{ngrid=25}.
+    }
+    \item{pch}{
+      plotting character of the raw observed frequency. Default: \code{pch=1}.
+    }
+    \item{xlab}{
+      label of the x-axis. Default is the name of \code{x} object.
+    }
+    \item{ylab}{
+      label of the y-axis. Default is \code{Pr\{<name.of.y>\}}.
+    }
+  }
 }
-\item{y}{
-vector of the response values; they must be nonnegative integers not larger
-than those of \code{N}.
-}
-\item{h}{
-the smoothing parameter; it must be positive.
-}
-\item{N}{
-a vector containing the binomial denominators.
-If missing, it is assumed to contain all 1's.
-}
-\item{\dots}{
-  other optional parameters are passed to the \code{sm.options}
-  function, through a mechanism which limits their effect only to this
-  call of the function; those relevant for this function are the following:
-\itemize{
-\item{add}{
-if graphical output is produced, this parameter controls whether a 
-new plot is created, or graphical output is added to the existing one.
-Default: \code{add=F}.
-}
-\item{col}{
-colour used for plotting curves and points. Default: \code{col=1}.
-}
-\item{display}{
-controls the type of graphical output; possible values are
-\code{"estimate"} (default), \code{"se"}, \code{"none"}.
-}
-\item{eval.points}{
-the vector of points on the \code{x} axis where the regression must be
-estimated. If the parameter \code{eval.points} is not given, this vector
-is chosen to be formed by \code{ngrid} equally spaced points between
-\code{min(x)} and `max(x)}.
-}
-\item{nbins}{
-The number of bins used when binning operation is performed.
-If \code{nbins=0}, binning is not performed; if \code{nbins=NA} (default),
-binning is switched on when the number of design points exceeds 100.
-See the documentation of \code{binning} for more details.
-}
-\item{ngrid}{
-the number of points where the regression curve must be estimated
-(only used if \code{eval.points} is not given). Default: \code{ngrid=25}.
-}
-\item{pch}{
-plotting character of the raw observed frequency. Default: \code{pch=1}.
-}
-\item{xlab}{
-label of the x-axis. Default is the name of \code{x} object.
-}
-\item{ylab}{
-label of the y-axis. Default is \code{Pr\{<name.of.y>\}}.
-}}}}
 \value{
 A list containing vectors with the evaluation points, the corresponding
 probability estimates, the linear predictors, the upper and lower points

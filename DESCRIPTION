@@ -1,6 +1,6 @@
 Package: sm
-Version: 2.0-10
-Date: 2004-07-29
+Version: 2.0-11
+Date: 2004-08-04
 Author:  Adrian W. Bowman and Adelchi Azzalini. 
          Ported to R by B. D. Ripley <ripley@stats.ox.ac.uk>.
 Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
@@ -9,4 +9,4 @@ Description: This is software linked to the book
   The Kernel Approach with S-Plus Illustrations' Oxford University Press.
 Title: kernel smoothing methods: Bowman & Azzalini (1997)
 License: GPL (version 2)
-Packaged: Thu Jul 29 17:27:07 2004; ripley
+Packaged: Wed Aug  4 08:27:11 2004; ripley

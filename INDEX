@@ -1,46 +1,47 @@
-ask                      Ask data to be typed on the keyboard.
-binning                  Construct frequency table from raw data
-cv                       Cross-validation criterion for nonparametric
-                         density estimation
-hcv                      Cross-validatory choice of smoothing parameter
-hnorm                    Normal optimal choice of smoothing parameter in
-                         density estimation
-hsj                      Sheather-Jones choice of smoothing parameter for
-                         density estimation
-nise                     integrated squared error between a density
-                         estimate and a Normal density
-nmise                    mean integrated squared error for density
-                         estimation with normal data
-nnbr                     nearest neighbour distances from data in one or
-                         two dimensions
-pause                    Pause before continuing execution
-provide.data             Making data available as data.frame
-sig.trace                A significance trace for a hypothesis test
-sj                       Sheather-Jones criterion for nonparametric
-                         density estimation
-sm                       The library sm: summary information
-sm.ancova                Nonparametric analysis of covariance
-sm.autoregression        Nonparametric estimation of the autoregression
-                         function
-sm.binomial              Nonparametric logistic regression
-sm.binomial.bootstrap    Bootstrap goodness-of-fit test for a logistic
-                         regression model.
-sm.density               Nonparametric density estimation in one, two or
-                         three dimensions.
-sm.density.compare       Comparison of univariate density estimates
-sm.options               Set or return options of sm library
-sm.poisson               Nonparametric Poisson regression
-sm.poisson.bootstrap     Bootstrap goodness-of-fit test for a Poisson
-                         regression model
-sm.regression            Nonparametric regression with one or two
-                         covariates.
-sm.regression.autocor    Nonparametric regression with autocorrelated
-                         errors
-sm.rm                    Nonparametric analysis of repeated measurements
-                         data
-sm.script                Running a script associated to the sm library
-sm.sphere                Nonparametric density estimation for spherical
-                         data.
-sm.survival              Nonparametric regression with survival data.
-sm.ts.pdf                Nonparametric density estimation of stationary
-                         time series data
+ask                     Ask data to be typed on the keyboard.
+binning                 Construct frequency table from raw data
+cv                      Cross-validation criterion for nonparametric
+                        density estimation
+geyser                  Old Faithful Geyser Data
+hcv                     Cross-validatory choice of smoothing parameter
+hnorm                   Normal optimal choice of smoothing parameter
+                        in density estimation
+hsj                     Sheather-Jones choice of smoothing parameter
+                        for density estimation
+nise                    integrated squared error between a density
+                        estimate and a Normal density
+nmise                   mean integrated squared error for density
+                        estimation with normal data
+nnbr                    nearest neighbour distances from data in one
+                        or two dimensions
+pause                   Pause before continuing execution
+provide.data            Making data available as data.frame
+sig.trace               A significance trace for a hypothesis test
+sj                      Sheather-Jones criterion for nonparametric
+                        density estimation
+sm                      The library sm: summary information
+sm.ancova               Nonparametric analysis of covariance
+sm.autoregression       Nonparametric estimation of the autoregression
+                        function
+sm.binomial             Nonparametric logistic regression
+sm.binomial.bootstrap   Bootstrap goodness-of-fit test for a logistic
+                        regression model.
+sm.density              Nonparametric density estimation in one, two
+                        or three dimensions.
+sm.density.compare      Comparison of univariate density estimates
+sm.options              Set or return options of sm library
+sm.poisson              Nonparametric Poisson regression
+sm.poisson.bootstrap    Bootstrap goodness-of-fit test for a Poisson
+                        regression model
+sm.regression           Nonparametric regression with one or two
+                        covariates.
+sm.regression.autocor   Nonparametric regression with autocorrelated
+                        errors
+sm.rm                   Nonparametric analysis of repeated
+                        measurements data
+sm.script               Running a script associated to the sm library
+sm.sphere               Nonparametric density estimation for spherical
+                        data.
+sm.survival             Nonparametric regression with survival data.
+sm.ts.pdf               Nonparametric density estimation of stationary
+                        time series data
