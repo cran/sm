@@ -104,7 +104,7 @@ function (x, y, breaks, nbins)
         }
         else nbins <- length(breaks)/2 - 1
         if (max(abs(breaks)) == Inf | is.na(max(abs(breaks))))
-            stop("Illegal breaks")
+            stop("illegal breaks")
         result <- binning.2d(x, y, breaks = breaks, nbins = nbins)
     }
     else {
@@ -119,7 +119,7 @@ function (x, y, breaks, nbins)
         }
         else nbins <- length(breaks) - 1
         if (max(abs(breaks)) == Inf | is.na(max(abs(breaks))))
-            stop("Illegal breaks")
+            stop("illegal breaks")
         result <- binning.1d(x, y, breaks = breaks, nbins = nbins)
     }
     result
@@ -934,7 +934,7 @@ function (x, y, group, h, model = "none", band = TRUE, test = TRUE,
             stop("if weights are set, nbins must be 0 or NA")
         weights <- as.vector(weights)
         if (any(weights < 0 | is.na(weights)))
-            stop("Negative or NA weights are meaningless")
+            stop("negative or NA weights are meaningless")
         if (!isInteger(weights)) {
             weights <- round(weights/min(weights[weights > 0]))
             cat("Warning: weights have been rescaled to integer values\n")
@@ -1333,7 +1333,7 @@ function (x, h, model = "none", weights = rep(1, nobs), ...)
             stop("if weights are set, nbins must be either 0 or NA")
         weights <- as.vector(weights)
         if (any(weights < 0 | is.na(weights)))
-            stop("Negative or NA weights are meaningless")
+            stop("negative or NA weights are meaningless")
         if (!isInteger(weights)) {
             weights <- round(weights/min(weights[weights > 0]))
             cat("Warning: weights have been rescaled to integer values\n")
@@ -2031,7 +2031,7 @@ function (...)
         switch(mode(arg),
                list = temp <- arg,
                character = return(.sm.Options[arg]),
-               stop(paste("invalid argument:", arg)))
+               stop("invalid argument: ", sQuote(arg)))
     }
     if (length(temp) == 0) return(current)
     n <- names(temp)
@@ -2230,7 +2230,7 @@ function (x, y, h, design.mat = NA, model = "none", test = TRUE,
             stop("if weights are set, nbins must be 0 or NA")
         weights <- as.vector(weights)
         if (any(weights < 0 | is.na(weights)))
-            stop("Negative or NA weights are meaningless")
+            stop("negative or NA weights are meaningless")
         if (!isInteger(weights)) {
             weights <- round(weights/min(weights[weights > 0]))
             cat("Warning: weights have been rescaled to integer values\n")
@@ -3046,8 +3046,7 @@ function (x, h = hnorm(x), lags, maxlag = 1, ask = TRUE)
 "sm.weight" <-
 function (x, eval.points, h, cross = FALSE, weights = rep(1, n), options)
 {
-    if (!exists(".sm.Options"))
-        stop("cannot find .sm.Options")
+    if (!exists(".sm.Options")) stop("cannot find '.sm.Options'")
     opt <- sm.options(options)
     replace.na(opt, hmult, 1)
     replace.na(opt, h.weights, rep(1, length(x)))

@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-02-02 11:30\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "breaks do not span the range of x"
+msgstr ""
+
+msgid "wrong parameter x for binning"
+msgstr ""
+
+msgid "illegal breaks"
+msgstr ""
+
+msgid "if weights are set, nbins must be 0 or NA"
+msgstr ""
+
+msgid "negative or NA weights are meaningless"
+msgstr ""
+
+msgid "lags must be in increasing order"
+msgstr ""
+
+msgid "dim(lags)[2] must be 2"
+msgstr ""
+
+msgid "x and y have different length"
+msgstr ""
+
+msgid "N and y have different length"
+msgstr ""
+
+msgid "if weights are set, nbins must be either 0 or NA"
+msgstr ""
+
+msgid "length of x and weights do not match"
+msgstr ""
+
+msgid "use of h.weights is incompatible with binning - set nbins=0"
+msgstr ""
+
+msgid "length(h) != 1"
+msgstr ""
+
+msgid "length(h) != 2"
+msgstr ""
+
+msgid "invalid argument:"
+msgstr ""
+
+msgid "options must be given by name"
+msgstr ""
+
+msgid "size of x and y do not match"
+msgstr ""
+
+msgid "length(h) does not match size of x"
+msgstr ""
+
+msgid "x and y must have equal length"
+msgstr ""
+
+msgid "y must be a matrix"
+msgstr ""
+
+msgid "cannot find '.sm.Options'"
+msgstr ""

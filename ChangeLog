@@ -1,3 +1,5 @@
+Version 2.0-14 2005-02-07  Improve messages, support translations
+ 
 Version 2.0-13 2004-11-11  Update sm.density.compare to pre-2.1 after
 	                   bug report from Deepayan Sarkar.
 			   Scripts trwlgam[13] now work.
