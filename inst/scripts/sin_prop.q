@@ -1,4 +1,4 @@
-n <- 50
+n <- 100
 x <- seq(0, 1, length = n)
 m <- sin(2 * pi * x)
 h <- 0.05
@@ -9,8 +9,9 @@ lower <- model$estimate - 2 * (true.sigma/model$sigma)*model$se
 y <- rnorm(n, m, true.sigma)
 plot(range(x), range(y, upper, lower), type = "n",
 	xlab="x", ylab="y")
-polygon(c(x, rev(x)), c(upper, rev(lower)), border = FALSE, col = "cyan")
+z <- model$eval.points
+polygon(c(z, rev(z)), c(upper, rev(lower)), border = FALSE, col = "cyan")
 
 lines(x, m)
-lines(x, model$estimate, lty = 3)
+lines(z, model$estimate, lty = 3)
 points(x, y)

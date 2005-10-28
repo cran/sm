@@ -5,7 +5,7 @@ Running a script associated to the sm library
 }
 \description{
 This is a utility function to run scripts, usually those associated 
-to the book described below. 
+with the book described below.
 }
 \usage{
 sm.script(name, path)
@@ -22,8 +22,10 @@ it is assumed to be the appropriate location for the scripts of the \code{sm}
 library.
 }}
 \details{
-This utility allows to reproduce easily the illustrations of the refernce 
-below, since each of them is associated to an available script.
+This utility allows the illustrations of the reference below to be reproduced
+easily, since each of them has an associated script.  The display of the
+script file itself is controlled by the setting of the logical variable
+\code{show.script} in \code{sm.options}.  This is set to \code{TRUE} by default.
 }
 \references{
 Bowman, A.W. and Azzalini, A. (1997). 

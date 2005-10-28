@@ -4,19 +4,14 @@
 Bootstrap goodness-of-fit test for a Poisson regression model
 }
 \description{
-This function is associated with \code{sm.poisson} for the underlying fitting
-procedure.
-It performs a Pseudo-Likelihood Ratio Test for the goodness-of-fit of
-a standard parametric Poisson regression of specified \code{degree} in the
-covariate \code{x}.
+This function is associated with \code{sm.poisson} for the underlying
+fitting procedure. It performs a Pseudo-Likelihood Ratio Test for the
+goodness-of-fit of a standard parametric Poisson regression of specified
+\code{degree} in the covariate \code{x}.
 }
 \usage{
-sm.poisson.bootstrap(x, y, h, nboot = 100, degree = 1, \dots)
-}
-\synopsis{
-sm.poisson.bootstrap(x, y, h, nboot = 99, degree = 1,
-                     fixed.disp = FALSE, intercept = TRUE,
-                     family = poisson(link = log), ...)
+sm.poisson.bootstrap(x, y, h,  degree = 1,
+          fixed.disp = FALSE, intercept = TRUE, ...)
 }
 \arguments{
 \item{x}{
@@ -28,13 +23,17 @@ vector of the response values; they must be nonnegative integers.
 \item{h}{
 the smoothing parameter; it must be positive.
 }
-\item{nboot}{
-number of bootstrap samples (default=100).
-}
 \item{degree}{
 specifies the degree of the fitted polynomial in \code{x} on the logit scale
 (default=1).
 }
+\item{fixed.disp}{if \code{TRUE}, the dispersion
+  parameter is kept at value 1 across the simulated samples, otherwise
+  the dispersion parameter estimated from the sample is used to generate
+  samples with that dispersion parameter (default=\code{FALSE}).
+}
+\item{intercept}{\code{TRUE} (default) if an intercept is to be included
+ in the fitted model.}
 \item{\dots}{
 additional parameters passed to \code{\link{sm.poisson}}.
 }}
@@ -55,7 +54,7 @@ see Section 5.4 of the reference below.
 }
 \references{
 Bowman, A.W. and Azzalini, A. (1997). 
-\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{Applied Smoothing Techniques for Data Analysis:}
 \emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }

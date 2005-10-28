@@ -9,8 +9,7 @@ compared, both graphically and formally in a bootstrap hypothesis test of
 equality.
 }
 \usage{
-sm.density.compare(x, group, h = NA, model  ="none", test = TRUE,
-                   nboot = 100, monitor = TRUE, \dots)
+sm.density.compare(x, group, h, model = "none",  \dots)
 }
 \arguments{
 \item{x}{
@@ -26,33 +25,31 @@ If this value is omitted, the mean of the normal optimal values for the
 different groups is used.
 }
 \item{model}{
-the default value is \code{"none"} which restricts comparison to plotting only.
-The alternative value \code{"equal"} can produce a bootstrap hypothesis test
-of equality and the display of an appropriate reference band.
+the default value is \code{"none"} which restricts comparison to
+plotting only. The alternative value \code{"equal"} can produce a
+bootstrap hypothesis test of equality and the display of an appropriate
+reference band.
 }
-\item{test}{
-a logical flag controlling the production of a bootstrap test of equality.
-}
-\item{nboot}{
-the number of bootstrap simulations.
-}
-\item{monitor}{
-a logical flag controlling the printing of the iteration numbers during the
-bootstrap test.
-}
-\item{\dots}{
-additional \code{sm.options} or graphical parameters.
+\item{...}{
+other optional parameters are passed to the \code{sm.options} function,
+through a mechanism which limits their effect only to this call of the
+function. Those specifically relevant for this function are the following:
+\code{method}, \code{df}, \code{band}, \code{test}, \code{nboot},
+plus those controlling graphical display (unless \code{display="none"}
+is set);
+see the documentation of  \code{\link{sm.options}} for their description.
 }}
 \value{
 When \code{model} is set to \code{"none"}, nothing is returned.  When
 \code{"model"} is set to \code{"equal"}, a list containing the smoothing
 parameter and the p-value of the test is returned.  When \code{band}
-takes the value \code{TRUE}, and there are only two groups to compare, the list
-contains in addition the upper and lower end-points of the reference
+takes the value \code{TRUE}, and there are only two groups to compare,
+the list contains in addition the upper and lower end-points of the reference
 band for equality.
 }
 \section{Side Effects}{
-none.
+ a plot on the current graphical device is produced, unless
+  \code{display="none"}.
 }
 \details{
 see Section 6.2 of the reference below.
@@ -63,7 +60,7 @@ Data Analysis: the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{sm.density}}, \code{\link{sm.ancova}}
+\code{\link{sm.density}}, \code{\link{sm.ancova}}, \code{\link{sm.options}}
 }
 \examples{
 y <- rnorm(100)

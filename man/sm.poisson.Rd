@@ -22,45 +22,20 @@ vector of the response values; they must be nonnegative integers.
 the smoothing parameter; it must be positive.
 }
 \item{\dots}{
-other optional parameters are passed to the \code{sm.options} function, through
-a mechanism which limits their effect only to this call of the function; 
-those relevant for this function are the following:
-\itemize{
-\item{add}{
-if graphical output is produced, this parameter controls whether a 
-new plot is created, or graphical output is added to the existing one.
-}
-\item{col}{
-colour used for plotting curves and points. Default: \code{col=1}.
-}
-\item{display}{
-controls the type of graphical output; possible values are
-\code{"estimate"} (default), \code{"se"}, \code{"none"}.
-}
-\item{eval.points}{
-the vector of points on the \code{x} axis where the regression must be
-estimated. If the parameter \code{eval.points} is not given, this vector
-is chosen to be formed by \code{ngrid} equally spaced points between
-\code{min(x)} and \code{max(x)}.
-}
-\item{nbins}{
-The number of bins used when binning operation is performed.
-If \code{nbins=0}, binning is not performed; if \code{nbins=NA} (default),
-binning is switched on when the number of design points exceeds 100.
-}
-\item{ngrid}{
-the number of points where the regression curve must be estimated
-(only used if \code{eval.points} is not given). Default: \code{ngrid=25}.
-}
-\item{pch }{
-plotting character of the raw observed frequency. Default: \code{pch=1}.
-}
-\item{xlab}{
-label of the x-axis. Default is the name of \code{x} object.
-}
-\item{ylab}{
-label of the y-axis .Default is the name of \code{y} object.
-}}}}
+ other optional parameters are passed to the \code{sm.options} function,
+through a mechanism which limits their effect only to this call of the
+function. Those specifically relevant for this function are the following:
+  \code{add}, 
+  \code{col}, 
+  \code{display}, 
+  \code{eval.points},
+  \code{nbins}, 
+  \code{ngrid}, 
+  \code{pch}, 
+  \code{xlab}, 
+  \code{ylab};
+see the documentation of  \code{\link{sm.options}} for their description.
+}}    
 \value{
 A list containing vectors with the evaluation points, the corresponding
 probability estimates, the linear predictors, the upper and lower points
@@ -69,7 +44,7 @@ scale.
 }
 \section{Side Effects}{
 graphical output will be produced, depending on the value of the
-\code{display} parameter.
+\code{display} option.
 }
 \details{
 see Sections 3.4 and 5.4 of the reference below.
@@ -81,10 +56,14 @@ Bowman, A.W. and Azzalini, A. (1997).
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{sm.binomial}}, \code{\link{sm.binomial.bootstrap}}, \code{\link{binning}}, \code{\link{glm}}
+  \code{\link{sm.binomial}}, \code{\link{sm.binomial.bootstrap}},
+  \code{\link{binning}}, \code{\link{glm}}
 }
 \examples{
-\dontrun{sm.poisson(exposure.time, N.events, 0.5, display="se")}
+provide.data(muscle)
+TypeI <- TypeI.R+ TypeI.P+TypeI.B
+sm.poisson(x=log(TypeI), y=TypeII, h=0.25,display="se")
+sm.poisson(x=log(TypeI), y=TypeII, h=0.75, col=2, add=TRUE)
 }
 \keyword{nonparametric}
 \keyword{smooth}

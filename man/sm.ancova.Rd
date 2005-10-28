@@ -10,9 +10,9 @@ model, used to define the null hypothesis, may be either equality or
 parallelism.
 }
 \usage{
-sm.ancova(x, y, group, h, model="none", band=TRUE, test=TRUE,
-          h.alpha=2 * diff(range(x))/length(x),
-          weights = as.integer(rep(1, length(x))), \dots)
+sm.ancova(x, y, group, h, model = "none", h.alpha = NA, weights=NA,
+                 covar = diag(1/weights), ...)
+
 }
 \arguments{
 \item{x}{
@@ -32,42 +32,31 @@ regression curves.
 a character variable which defines the reference model.  The values
 \code{"none"}, \code{"equal"} and \code{"parallel"} are possible.
 }
-\item{band}{
-a logical flag controlling the production of a reference band for the 
-reference model.  A band will be produced only in the case of two groups.
-}
-\item{test}{
-a logical flag controlling the production of a formal test, using the 
-reference model as the null hypothesis.
-}
 \item{h.alpha}{
 the value of the smoothing parameter used when estimating the vertical
 separations of the curves under the parallelism model.
 }
 \item{weights}{
-case weights.
+  case weights; see the documentation of \code{\link{sm.regression}}
+  for a full description.
+}
+\item{covar}{
+  the (estimated) covariance matrix of y.  The defaulty value assumes
+  the data to be independent.  Where appropriate, the covariance structure
+  of \code{y} can be estimated by the user, externally to \code{sm.ancova},
+  and passed through this argument.
 }
 \item{\dots}{
-other optional parameters are passed to the \code{sm.options} function, through
-a mechanism which limits their effect only to this call of the function; 
-those relevant for this function are the following:
-\itemize{
-\item{display}{
-any character setting other than \code{"none"} will cause a plot of the curves,
-distinguished by line type, to be produced.
-}
-\item{ngrid}{
-the size of the grid used to plot the curves.
-}
-\item{eval.points}{
-a vector of points at which reference bands will be evaluated.
-}
-\item{xlab}{
-the label attached to the x-axis.
-}
-\item{ylab}{
-the label attached to the y-axis.
-}}}}
+  other optional parameters are passed to the \code{sm.options}
+  function, through a mechanism which limits their effect only to this
+  call of the function. Those relevant for this function are the following:
+  \code{display},
+  \code{ngrid},
+  \code{eval.points},
+  \code{xlab},
+  \code{ylab};
+see the documentation of  \code{\link{sm.options}} for their description.
+}}
 \value{
 a list containing an estimate of the error standard deviation and, where
 appropriate, a p-value and reference model.  If the parallelism model has

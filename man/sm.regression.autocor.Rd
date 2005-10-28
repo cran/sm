@@ -8,8 +8,7 @@ This function estimates nonparametrically the regression function
 of \code{y} on \code{x} when the error terms are serially correlated.
 }
 \usage{
-sm.regression.autocor(x = 1:n, y, h.first, minh, maxh,
-                      method = "direct", \dots)
+sm.regression.autocor(x = 1:n, y, h.first, minh, maxh, method = "direct", \dots)
 }
 \arguments{
 \item{y}{
@@ -19,7 +18,8 @@ vector of the response values
 the smoothing parameter used for the initial smoothing stage.
 }
 \item{x}{
-vector of the covariate values; if unset, it is assumed to be \code{1:length(y)}.
+  vector of the covariate values; if unset, it is assumed to
+  be \code{1:length(y)}.
 }
 \item{minh}{
 the minimum value of the interval where the optimal smoothing parameter
@@ -31,20 +31,17 @@ is searched for (default is 10).
 }
 \item{method}{
 character value which specifies the optimality criterium adopted;
-possible values are \code{"no.cor"}, \code{"direct"} (default), and \code{"indirect"}.
+possible values are \code{"no.cor"}, \code{"direct"} (default),
+and \code{"indirect"}.
 }
 \item{\dots}{
-other optional parameters are passed to the \code{sm.options} function, through
-a mechanism which limits their effect only to this call of the function; 
-those relevant for this function are the following:
-\itemize{
-\item{ngrid}{
-the number of points to be considered in \code{(minh,maxh)}. Default: \code{ngrid=15}.
-}
-\item{display}{
-if this is not equal to \code{"none"}, graphical output is produced on the
-current graphical device.
-}}}}
+  other optional parameters are passed to the \code{sm.options}
+  function, through a mechanism which limits their effect only to this
+  call of the function. Those relevant for this function are the following:
+  \code{ngrid},
+  \code{display};
+see the documentation of  \code{\link{sm.options}} for their description.
+}}
 \value{
 a list as returned from sm.regression called with the new value of
 smoothing parameter, with an additional term \code{$aux} added which contains

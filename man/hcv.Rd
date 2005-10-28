@@ -29,26 +29,12 @@ the largest value of the grid points to be used in an initial grid search
 for the value of the smoothing parameter.
 }
 \item{\dots}{
-other optional parameters are passed to the \code{sm.options} function, through
-a mechanism which limits their effect only to this call of the function; 
-those relevant for this function are the following:
-\itemize{
-\item{h.weights}{
-a vector of weights which multiply the smoothing parameter(s) used in the
-kernel function at each observation.
-}
-\item{ngrid}{
-the number of grid points to be used in an initial grid search for the 
-value of the smoothing parameter. Default: \code{ngrid=8}.
-}
-\item{display}{
-any character setting other than \code{"none"} will cause the criterion function 
-to be plotted over the search grid of smoothing parameters.  The particular
-value \code{"log"} will use a log scale for the grid values.
-}
-\item{add}{
-controls whether the plot is added to an existing graph. Default: \code{add=F}.
-}}}}
+   other optional parameters are passed to the \code{sm.options} function,
+through a mechanism which limits their effect only to this call of the
+function. Those specifically relevant for this function are the following:
+\code{h.weights}, \code{ngrid}, \code{display}, \code{add};
+see the documentation of  \code{\link{sm.options}} for their description.
+}}
 \value{
 the value of the smoothing parameter which minimises the cross-validation
 criterion over the selected grid.
@@ -65,21 +51,28 @@ See Sections 2.4 and 4.5 of the reference below.
 The two-dimensional case uses a smoothing parameter derived from a single 
 value, scaled by the standard deviation of each component.
 
-This function does not employ a sophisticated algorithm and some adjustment
-of the search parameters may be required for different sets of data.
-An initial estimate of the value of h which minimises the cross-validatory
-criterion is located from a grid search using values which are equally
-spaced on a log scale between \code{hstart} and \code{hend}.  A quadratic approximation
-is then used to refine this initial estimate.
+This function does not employ a sophisticated algorithm and some
+adjustment of the search parameters may be required for different sets
+of data.  An initial estimate of the value of h which minimises the
+cross-validatory criterion is located from a grid search using values
+which are equally spaced on a log scale between \code{hstart} and
+\code{hend}.  A quadratic approximation is then used to refine this
+initial estimate.
+}
+\note{As from version 2.1 of the package, a similar effect can be
+  obtained with the new function \code{h.select}, via
+  \code{h.select(x, method="cv")}. Users are encouraged to adopt
+  this route, since \code{hcv} might be not accessible directly
+  in future releases of the package.
 }
 \references{
 Bowman, A.W. and Azzalini, A. (1997).
-\emph{Applied Smoothing Techniques for Data Analysis: }
+\emph{Applied Smoothing Techniques for Data Analysis:} 
 \emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 }
 \seealso{
-\code{\link{cv}}, \code{\link{hsj}}, \code{\link{hnorm}}
+   \code{\link{h.select}}, \code{\link{hsj}}, \code{\link{hnorm}}
 }
 \examples{
 #  Density estimation

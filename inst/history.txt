@@ -1,4 +1,4 @@
-History of the `sm' library  
+History of the `sm' library
 by Adrian W. Bowman & Adelchi Azzalini
 --------------------------------------
 
@@ -24,7 +24,10 @@ The main differences from version 1 are:
 - some of the associated scripts have been modified slightly;
 - some other minor changes (e.g. the function type() has been removed).
 
-
-
-
-
+September 2005: version 2.1 for R is released.
+- more extensive methods of selecting smoothing parameters have been
+  implemented, and in a more systematic manner, for density estimation
+  and regression; the methods for regression now include one based on
+  AIC, proposed by Hurvich, Simonoff and Tsai;
+- the operation of the code has been streamlined;
+- some other minor changes have been implemented.
