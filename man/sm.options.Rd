@@ -1,8 +1,6 @@
 \name{sm.options}
 \alias{sm.options}
-\title{
-Set or return options of sm library
-}
+\title{Set or return options of sm library}
 \description{
 Provides a means to control the behaviour of the \code{sm} library
 such as the colour of the plotted lines, the size of the grid in 2-D
@@ -13,10 +11,10 @@ sm.options(\dots)
 }
 \arguments{
   \item{\dots}{    
-a list may be given as the only argument, or a vector of character
-strings given as the only argument, or any number of arguments may be in
-the \code{name=value} form , or no argument at all may be given.  See
-the Value and Side Effects sections for explanation.
+  a list may be given as the only argument, or a vector of character
+  strings given as the only argument, or any number of arguments may be in
+  the \code{name=value} form , or no argument at all may be given.  See
+  the Value and Side Effects sections for explanation.
 
 Arguments which are set by a function call will remain
 in effect until the end of the
@@ -28,21 +26,60 @@ functions for the list of options which are recognised by that function.
 Notice that some options are relevant only to some functions.
 \itemize{
 \item{add}{
-a logical value which controls whether the density estimate is added to
+a logical value which controls whether the estimate is added to
 the current plot.  Its default value is \code{FALSE}, which creates a new plot.
-This argument applies only with one-dimensional data or to contours
+This argument applies only with one-dimensional data or to contour and \code{rgl}
 created from two-dimensional data.
 }
+\item{alpha}{
+an parameter, lying between 0 and 1, which controls the transparency of the 
+surface used to construct an \code{rgl} plot for regression with two covariates.  
+The default value is \code{0.7}.
+}
+\item{alpha.mesh}{
+an parameter, lying between 0 and 1, which controls the transparency of the 
+mesh lines used to construct an \code{rgl} plot for regression with two covariates.  
+The default value is \code{1}.
+}
 \item{band}{
- a logical value which controls whether the reference band appears on
- the plot. This argument applies only with one-dimensional data.
- Default: \code{band=FALSE}.
+a logical value which controls whether the distance between the nonparametric
+estimate and a reference model should be indicated as a band (one covariate),
+or through colour painting of the regression surface (two covariates).  This
+is activated only when a model has been nominated through the \code{model} 
+parameter.  In the case of two covariates, the setting of the argument 
+\code{col} has priority over \code{band}.  The setting \code{se = TRUE} can
+also activate this feature.
 }
 \item{col}{
 the colour used for plotting observed points and estimated curves.
-Where groups are used, \code{col} may be set to a vector of
-colours associated with the groups.
-Default: \code{col=1}.
+Where groups are used, with one covariate, \code{col} may be set to a vector of
+colours associated with the groups.  In regression with two covariates
+using an \code{rgl} display, \code{col} may be set to a single colour,
+or to the values \code{"height"} or \code{"se"}.  These letter two setting 
+cause the surface to be painted according to its height or to standard 
+error information; see the information on the parameters \code{se}, 
+\code{se.breaks} and \code{model}.  Default: \code{col=1}.
+}
+\item{col.band}{
+the colour used for the reference band when a \code{model} is specified in 
+regression with one covariate.
+Default: \code{col.band="cyan"}.
+}
+\item{col.mesh}{
+the colour used for the `wire mesh' representation plotting observed points 
+in an rgl display for regression with two covariates.  This can also be set by the
+second component of a vector of length two which is set for \code{col}.
+Default: \code{col.mesh="black"}.
+}
+\item{col.palette}{
+the colours used for shading an image plot, or for surface painting in an rgl 
+display, for regression with two covariates.
+Default: \code{col.palette=topo.colors(12)}.
+}
+\item{col.points}{
+the colour used for plotting observed points in a regression with one 
+covariate or an \code{rgl} display for regression with two covariates.
+Default: \code{col.points="black"}.
 }
 \item{delta}{in \code{sm.density},
 a value which will be added to the data before they are log transformed in
@@ -78,12 +115,14 @@ and a linear interplotation from its two neighbours, is used.
 This argument applies only with one- or two-dimensional data.  The
 setting \code{"none"} will prevent any graphical output from being
 produced.  In one dimensions, the default setting \code{"line"} will
-produce the estimate, while the setting \code{"se"} will in
-addition produce a variability band, showing the variability, but not
-the bias, of the estimate.  In two dimensions, the default setting
+produce the estimate.  (For compatibility with earlier versions of the
+package, the setting \code{"se"} will produce a variability band to
+show the variability, but not the bias, of the estimate.  This should 
+now be controlled by setting the separate parameter \code{se}
+to \code{TRUE}.)  In two dimensions, the default setting
 \code{"persp"} will produce a perspective plot of the estimate,
-while the settings \code{"slice"} and \code{"image"} will produce slice
-(contour) or image plots.
+while the settings \code{"slice"}, \code{"image"}  and \code{"rgl"} 
+will produce slice (contour), image or \code{rgl} plots.
 }
 \item{eval.grid}{
   logical flag which controls how the options \code{eval.points} are
@@ -116,8 +155,8 @@ data. When this argument is set to \code{FALSE}, evaluation and plotting
 take place at all grid points where the contribution from at least one
 kernel function is non-negligible.  Both of these settings ensure that
 the estimate is not evaluated at points where there are no observations
-nearby.  This argument applies only to \code{sm.regression} for the case
-of two covariates.
+nearby.  This argument applies only to \code{sm.regression} and
+\code{sm.discontinuity} in the case of two covariates.
 }
 \item{lty}{
   the line type used to plot the estimate.  This argument applies only
@@ -126,7 +165,7 @@ of two covariates.
 }
 \item{method}{
   the method used to select smoothing parameters.  In density estimation
-  the default is \code{"normal"} which uses a vlue which is asymptotically
+  the default is \code{"normal"} which uses a value which is asymptotically
   optimal for the normal distribution.  Other possibilities are \code{"cv"}
   for cross-validation and \code{"sj"} for the Sheather-Jones method.
   In nonparametric regression, the
@@ -159,11 +198,15 @@ Default value for \code{sm.density}:
   100, 50 and 20 for 1-, 2- and 3-dimensional data, respectively.
 }
 \item{panel}{
-a logical value which controls the appearance of a panel display, in the
-case of one- or two-dimensional data.  The panel can be used to alter the
-value of the smoothing parameter.  For one-dimensional data it can also
-launch an animation, and superimpose a normal reference band.  This argument 
-does not apply with three-dimensional data.
+a logical value which, when set to true, creates a panel which allows interactive
+control of \code{sm.regression} or \code{sm.density} plots
+for one- or two-dimensional data.  The panel can be used to alter the
+value of the smoothing parameter and control a variety of other settings. 
+}
+\item{panel.plot}{
+a logical value which, when set to true (the default), places the plot
+inside the control panel (see the \code{panel} argument above),  This creates 
+a neater screen arrangement.
 }
 \item{pch}{
   the standard plotting charater identified for data plotting.
@@ -193,13 +236,29 @@ the first element of the vector will be used.  This argument does not apply
 to one-dimensional data.  Default value: \code{c(75,50,25)}.
 }
 \item{rugplot}{
-logical flag which regulates whetehr a rugplot is superimposed to the
-density estimate, in the univariate case. Dafault value: \code{TRUE}.
+logical flag which regulates whether a rugplot is superimposed to the
+density estimate, in the univariate case. Default value: \code{TRUE}.
+}
+\item{se}{
+logical flag which regulates whether a standard error information is
+added to the plot produced by \code{sm.regression}. If a \code{model}
+is specified, then these standard errors refer to the difference between
+this fitted model and the nonparametric regression estimate.
+Default value: \code{TRUE}.
+}
+\item{se.breaks}{
+a numerical vector which defines the cut-points, on a standard error 
+scale, for the assignment of colours when painting a regression surface
+with standard error information.  Default value: \code{c(-3, -2, 3, 3)}.
 }
 \item{show.script}{
   logical flag which affects the behaviour of \code{sm.script} when
   this is called with non-empty   argument. If \code{show.script=TRUE}
   (default) a window is opened to display the source code of the script.
+  }
+\item{size}{
+  an integer which defines the size of plotted points in \code{rgl}
+  displays.  The default value is \code{2}.
   }
 \item{structure.2d}{
   the structure of the smoothing parameter in two-dimensional settings.

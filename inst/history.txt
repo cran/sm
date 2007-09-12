@@ -31,3 +31,10 @@ September 2005: version 2.1 for R is released.
   AIC, proposed by Hurvich, Simonoff and Tsai;
 - the operation of the code has been streamlined;
 - some other minor changes have been implemented.
+
+September 2007: version 2.2 for R is released.
+- rotatable rgl plots can be produced by sm.density and sm.regression.
+- rpanel interactive controls are available in sm.density and
+  sm.regression.
+- other minor changes.
+ 

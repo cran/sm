@@ -59,16 +59,16 @@ a vector of reponses, in regression case.
   the principal bias terms cancel when the estimates are compared.
 }
 \references{
-Bowman, A.W. and Azzalini, A. (1997). 
-\emph{Applied Smoothing Techniques for Data Analysis:}
-\emph{the Kernel Approach with S-Plus Illustrations.}
-Oxford University Press, Oxford.
+  Bowman, A.W. and Azzalini, A. (1997). 
+  \emph{Applied Smoothing Techniques for Data Analysis:}
+  \emph{the Kernel Approach with S-Plus Illustrations.}
+  Oxford University Press, Oxford.
 
-Hurvich, C.M., Simonoff, J.S. and Tsai, C.-L. (1998).
-Smoothing parameter selection in nonparametric regression
-using an improved Akaike information criterion.
-\emph{J. R. Statistic. Soc., Series B}, 60, 271-293.
-}
+  Hurvich, C.M., Simonoff, J.S. and Tsai, C.-L. (1998).
+  Smoothing parameter selection in nonparametric regression
+  using an improved Akaike information criterion.
+  \emph{J. R. Statistic. Soc., Series B}, 60, 271-293.
+  }
 \seealso{ \code{\link{sm}},
   \code{\link{hcv}}, \code{\link{hsj}}, \code{\link{hnorm}}
 }

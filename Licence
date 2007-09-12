@@ -16,13 +16,9 @@ of its applications.
 The `sm` library is copyright of A.W.Bowman & A.Azzalini (1997, 
 2000) except for the exceptions below.
 
-The function sm.density calls the function sm.density.3d
-to produce contour plots of three-dimensional density estimates.
-This function was originally written by Stuart Young and has
-been amended by Adrian Bowman.  The copyright of this function
-and its subsidiary functions remains with Stuart Young.  The
-copyright of the Fortran code in the file routines.f is also
-held by Stuart Young.
+The function sm.density calls the function contour3d from the
+misc3d R package by Feng & Tierney to produce contour plots 
+of three-dimensional density estimates.
 
 The function sm.sphere was written jointly by Adrian Bowman
 and Adrian Hines and copyright is held jointly.

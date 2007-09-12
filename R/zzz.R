@@ -1,20 +1,26 @@
 ".sm.Options" <-
-    list(hmult = 1, h.weights = NA, describe = TRUE, diff.ord = 2,
-         add = FALSE, band = TRUE, props = c(75,50,25), nbins = NA,
-         positive = FALSE, delta = NA, display = NA, xlab = NA, 
-         ylab = NA, zlab = NA, xlim = NA, ylim = NA, zlim=NA, yht = NA,
-         panel = FALSE, ngrid = NA, eval.points = NA, rugplot = TRUE, 
-         lty = 1, col = 1, pch = 1 , theta = -30, phi = 40,
-         poly.index = 1, test = TRUE, hull = TRUE, verbose=1, df
-         = NA, method = NA, structure.2d = "scaled", nboot=100, df=4,
-         show.script=TRUE, eval.grid=TRUE)
+    list(hmult = 1, h.weights = NA, 
+         add = FALSE, band = NA, props = c(75, 50, 25), nbins = NA,
+         positive = FALSE, delta = NA, display = NA, 
+         xlab = NA, ylab = NA, zlab = NA, 
+         xlim = NA, ylim = NA, zlim = NA, yht = NA,
+         panel = FALSE, panel.plot = NA,
+         ngrid = NA, eval.points = NA, rugplot = TRUE, 
+         col = NA, col.band = "cyan", col.mesh = "black", 
+         col.palette = topo.colors(12), col.points = "black",
+         se = NA, se.breaks = c(-3, -2, 2, 3), lty = 1, pch = 1, cex = NA,
+         theta = -30, phi = 40, size = 2, scaling = NULL, 
+         alpha = 0.7, alpha.mesh = 1, lit = FALSE,
+         poly.index = 1, diff.ord = 2, test = NA, hull = TRUE, verbose = 1, 
+         df = NA, method = NA, structure.2d = "scaled", nboot = 100, 
+         describe = TRUE, show.script = TRUE, eval.grid = TRUE)
 
 .onAttach <- function(library, pkg)
 {
     ## we can't do this in .onLoad
     unlockBinding(".sm.Options", asNamespace("sm"))
-    cat("Library `sm', version 2.1; ",
-        "Copyright (C) 1997, 2000, 2005 A.W.Bowman & A.Azzalini\n")
+    cat("Library `sm', version 2.2 (beta test version); ",
+        "Copyright (C) 1997, 2000, 2005, 2007 A.W.Bowman & A.Azzalini\n")
     cat("type help(sm) for summary information\n")
     invisible()
 }

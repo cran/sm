@@ -7,7 +7,8 @@ Nonparametric analysis of covariance
 This function allows a set of nonparametric regression curves to be
 compared, both graphically and formally in a hypothesis test.  A reference
 model, used to define the null hypothesis, may be either equality or 
-parallelism.
+parallelism.  Regression surfaces can also be compared in a test but a
+graphical display is not produced.  
 }
 \usage{
 sm.ancova(x, y, group, h, model = "none", h.alpha = NA, weights=NA,
@@ -16,7 +17,7 @@ sm.ancova(x, y, group, h, model = "none", h.alpha = NA, weights=NA,
 }
 \arguments{
 \item{x}{
-a vector of covariate values.
+a vector or two-column matrix of covariate values.
 }
 \item{y}{
 a vector of response values.
@@ -26,7 +27,8 @@ a vector of group indicators.
 }
 \item{h}{
 the smoothing parameter to be used in the construction of each of the
-regression curves.
+regression curves.  If this is missing the method of smoothing parameter
+selection specified by \code{sm.options} will be applied.
 }
 \item{model}{
 a character variable which defines the reference model.  The values
@@ -34,7 +36,9 @@ a character variable which defines the reference model.  The values
 }
 \item{h.alpha}{
 the value of the smoothing parameter used when estimating the vertical
-separations of the curves under the parallelism model.
+separations of the curves under the parallelism model.  If this is missing,
+it is set to 2 * r / n, where r denotes the range of the data and n the
+sample size.
 }
 \item{weights}{
   case weights; see the documentation of \code{\link{sm.regression}}
@@ -44,7 +48,9 @@ separations of the curves under the parallelism model.
   the (estimated) covariance matrix of y.  The defaulty value assumes
   the data to be independent.  Where appropriate, the covariance structure
   of \code{y} can be estimated by the user, externally to \code{sm.ancova},
-  and passed through this argument.
+  and passed through this argument.  This is used in the hypothesis tests
+  but not in the construction of the reference band for comparing two groups
+  (and so graphics are disabled in this case).
 }
 \item{\dots}{
   other optional parameters are passed to the \code{sm.options}
@@ -77,12 +83,10 @@ Bowman, A.W. and Azzalini, A. (1997).
 \emph{the Kernel Approach with S-Plus Illustrations.}
 Oxford University Press, Oxford.
 
-
 Young, S.G. and Bowman, A.W. (1995).  
 Nonparametric analysis of covariance.  
 \emph{Biometrics}
 \bold{51}, 920--931.
-
 
 Bowman, A.W. and Young, S.G. (1996).  
 Graphical comparison of nonparametric curves.  
