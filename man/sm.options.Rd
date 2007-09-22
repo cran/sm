@@ -11,10 +11,9 @@ sm.options(\dots)
 }
 \arguments{
   \item{\dots}{    
-  a list may be given as the only argument, or a vector of character
-  strings given as the only argument, or any number of arguments may be in
-  the \code{name=value} form , or no argument at all may be given.  See
-  the Value and Side Effects sections for explanation.
+  a list may be given as the only argument, or any number of arguments may be in
+  the \code{name=value} form, or no argument at all may be given.  See
+  the Value and Details sections for explanation.
 
 Arguments which are set by a function call will remain
 in effect until the end of the

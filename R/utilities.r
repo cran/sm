@@ -8,19 +8,43 @@
         arg <- temp[[1]]
         switch(mode(arg),
                list = temp <- arg,
-               character = return(.Options[arg]),
-               stop(paste("invalid argument:", arg)))
-        }
+               character = return(.sm.Options[arg]),
+               stop("invalid argument: ", sQuote(arg)))
+    }
     if (length(temp) == 0) return(current)
     n <- names(temp)
     if (is.null(n)) stop("options must be given by name")
     changed <- current[n]
     current[n] <- temp
-    if (sys.parent() == 0) env <- pos.to.env( match(".GlobalEnv", search()) )
-    else env <- parent.frame()
+    if (sys.parent() == 0) env <- asNamespace("sm") else env <- parent.frame()
     assign(".sm.Options", current, envir = env)
     invisible(current)
-    }
+}
+
+# Not sure where this version came from.  It doesn't seem to work.
+# "sm.options" <- function (...) {
+#     if (nargs() == 0) return(.sm.Options)
+#     current <- .sm.Options
+#     if (is.character(...))
+#         temp <- eval(parse(text = paste(c("list(", ..., ")"))))
+#     else temp <- list(...)
+#     if (length(temp) == 1 && is.null(names(temp))) {
+#         arg <- temp[[1]]
+#         switch(mode(arg),
+#                list = temp <- arg,
+#                character = return(.Options[arg]),
+#                stop(paste("invalid argument:", arg)))
+#         }
+#     if (length(temp) == 0) return(current)
+#     n <- names(temp)
+#     if (is.null(n)) stop("options must be given by name")
+#     changed <- current[n]
+#     current[n] <- temp
+#     if (sys.parent() == 0) env <- pos.to.env( match(".GlobalEnv", search()) )
+#        else env <- parent.frame()
+#     assign(".sm.Options", current, envir = env)
+#     invisible(current)
+#     }
 
 
 "binning" <- function (x, y, breaks, nbins) {

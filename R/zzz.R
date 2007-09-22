@@ -19,7 +19,7 @@
 {
     ## we can't do this in .onLoad
     unlockBinding(".sm.Options", asNamespace("sm"))
-    cat("Library `sm', version 2.2 (beta test version); ",
+    cat("Package `sm', version 2.2-1; ",
         "Copyright (C) 1997, 2000, 2005, 2007 A.W.Bowman & A.Azzalini\n")
     cat("type help(sm) for summary information\n")
     invisible()
