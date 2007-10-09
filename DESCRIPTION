@@ -1,6 +1,6 @@
 Package: sm
-Version: 2.2-1
-Date: 2007-09-22
+Version: 2.2-2
+Date: 2007-10-09
 Author:  Adrian Bowman and Adelchi Azzalini. 
          Ported to R by B. D. Ripley <ripley@stats.ox.ac.uk> up to version 2.0,
 	     version 2.1 by Adrian Bowman and Adelchi Azzalini,
@@ -14,4 +14,4 @@ Depends: R (>= 2.2.0)
 Suggests: rpanel, tkrplot, rgl, misc3d, akima, gam
 License: GPL (version 2)
 URL: http://www.stats.gla.ac.uk/~adrian/sm
-Packaged: Sun Sep 23 21:45:12 2007; hornik
+Packaged: Tue Oct  9 12:32:07 2007; hornik
