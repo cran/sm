@@ -1,5 +1,5 @@
 ".sm.Options" <-
-    list(hmult = 1, h.weights = NA, 
+    list(hmult = 1, h.weights = NA, period = NA,
          add = FALSE, band = NA, props = c(75, 50, 25), nbins = NA,
          positive = FALSE, delta = NA, display = NA, 
          xlab = NA, ylab = NA, zlab = NA, 
@@ -19,7 +19,7 @@
 {
     ## we can't do this in .onLoad
     unlockBinding(".sm.Options", asNamespace("sm"))
-    cat("Package `sm', version 2.2-2; ",
+    cat("Package `sm', version 2.2-3; ",
         "Copyright (C) 1997, 2000, 2005, 2007 A.W.Bowman & A.Azzalini\n")
     cat("type help(sm) for summary information\n")
     invisible()

@@ -84,8 +84,7 @@
         result <- list(x = X, x.freq = X.f, midpoints = midpoints,
             breaks = breaks, table.freq = freq)
         if (!all(is.na(y))) {
-            result$means <- as.numeric(tapply(y, list(f1, f2),
-                mean))[id]
+            result$means <- as.numeric(tapply(y, list(f1, f2), mean))[id]
             result$devs <- as.numeric(tapply(y, list(f1, f2),
                 function(x) sum((x - mean(x))^2)))[id]
             }
@@ -222,14 +221,14 @@
     }
 
 
-"sm.check.data" <- function (x, y=NA, weights=NA, group=NA, ...) {
+"sm.check.data" <- function (x, y = NA, weights = NA, group = NA, ...) {
    opt <- sm.options(list(...))
 
    density <- all(is.na(y))
    if (density) X <- x
       else  X <- cbind(x, y)
 
-   if(all(is.na(weights)))
+   if(all(is.na(weights)) | all(weights == 1))
       X <- cbind(X, 1) 
    else{
       if(!is.na(opt$nbins) & opt$nbins!=0) 

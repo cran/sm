@@ -173,6 +173,7 @@
     x <- X[, 1]
     y <- X[, 2]
     replace.na(opt, display, "persp")
+    if (opt$display == "contour") opt$display <- "slice"
     replace.na(opt, ngrid, 50)
     replace.na(opt, xlab, deparse(substitute(x)))
     replace.na(opt, ylab, deparse(substitute(y)))
@@ -195,6 +196,10 @@
         display <- "persp"
         cat("The rgl package is not available.\n")
         }
+    if ((display == "rgl") & (!require(rpanel))) {
+        display <- "persp"
+        cat("The rpanel package is not available.\n")
+        }
 
     if (!opt$eval.grid)
         est <- sm.density.eval.2d(x, y, h,
@@ -212,6 +217,8 @@
         est <- sm.sliceplot(x, y, h, weights, rawdata, options = opt)
     else if (display == "rgl")
         est <- sm.rglplot(x, y, h, weights, rawdata, options = opt)
+    else
+        stop("invalid setting for display.")
 
     if (all(opt$h.weights == rep(1, length(x)))) {
         se <- dnorm(0, sd = sqrt(2)) / sqrt(4 * sum(weights) * h[1] * h[2])
@@ -552,7 +559,7 @@
         }
     image(xgrid, ygrid, dgrid,
           xlab = opt$xlab, ylab = opt$ylab, xlim = xlim, ylim = ylim,
-          add = opt$add)
+          add = opt$add, col = opt$col.palette)
     invisible(list(eval.points = cbind(xgrid, ygrid), estimate = dgrid,
         h = h * opt$hmult, h.weights = opt$h.weights, weights = weights))
     }

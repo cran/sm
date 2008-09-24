@@ -70,19 +70,15 @@ rp.smooth1 <- function(x, y, h, design.mat, model, weights, rawdata, opt) {
       }
    else
       plotfun <- plot.smooth1
-   rp.radiogroup(smooth.panel, method, pos = "top",
+   rp.radiogroup(smooth.panel, method,
                       c("aicc", "cv", "manual"), title = "Choice of bandwidth",
                       action = set.bandwidth)
-   rp.slider(smooth.panel, h.manual, hvec[1], hvec[nvec], 
-                      plotfun, "df", log = TRUE, pos = "top")
-   rp.checkbox(smooth.panel, se, plotfun, pos = "top",
-                      title = "Standard errors")
+   rp.slider(smooth.panel, h.manual, hvec[1], hvec[nvec], plotfun, "df", log = TRUE)
+   rp.checkbox(smooth.panel, se, plotfun, title = "Standard errors")
    rp.radiogroup(smooth.panel, model,
-                      pos = "top",
                       c("none", "no effect", "linear"),
                       title = "Reference model", action = plotfun)
-   rp.checkbox(smooth.panel, test, plotfun, pos = "top",
-                      title = "Test")
+   rp.checkbox(smooth.panel, test, plotfun, title = "Test")
    rp.do(smooth.panel, plotfun)
        
    invisible(smooth.panel)
@@ -192,26 +188,26 @@ rp.smooth2 <- function(x, y, h, model, weights, rawdata, opt) {
       }
    else
       plotfun <- plot.smooth2
-   rp.radiogroup(smooth.panel, method, pos = "top",
+   rp.radiogroup(smooth.panel, method,
                       c("aicc", "cv", "manual"), title = "Choice of bandwidth",
                       action = set.bandwidth)
    rp.slider(smooth.panel, h.manual, hvec[1], hvec[nvec], 
-                      plotfun, "df", log = TRUE, pos = "top")
-   rp.checkbox(smooth.panel, se, plotfun, pos = "top", title = "Standard errors")
+                      plotfun, "df", log = TRUE)
+   rp.checkbox(smooth.panel, se, plotfun, title = "Standard errors")
    rp.radiogroup(smooth.panel, model,
-                      pos = "top", c("none", "no effect", "linear"),
+                      c("none", "no effect", "linear"),
                       title = "Reference model", action = plotfun)
-   rp.checkbox(smooth.panel, test, plotfun, pos = "top", title = "Test")
+   rp.checkbox(smooth.panel, test, plotfun, title = "Test")
    if (!display.set) {
       display.options <- c("persp", "image")
       if (require(rgl)) 
          display.options <- c(display.options, "rgl")
       rp.radiogroup(smooth.panel, display, display.options,
-                      title = "Display", pos = "top", action = plotfun)
+                      title = "Display", action = plotfun)
       }
    if (opt$display == "persp") {
-      rp.slider(smooth.panel, theta, -180, 180, plotfun, "persp angle 1", pos = "top")
-      rp.slider(smooth.panel, phi,      0,  90, plotfun, "persp angle 2", pos = "top")
+      rp.slider(smooth.panel, theta, -180, 180, plotfun, "persp angle 1")
+      rp.slider(smooth.panel, phi,      0,  90, plotfun, "persp angle 2")
       }
        
    invisible(smooth.panel)
@@ -279,16 +275,12 @@ rp.density1 <- function(x, h, model, weights, rawdata, opt) {
       }
    else
       plotfun <- plot.density1
-   rp.radiogroup(smooth.panel, method, pos = "top",
+   rp.radiogroup(smooth.panel, method,
                       c("normal", "sj", "cv", "manual"), title = "Choice of bandwidth",
                       action = set.bandwidth.d)
-   rp.slider(smooth.panel, h.manual, h / 10, h * 10, 
-                      plotfun, "h", log = TRUE, pos = "top")
-   rp.checkbox(smooth.panel, se, plotfun, pos = "top",
-                      title = "Standard errors")
-   rp.radiogroup(smooth.panel, model,
-                      pos = "top",
-                      c("none", "normal"),
+   rp.slider(smooth.panel, h.manual, h / 10, h * 10, plotfun, "h", log = TRUE)
+   rp.checkbox(smooth.panel, se, plotfun, title = "Standard errors")
+   rp.radiogroup(smooth.panel, model, c("none", "normal"),
                       title = "Reference model", action = plotfun)
    rp.do(smooth.panel, plotfun)
        
@@ -301,8 +293,8 @@ plot.density2 <- function(panel) {
    if (panel$structure.2d == "common")
       h2 <- rep(panel$h, 2)
    else 
-      h2 <- c(panel$h, panel$h * sqrt(wvar(panel$x[,1], panel$weights) /
-                                      wvar(panel$x[,2], panel$weights)))
+      h2 <- c(panel$h, panel$h * sqrt(wvar(panel$x[,2], panel$weights) /
+                                      wvar(panel$x[,1], panel$weights)))
    panel$opt$display <- panel$display
    if (panel$display == "image") {
       opt1 <- panel$opt
@@ -370,25 +362,24 @@ rp.density2 <- function(x, h, model, weights, rawdata, opt) {
       }
    else
       plotfun <- plot.density2
-   rp.radiogroup(smooth.panel, method, pos = "top",
+   rp.radiogroup(smooth.panel, method,
                       c("normal", "cv", "manual"), title = "Choice of bandwidth",
                       action = set.bandwidth.d)
    rp.slider(smooth.panel, h.manual, h[1] / 10, h[1] * 10, 
-                      plotfun, "h", log = TRUE, pos = "top")
-   # rp.checkbox(smooth.panel, se, plotfun, pos = "top", title = "Standard errors")
-   # rp.radiogroup(smooth.panel, model,
-   #                    pos = "top", c("none", "normal"),
+                      plotfun, "h", log = TRUE)
+   # rp.checkbox(smooth.panel, se, plotfun, title = "Standard errors")
+   # rp.radiogroup(smooth.panel, model, c("none", "normal"),
    #                    title = "Reference model", action = plotfun)
    if (!display.set) {
       display.options <- c("persp", "image")
       if (require(rgl)) 
          display.options <- c(display.options, "rgl")
       rp.radiogroup(smooth.panel, display, display.options,
-                      title = "Display", pos = "top", action = plotfun)
+                      title = "Display", action = plotfun)
       }
    if (opt$display == "persp") {
-      rp.slider(smooth.panel, theta, -180, 180, plotfun, "persp angle 1", pos = "top")
-      rp.slider(smooth.panel, phi,      0,  90, plotfun, "persp angle 2", pos = "top")
+      rp.slider(smooth.panel, theta, -180, 180, plotfun, "persp angle 1")
+      rp.slider(smooth.panel, phi,      0,  90, plotfun, "persp angle 2")
       }
        
    invisible(smooth.panel)
@@ -400,10 +391,10 @@ plot.density3 <- function(panel) {
    if (panel$structure.2d == "common")
       h3 <- rep(panel$h, 3)
    else 
-      h3 <- c(panel$h, panel$h * sqrt(wvar(panel$x[,1], panel$weights) /
-                                      wvar(panel$x[,2], panel$weights)),
-                       panel$h * sqrt(wvar(panel$x[,1], panel$weights) /
-                                      wvar(panel$x[,3], panel$weights)))
+      h3 <- c(panel$h, panel$h * sqrt(wvar(panel$x[,2], panel$weights) /
+                                      wvar(panel$x[,1], panel$weights)),
+                       panel$h * sqrt(wvar(panel$x[,3], panel$weights) /
+                                      wvar(panel$x[,1], panel$weights)))
    panel$opt$display <- panel$display
    if (panel$display.old == "rgl") {
       panel$opt$add <- TRUE
@@ -446,11 +437,11 @@ rp.density3 <- function(x, h, model, weights, rawdata, opt) {
       }
    else
       plotfun <- plot.density3
-   rp.radiogroup(smooth.panel, method, pos = "top",
+   rp.radiogroup(smooth.panel, method,
                       c("normal", "manual"), title = "Choice of bandwidth",
                       action = set.bandwidth.d)
    rp.slider(smooth.panel, h.manual, h[1] / 3, h[1] * 3, 
-                      plotfun, "h", log = TRUE, pos = "top")
+                      plotfun, "h", log = TRUE)
        
    invisible(smooth.panel)
    }

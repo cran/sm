@@ -245,7 +245,7 @@ sm.discontinuity.2d <- function(x, y, h, hd, doublesmooth, opt,
    var.angle <- atan2(beta2, beta1) + pi / 2
    var.angle <- as.vector(var.angle)
 
-   sig2 <- sm.sigma2(x, y)
+   sig2 <- sm.sigma(x, y)
    A    <- sig2$qmat
    shat <- sig2$estimate
    ts   <- 0

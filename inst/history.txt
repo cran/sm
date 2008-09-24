@@ -37,4 +37,3 @@ September 2007: version 2.2 for R is released.
 - rpanel interactive controls are available in sm.density and
   sm.regression.
 - other minor changes.
- 

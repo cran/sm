@@ -48,6 +48,7 @@
    igp   <- as.vector(cut(hall, brks, labels = FALSE))
 
    if(missing(h)) h <- h.select(hh, dd, weights = wts, ...)
+                      # nbins = 0, df = opt$df, method = opt$method)
    b <- h
 
 #---Construct covariance matrix of binned data---

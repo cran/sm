@@ -115,6 +115,10 @@ to control various features of the plot.
    When \code{panel} is set to \code{"TRUE"}, an interactive control panel is
    created if the \code{rpanel} package is available.
    
+   If a covariate is on a cyclical scale, this can be incorporated by setting
+   the \code{period} argument to a vector (of length 1 or 2) whose components give 
+   the values of the periods, or NA if the covariate is not periodic.
+   
    See Chapters 3, 4 and 5 of the first reference below for the details of the
    construction of the estimate and its standard error.  The second reference
    gives further details and examples of surface painting.

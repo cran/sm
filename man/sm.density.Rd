@@ -73,6 +73,7 @@ sm.density(x, h, model = "none", weights = NA, group=NA, \dots)
 a list containing the values of the density estimate at the evaluation points,
 the smoothing parameter, the smoothing parameter weights and the kernel 
 weights.  For one- and two-dimensional data, the standard error of the estimate
+(on the square root scale, where the standard error is approximately constant)
 and the upper and lower ends of a variability band are also supplied.  Less 
 information is supplied when the smoothing parameter weights
 or kernel weights are not all 1, or when \code{positive} is set to \code{TRUE}.

@@ -350,19 +350,18 @@
     }
     x.name <- deparse(substitute(x))
     if (missing(lags)) {
-        if (d == 1)
-            lags <- (1:maxlag)
-        else lags <- cbind(1:(maxlag - 1), 2:maxlag)
-    }
-    else {
-        if (isMatrix(lags))
-            d <- 2
-    }
+       if (d == 1)
+          lags <- (1:maxlag)
+       else 
+          lags <- cbind(1:(maxlag - 1), 2:maxlag)
+       }
+    else
+       if (isMatrix(lags)) d <- 2
     x <- as.vector(x)
     if (d == 1)
-        r <- sm.autoregression.1d(x, h, x.name, lags, se = se,
-            ask = ask)
-    else r <- sm.autoregression.2d(x, h, x.name, lags, ask = ask)
+       r <- sm.autoregression.1d(x, h, x.name, lags, se = se, ask = ask)
+    else 
+       r <- sm.autoregression.2d(x, h, x.name, lags, ask = ask)
     invisible(r)
 }
 
@@ -563,7 +562,7 @@
     if (missing(lags))
         lags <- (1:maxlag)
     else maxlag <- max(lags)
-    if (any(diff(lags)) < 0)
+    if (any(diff(lags) < 0))
         stop("lags must be in increasing order")
     x.name <- deparse(substitute(x))
     x <- as.vector(x)

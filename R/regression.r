@@ -9,7 +9,7 @@
    if (isMatrix(x)) x.names <- dimnames(x)[[2]]
    y.name <- deparse(substitute(y))
 
-   opt <- sm.options(list(...))
+   opt     <- sm.options(list(...))
    data    <- sm.check.data(x = x, y = y, weights = weights, group = group, ...)
    x       <- data$x
    y       <- data$y
@@ -31,7 +31,7 @@
      h <- h.select(x = x, y = y, weights = weights, ...)
    else
      {if(length(h) != ndim) stop("length(h) does not match size of x")}
-     
+
    if(opt$nbins > 0) {
      if (!all(weights == 1) & opt$verbose > 0)
         cat("Warning: weights overwritten by binning\n")
@@ -45,7 +45,7 @@
      nx           <- length(y)
      }
    else 
-     nx<-nobs
+     nx <- nobs
   
    replace.na(opt, h.weights, rep(1,nx))
    if (opt$panel && !require(rpanel)) {
@@ -57,6 +57,7 @@
       replace.na(opt, xlab,  x.name)
       replace.na(opt, ylab,  y.name)
       replace.na(opt, ngrid, 50)
+      opt$period <- opt$period[1]
       if (opt$pch == ".") replace.na(opt, cex, 1)
          else replace.na(opt, cex,  2/log(rawdata$nobs))
       if (!opt$panel) 
@@ -75,6 +76,9 @@
       replace.na(opt, xlab, name.comp[1])
       replace.na(opt, ylab, name.comp[2])
       replace.na(opt, zlab, y.name)
+      if (all(is.na(opt$period))) opt$period <- rep(NA, 2)
+      if (!(length(opt$period) == 2))
+         stop("the length of period should match the number of covariates.")
       if (opt$panel) 
          rp.smooth2(x, y, h, model, weights, rawdata, opt)
       else
@@ -260,7 +264,8 @@
                        "(eval.grid = TRUE)."))
         }
         
-    sigma <- sm.sigma(rawdata$x, rawdata$y)$estimate
+    # sigma <- sm.sigma(rawdata$x, rawdata$y, nbins = opt$nbins)$estimate
+    sigma <- sm.sigma(x, y, rawdata, weights = weights, nbins = 0)$estimate
     
     if (!opt$eval.grid) {
         w <- sm.weight2(x, opt$eval.points, h, weights = weights,
@@ -284,6 +289,7 @@
         	
            S    <- sm.weight2(x, evpts, h = h, weights = weights, options = opt)
            mask <- est / est
+           
            if (model == "none") {
               se      <- matrix(diag(S %*% t(S)) * sigma, ncol = ngrid) * mask
               }
@@ -301,9 +307,20 @@
               model.y <- matrix(as.vector(X %*% y), ncol = ngrid)
               S       <- S - X
               }
-           se    <- matrix(sqrt(diag(S %*% t(S))), ncol = ngrid) * sigma * mask
+              
+           if (model == "isotropic") {
+              # est    <- S %*% dd
+              # S      <- sm.weight2(cbind(hh, ang), cbind(hh, ang), sp, weights = wts)
+              X       <- sm.weight(x[, 1], evpts[, 1], h[1], weights = weights)
+              S       <- S - X
+              se      <- matrix(sqrt(diag(S %*% opt$covmat %*% t(S))), ncol = ngrid) * mask
+              model.y <- matrix(as.vector(X %*% y), ncol = ngrid) * mask
+              }
+           else {
+              se    <- matrix(sqrt(diag(S %*% t(S))), ncol = ngrid) * sigma * mask
+              }
            sdiff <- (est - model.y) / se
-           
+              
            if (opt$display %in% "persp") {
               se    <- array(c(se[-ngrid, -ngrid], se[    -1, -ngrid], 
                                se[-ngrid,     -1], se[    -1,     -1]), 
@@ -557,13 +574,27 @@
     wd2 <- matrix(rep(eval.points[, 2], n), ncol = n)
     wd2 <- wd2 - matrix(rep(x[, 2], ngrid), ncol = n, byrow = TRUE)
     wy <- matrix(rep(h.weights, ngrid), ncol = n, byrow = TRUE)
-    w1 <- exp(-0.5 * (wd1/(h[1] * hmult * wy))^2)
+    if (!is.na(opt$period[1])) 
+       w1 <- exp(cos(2 * pi * wd1 / opt$period[1]) / (h[1] * hmult * wy))
+    else
+       w1 <- exp(-0.5 * (wd1 / (h[1] * hmult * wy))^2)
     w1 <- w1 * matrix(rep(weights, ngrid), ncol = n, byrow = TRUE)
-    w2 <- exp(-0.5 * (wd2/(h[2] * hmult * wy))^2)
+    if (!is.na(opt$period[2])) 
+       w2 <- exp(cos(2 * pi * wd2 / opt$period[2]) / (h[2] * hmult * wy))
+    else
+       w2 <- exp(-0.5 * (wd2 / (h[2] * hmult * wy))^2)
     wy <- matrix(rep(y, ngrid), ncol = n, byrow = TRUE)
-    if (opt$poly.index == 0)
+    if ((opt$poly.index == 0) | (sum(is.na(opt$period)) == 0))
         est <- w1 %*% t(w2 * wy)/(w1 %*% t(w2))
-    if (opt$poly.index == 1) {
+    else if ((opt$poly.index == 1) & (length(opt$period) == 2) & (sum(is.na(opt$period)) == 1)) {
+        x1grid  <- opt$eval.points[,1]
+        x2grid  <- opt$eval.points[,2]
+        ngrid   <- length(x1grid)
+        evpts   <- cbind(rep(x1grid, ngrid), rep(x2grid, each = ngrid))
+        w       <- sm.weight2(x, evpts, h, weights = weights, options = opt)
+        est     <- matrix(c(w %*% y), ncol = ngrid)
+        }
+    else {
         a11 <- w1 %*% t(w2)
         a12 <- (w1 * wd1) %*% t(w2)
         a13 <- w1 %*% t(w2 * wd2)
@@ -573,11 +604,11 @@
         d   <- a22 * a33 - a23^2
         b1  <- 1/(a11 - ((a12 * a33 - a13 * a23) * a12 + (a13 *
                 a22 - a12 * a23) * a13)/d)
-        b2 <- (a13 * a23 - a12 * a33) * b1/d
-        b3 <- (a12 * a23 - a13 * a22) * b1/d
-        c1 <- w1 %*% t(w2 * wy)
-        c2 <- (w1 * wd1) %*% t(w2 * wy)
-        c3 <- w1 %*% t(w2 * wy * wd2)
+        b2  <- (a13 * a23 - a12 * a33) * b1/d
+        b3  <- (a12 * a23 - a13 * a22) * b1/d
+        c1  <- w1 %*% t(w2 * wy)
+        c2  <- (w1 * wd1) %*% t(w2 * wy)
+        c3  <- w1 %*% t(w2 * wy * wd2)
         est <- b1 * c1 + b2 * c2 + b3 * c3
     }
     if (hull) {
@@ -765,29 +796,45 @@ function(A, Sigma, cnst)
   if (any(is.na(x1 + x2 + y))) stop("Missing data not allowed in sm.sigma2")
   
   if (strip) {
-    ch <- chull(x1, x2, onbdy = TRUE)
+    ch <- chull(x1, x2)
     x1 <- x1[-ch]
     x2 <- x2[-ch]
     y  <-  y[-ch]
     }
-  X  <- cbind(x1, x2)
+  X <- cbind(x1, x2)
 
-  if (simple) {
-    S <- sm.weight2.nn(cbind(x1, x2), cross = cross)
+  #  Repeated values can cause difficulties with zero nearest neighbour
+  #  distances, so use the unique values.
+  
+  if (all(weights == rep(1, length(y))) & (nrow(unique(X)) < nrow(X)) & (!(opt$nbins == 0))) {
+    X <- paste(as.character(X[,1]), as.character(X[,2]), sep = ",")
+    weights <- table(X)
+    rawdata$devs <- tapply(y, factor(X), function(x) sum((x - mean(x))^2))
+    y <- tapply(y, factor(X), mean)
+    X <- sort(unique(X))
+    X <- paste(X, collapse = ",")
+    X <- paste("c(", X, ")", sep = "")
+    X <- eval(parse(text = X))
+    X <- matrix(X, ncol = 2, byrow = TRUE)
     }
-  else {
-    d  <- matrix(rep(x1, n), ncol = n)
+  
+  # if (simple) {
+  #   S <- sm.weight2.nn(cbind(x1, x2), cross = cross)
+  #   }
+  # else {
+  	nx <- nrow(X)
+    d  <- matrix(rep(X[,1], nx), ncol = nx)
     D  <- (d - t(d))^2
-    d  <- matrix(rep(x2, n), ncol = n)
-    D  <- sqrt(D / var(x1) + ((d - t(d))^2) / var(x2))
+    d  <- matrix(rep(X[,2], nx), ncol = nx)
+    D  <- sqrt(D / var(X[,1]) + ((d - t(d))^2) / var(X[,2]))
     nn <- function(x) {sort(x)[5]}
     hw <- apply(D, 1, nn) / 2
-    hh <- c(sqrt(var(x1)), sqrt(var(x2)))
+    hh <- c(sqrt(var(X[,1])), sqrt(var(X[,2])))
     S  <- sm.weight2(X, X, hh, cross = cross, weights = weights, 
-               options = list(h.weights = hw)) 
-    }
+               options = list(h.weights = hw, hw.eval = TRUE))
+  #   }
 
-  A <- (diag(n) - S)
+  A <- (diag(nx) - S)
 
   if (stand=="local") {
      A   <- t(A) %*% diag(1/diag(A %*% t(A))) %*% A
@@ -897,11 +944,11 @@ function(A, Sigma, cnst)
   if (!(ndim1 == 2 & ndim2 == 2)) 
      stop("x1 and x2 should be two-column matrices.")
 
-  sig  <- sm.sigma2(x1, y1)
+  sig  <- sm.sigma2(x1, y1, options = list(nbins = 0))
   est1 <- sig$estimate
   A1   <- sig$qmat
 
-  sig  <- sm.sigma2(x2, y2)
+  sig  <- sm.sigma2(x2, y2, options = list(nbins = 0))
   est2 <- sig$estimate
   A2   <- sig$qmat
 
@@ -927,74 +974,100 @@ function(A, Sigma, cnst)
     replace.na(opt, poly.index, 1)
     poly.index <- opt$poly.index
     h.weights <- opt$h.weights
-    hmult <- opt$hmult
-    n <- length(x)
+    hmult     <- opt$hmult
+    period    <- opt$period[1]
+    n  <- length(x)
     ne <- length(eval.points)
     wd <- matrix(rep(eval.points, rep(n, ne)), ncol = n, byrow = TRUE)
     wd <- wd - matrix(rep(x, ne), ncol = n, byrow = TRUE)
     w <- matrix(rep(h.weights, ne), ncol = n, byrow = TRUE)
-    w <- exp(-0.5 * (wd/(h * hmult * w))^2)
+    if (!is.na(opt$period)) 
+       w <- exp(cos(2 * pi * wd / period) / (h * hmult * w))
+    else
+       w <- exp(-0.5 * (wd / (h * hmult * w))^2)
     w <- w * matrix(rep(weights, ne), ncol = n, byrow = TRUE)
     if (cross)
         diag(w) <- 0
-    if (poly.index == 0) {
+    if ((poly.index == 0) | (!is.na(period))) {
         den <- w %*% rep(1, n)
-        w <- w / matrix(rep(den, n), ncol = n)
-    }
-    else if (poly.index == 1) {
+        w   <- w / matrix(rep(den, n), ncol = n)
+        }
+    else {
         s0 <- w %*% rep(1, n)
         s1 <- (w * wd) %*% rep(1, n)
         s2 <- (w * wd^2) %*% rep(1, n)
-        w <- w * (matrix(rep(s2, n), ncol = n) - wd * matrix(rep(s1,
-            n), ncol = n))
-        w <- w/(matrix(rep(s2, n), ncol = n) * matrix(rep(s0,
-            n), ncol = n) - matrix(rep(s1, n), ncol = n)^2)
+        w  <- w * (matrix(rep(s2, n), ncol = n) - wd * matrix(rep(s1, n), ncol = n))
+        w  <- w / (matrix(rep(s2, n), ncol = n) * matrix(rep(s0, n), ncol = n) - 
+                    matrix(rep(s1, n), ncol = n)^2)
+        }
     }
-}
 
 
 "sm.weight2" <- function (x, eval.points, h, cross = FALSE, weights = rep(1, nrow(x)),
     options = list()) {
 
     opt <- sm.options(options)
-    n <- nrow(x)
-    ne <- nrow(eval.points)
-    replace.na(opt, h.weights, rep(1, n))
-    h.weights <- opt$h.weights
-    hmult <- opt$hmult
-    wd1 <- matrix(rep(eval.points[, 1], rep(n, ne)), ncol = n,
-        byrow = TRUE)
+    if (all(is.na(opt$period))) opt$period <- rep(NA, 2)
+    replace.na(opt, hmult, 1)
+    replace.na(opt, h.weights, rep(1, nrow(x)))
+    replace.na(opt, poly.index, 1)
+    poly.index <- opt$poly.index
+    h.weights  <- opt$h.weights
+    hmult      <- opt$hmult
+    n          <- nrow(x)
+    ne         <- nrow(eval.points)
+
+    wd1 <- matrix(rep(eval.points[, 1], rep(n, ne)), ncol = n, byrow = TRUE)
     wd1 <- wd1 - matrix(rep(x[, 1], ne), ncol = n, byrow = TRUE)
-    w <- matrix(rep(h.weights, ne), ncol = n, byrow = TRUE)
-    w <- exp(-0.5 * (wd1/(h[1] * hmult * w))^2)
-    wd2 <- matrix(rep(eval.points[, 2], rep(n, ne)), ncol = n,
-        byrow = TRUE)
+    if (("hw.eval" %in% names(opt)) & (opt$hw.eval = TRUE))
+       hw  <- matrix(rep(h.weights, n),  ncol = n)
+    else
+       hw  <- matrix(rep(h.weights, ne), ncol = n, byrow = TRUE)
+    if (!is.na(opt$period[1])) 
+       w <- exp(cos(2 * pi * wd1 / opt$period[1]) / (h[1] * hmult * hw))
+    else
+       w <- exp(-0.5 * (wd1 / (h[1] * hmult * hw))^2)
+    wd2 <- matrix(rep(eval.points[, 2], rep(n, ne)), ncol = n, byrow = TRUE)
     wd2 <- wd2 - matrix(rep(x[, 2], ne), ncol = n, byrow = TRUE)
-    w <- w * exp(-0.5 * (wd2/(h[2] * hmult * matrix(rep(h.weights,
-        ne), ncol = n, byrow = TRUE)))^2)
+    if (!is.na(opt$period[2])) 
+       w <- w * exp(cos(2 * pi * wd2 / opt$period[2]) / (h[2] * hmult * hw))
+    else
+       w <- w * exp(-0.5 * (wd2 / (h[2] * hmult * hw))^2)
     w <- w * matrix(rep(weights, ne), ncol = n, byrow = TRUE)
+    
     if (cross)
         diag(w) <- 0
-    if (opt$poly.index == 0) {
+
+    if ((opt$poly.index == 0) | (sum(is.na(opt$period)) == 0)) {
         den <- w %*% rep(1, n)
-        w <- w/matrix(rep(den, n), ncol = n)
-    }
-    else if (opt$poly.index == 1) {
+        w   <- w/matrix(rep(den, n), ncol = n)
+        }
+    else if ((opt$poly.index == 1) & (sum(is.na(opt$period)) == 1)) {
+    	if (is.na(opt$period[2])) wd1 <- wd2
+    	s0 <- w %*% rep(1, n)
+        s1 <- (w * wd1) %*% rep(1, n)
+        s2 <- (w * wd1^2) %*% rep(1, n)
+        w  <- w * (matrix(rep(s2, n), ncol = n) - 
+                 wd1 * matrix(rep(s1, n), ncol = n))
+        w  <- w / (matrix(rep(s2, n), ncol = n) * 
+                   matrix(rep(s0, n), ncol = n) - matrix(rep(s1, n), ncol = n)^2)
+        }
+    else {
         a11 <- w %*% rep(1, n)
         a12 <- (w * wd1) %*% rep(1, n)
         a13 <- (w * wd2) %*% rep(1, n)
         a22 <- (w * wd1^2) %*% rep(1, n)
         a23 <- (w * wd1 * wd2) %*% rep(1, n)
         a33 <- (w * wd2^2) %*% rep(1, n)
-        d <- a22 * a33 - a23^2
-        b1 <- 1/(a11 - ((a12 * a33 - a13 * a23) * a12 + (a13 *
-            a22 - a12 * a23) * a13)/d)
-        b2 <- (a13 * a23 - a12 * a33) * b1/d
-        b3 <- (a12 * a23 - a13 * a22) * b1/d
-        wt <- matrix(rep(b1, n), ncol = n)
-        wt <- wt + matrix(rep(b2, n), ncol = n) * wd1
-        wt <- wt + matrix(rep(b3, n), ncol = n) * wd2
-        w <- wt * w
+        d   <- a22 * a33 - a23^2
+        b1  <- 1/(a11 - ((a12 * a33 - a13 * a23) * a12 + (a13 *
+                  a22 - a12 * a23) * a13)/d)
+        b2  <- (a13 * a23 - a12 * a33) * b1/d
+        b3  <- (a12 * a23 - a13 * a22) * b1/d
+        wt  <- matrix(rep(b1, n), ncol = n)
+        wt  <- wt + matrix(rep(b2, n), ncol = n) * wd1
+        wt  <- wt + matrix(rep(b3, n), ncol = n) * wd2
+        w   <- wt * w
     }
     w
 }

@@ -211,6 +211,11 @@ a neater screen arrangement.
   the standard plotting charater identified for data plotting.
   Default value: 1.
 }
+\item{period}{
+  a vector of length one or two identifying the period for covariates which
+  are on a periodic scale.  Non-periodic covariates are identified by NA.
+  Default value: NA.
+}
 \item{phi}{
 the vertical rotation (in degrees) of perspective plots of
 estimate in the form of surfaces.  Default value: 40.

@@ -21,6 +21,6 @@ mask[!is.na(mask)] <- 1
 persp(ex, ey, matrix(surface * mask, ncol = ngrid),
             xlab = "latitude", ylab = "longitude")
 summary(model2)
-plot.gam(model2, se=TRUE)
+plot(model2, se=TRUE)
 par(cex=1)
 par(mfrow = c(1,1))

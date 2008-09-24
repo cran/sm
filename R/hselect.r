@@ -200,7 +200,7 @@
             for (i in 1:ngrid) {
                 cvgrid[i] <- sum((y - sm.weight2(x, x, 
                         exp(hgrid[i] * c(sqrt(var(x[, 1])), sqrt(var(x[, 2])))), 
-                        h.weights = h.weights, cross = TRUE) %*% y)^2)
+                        cross = TRUE, options = list(h.weights = h.weights)) %*% y)^2)
                 }
         }
     if (any(is.na(cvgrid))) {
@@ -321,11 +321,11 @@
   freq <- data$x.freq
   h    <- exp(log.h)
   if (is.vector(x))
-    S <- sm.weight(x, x, h, weights = freq, options = list())
+     S <- sm.weight(x, x, h, weights = freq, options = opt)
   if (is.matrix(x)) {
-    h <- switch(structure.2d, scaled = h * data$sd, common = rep(h, 2), h)
-    S <- sm.weight2(x, x, h, weights = freq, options = list())
-    }
+     h <- switch(structure.2d, scaled = h * data$sd, common = rep(h, 2), h)
+     S <- sm.weight2(x, x, h, weights = freq, options = opt)
+     }
   (sum(diag(S)) - opt$df)^2
   }
 
