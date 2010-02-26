@@ -86,22 +86,22 @@ sm.discontinuity.1d <- function(x, y, h, hd, doublesmooth, opt) {
 	nz   <- length(z)
 	flag <- rep(T, nz)
 	for (i in 1:nz) {
-	   left  <- x[x < z[i]]
-	   right <- x[x > z[i]]
+	   left    <- x[x < z[i]]
+	   right   <- x[x > z[i]]
 	   flag[i] <- (length(left) > 5 
 		    & length(right) > 5
 		    & length(diff(left)[diff(left)   > 0]) > 1
 		    & length(diff(right)[diff(right) > 0]) > 1)
-	   }
-	z    <- z[flag]
-	nz   <- length(z)
+	}
+	z  <- z[flag]
+	nz <- length(z)
 
 	ghat.left  <- vector("numeric", length = nz)
 	ghat.right <- vector("numeric", length = nz)
 
-        wd <- matrix(rep(z, rep(n, nz)), ncol = n, byrow = T)
-        wd <- wd - matrix(rep(x, nz), ncol = n, byrow = T)
-        w  <- exp(-.5 * (wd / h)^2)
+    wd <- matrix(rep(z, rep(n, nz)), ncol = n, byrow = T)
+    wd <- wd - matrix(rep(x, nz), ncol = n, byrow = T)
+    w  <- exp(-.5 * (wd / h)^2)
 
 	wl <-  w * (sign(wd) + 1) / 2
 	s0 <-  wl          %*% rep(1, n)
@@ -126,8 +126,8 @@ sm.discontinuity.1d <- function(x, y, h, hd, doublesmooth, opt) {
     if (doublesmooth) {
        ws         <- sm.weight(z, z, hd)
        w          <- ws %*% w
-       ghat.left  <- ws %*% as.vector(ghat.left)
-       ghat.right <- ws %*% as.vector(ghat.right)
+       ghat.left  <- as.vector(ws %*% as.vector(ghat.left))
+       ghat.right <- as.vector(ws %*% as.vector(ghat.right))
        }
 
 	shat <- sqrt(as.vector(t(as.matrix(y)) %*% A %*% as.matrix(y)))
@@ -151,6 +151,8 @@ sm.discontinuity.1d <- function(x, y, h, hd, doublesmooth, opt) {
         cat("Test of continuity:  significance = ", round(p, 3), "\n")
     st.diff <- (ghat.left - ghat.right)/ s.e.
     diffmat <- cbind(z, round(st.diff, 2))[abs(st.diff) > 2.5,]
+    #  The following line forces a matrix when there is only one row in diffmat.
+    if (!is.matrix(diffmat)) diffmat <- matrix(diffmat, ncol = 2)
     if ((opt$verbose > 0) & (nrow(diffmat) > 0)) {
        cat("location  st.diff\n")
        for (i in 1:nrow(diffmat)) cat(diffmat[i, ], "\n")

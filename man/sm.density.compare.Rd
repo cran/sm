@@ -5,7 +5,7 @@ Comparison of univariate density estimates
 }
 \description{
 This function allows a set of univariate density estimates to be
-compared, both graphically and formally in a bootstrap hypothesis test of 
+compared, both graphically and formally in a permutation test of 
 equality.
 }
 \usage{
@@ -38,6 +38,8 @@ function. Those specifically relevant for this function are the following:
 plus those controlling graphical display (unless \code{display="none"}
 is set);
 see the documentation of  \code{\link{sm.options}} for their description.
+The parameter \code{nboot} controls teh number of permutations used in the
+permutation test.
 }}
 \value{
 When \code{model} is set to \code{"none"}, nothing is returned.  When

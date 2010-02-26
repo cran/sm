@@ -184,6 +184,15 @@ if (!(opt$display %in% "none")) {
      text(rawdata$x[fac == fac.levels[i]], rawdata$y[fac == fac.levels[i]],
           as.character(fac.levels[i]), col = opt$col[i])
 
+  if (opt$band & nlev > 2) {
+     if (opt$verbose > 0) cat("Band available only to compare two groups.\n")
+     opt$band <- FALSE
+     }
+  if (opt$band & covar.set) {
+     if (opt$verbose > 0) cat("Band not available when covariance is set.\n")
+     opt$band <- FALSE
+     }       
+      
   if (!opt$band) {
     for (i in 1:nlev) {
       ind <- (fac == fac.levels[i])
@@ -192,70 +201,66 @@ if (!(opt$display %in% "none")) {
       }
     }
   else {
-    if (nlev > 2) {
-       if (opt$verbose > 0) cat("Band available only to compare two groups.\n")
-       }
-    else if (covar.set) {
-       if (opt$verbose > 0) cat("Band not available when covariance is set.\n")
-       }       
-    else {
-      
-      eval.points <- opt$eval.points
-      if (any(is.na(eval.points))) {
-        start.eval <- max(tapply(x, fac, min))
-        stop.eval  <- min(tapply(x, fac, max))
-        eval.points <- seq(start.eval, stop.eval, length = opt$ngrid)
-        }
-
-      ind <- (fac == fac.levels[1])
-      model1 <- sm.regression(x[ind], y[ind], h = h,
-             eval.points = eval.points, weights = weights[ind],
-             options = opt, display = "none", ngrid = opt$ngrid, 
-             add = TRUE, lty = 1)
-      ind <- fac == fac.levels[2]
-      model2 <- sm.regression(x[ind], y[ind], h = h,
-             eval.points = eval.points, weights = weights[ind],
-             options = opt, display = "none", ngrid = opt$ngrid, 
-             add = TRUE, lty = 2)
-      model.y <- (model1$estimate + model2$estimate) / 2
-      if (model == "parallel")
-           model.y <- cbind(model.y - alpha/2, model.y + alpha/2)
-      se <- sqrt((model1$se/model1$sigma)^2 + (model2$se/model2$sigma)^2)
-      se <- se * sigma
-      upper <- model.y + se
-      lower <- model.y - se
-      if (model == "equal") {
-        upper <- pmin(pmax(upper, par()$usr[3]), par()$usr[4])
-        lower <- pmin(pmax(lower, par()$usr[3]), par()$usr[4])
-        polygon(c(eval.points, rev(eval.points)), c(lower, rev(upper)),
-                border = FALSE, col = 5)
-        }
-      else if (model == "parallel") {
-        upper[,1] <- pmin(pmax(upper[,1], par()$usr[3]), par()$usr[4])
-        lower[,1] <- pmin(pmax(lower[,1], par()$usr[3]), par()$usr[4])
-        upper[,2] <- pmin(pmax(upper[,2], par()$usr[3]), par()$usr[4])
-        lower[,2] <- pmin(pmax(lower[,2], par()$usr[3]), par()$usr[4])
-        polygon(c(eval.points, rev(eval.points)),
-              c(lower[,1],   rev(upper[,1])),
-              density = 20, angle = 90, border = FALSE, col = 5)
-        polygon(c(eval.points, rev(eval.points)),
-              c(lower[,2],   rev(upper[,2])),
-              density = 20, angle =  0, border = FALSE, col = 6)
-        }
-      for (i in 1:nlev)
-        text(rawdata$x[fac == fac.levels[i]], rawdata$y[fac == fac.levels[i]],
-             as.character(fac.levels[i]), col = opt$col[i])
-      lines(eval.points, model1$estimate, lty = opt$lty[1], col = opt$col[1])
-      lines(eval.points, model2$estimate, lty = opt$lty[2], col = opt$col[2])
+    eval.points <- opt$eval.points
+    if (any(is.na(eval.points))) {
+      start.eval <- max(tapply(x, fac, min))
+      stop.eval  <- min(tapply(x, fac, max))
+      eval.points <- seq(start.eval, stop.eval, length = opt$ngrid)
       }
+
+    ind <- (fac == fac.levels[1])
+    model1 <- sm.regression(x[ind], y[ind], h = h,
+           eval.points = eval.points, weights = weights[ind],
+           options = opt, display = "none", ngrid = opt$ngrid, 
+           add = TRUE, lty = 1)
+    ind <- fac == fac.levels[2]
+    model2 <- sm.regression(x[ind], y[ind], h = h,
+           eval.points = eval.points, weights = weights[ind],
+           options = opt, display = "none", ngrid = opt$ngrid, 
+           add = TRUE, lty = 2)
+    model.y <- (model1$estimate + model2$estimate) / 2
+    if (model == "parallel")
+         model.y <- cbind(model.y - alpha/2, model.y + alpha/2)
+    se <- sqrt((model1$se/model1$sigma)^2 + (model2$se/model2$sigma)^2)
+    se <- se * sigma
+    upper <- model.y + se
+    lower <- model.y - se
+    if (model == "equal") {
+      upper <- pmin(pmax(upper, par()$usr[3]), par()$usr[4])
+      lower <- pmin(pmax(lower, par()$usr[3]), par()$usr[4])
+      polygon(c(eval.points, rev(eval.points)), c(lower, rev(upper)),
+              border = FALSE, col = 5)
+      }
+    else if (model == "parallel") {
+      upper[,1] <- pmin(pmax(upper[,1], par()$usr[3]), par()$usr[4])
+      lower[,1] <- pmin(pmax(lower[,1], par()$usr[3]), par()$usr[4])
+      upper[,2] <- pmin(pmax(upper[,2], par()$usr[3]), par()$usr[4])
+      lower[,2] <- pmin(pmax(lower[,2], par()$usr[3]), par()$usr[4])
+      polygon(c(eval.points, rev(eval.points)),
+            c(lower[,1],   rev(upper[,1])),
+            density = 20, angle = 90, border = FALSE, col = 5)
+      polygon(c(eval.points, rev(eval.points)),
+            c(lower[,2],   rev(upper[,2])),
+            density = 20, angle =  0, border = FALSE, col = 6)
+      }
+    for (i in 1:nlev)
+      text(rawdata$x[fac == fac.levels[i]], rawdata$y[fac == fac.levels[i]],
+           as.character(fac.levels[i]), col = opt$col[i])
+    lines(eval.points, model1$estimate, lty = opt$lty[1], col = opt$col[1])
+    lines(eval.points, model2$estimate, lty = opt$lty[2], col = opt$col[2])
     }
   }
 
 #-------------------------------Output-----------------------------
 
 r <- list(p = p, model = model, sigma = sigma)
-if (model == "parallel") r <- list(p = p, model = model, sigma = sigma,
-                                        alphahat = alpha)
+if (model == "parallel")
+   r <- list(p = p, model = model, sigma = sigma, alphahat = alpha)
+if (!(opt$display == "none") & opt$band) {
+   r$upper <- upper
+   r$lower <- lower
+   r$eval.points <- eval.points
+   }
 r$data <- list(x=x, y=y, group=fac, nbins=rawdata$nbins, devs=rawdata$devs, 
           weights=weights)
 r$call <- match.call()

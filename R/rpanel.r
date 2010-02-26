@@ -32,6 +32,7 @@ set.bandwidth <- function(panel) {
       if (ndim == 1) rp.do(panel, plot.smooth1)
       else           rp.do(panel, plot.smooth2)
       }
+   
    panel
    }
 
@@ -86,7 +87,17 @@ rp.smooth1 <- function(x, y, h, design.mat, model, weights, rawdata, opt) {
 
 
 plot.smooth2 <- function(panel) {
-   if (panel$method == "manual") panel$h <- panel$h.manual
+	
+   if (panel$method != panel$method.old) {
+      if (panel$method != "manual") {
+         panel$h <- h.select(panel$x, panel$y, panel$weights, method = panel$method)
+         panel$h <- panel$h[1]
+       }
+      panel$method.old <- panel$method
+   }
+   
+   if (panel$method == "manual")
+      panel$h <- panel$h.manual
    if (panel$structure.2d == "common")
       h2 <- rep(panel$h, 2)
    else 
@@ -98,25 +109,30 @@ plot.smooth2 <- function(panel) {
       opt1$display <- "slice"
       opt1$add     <- TRUE
       }
+   if (panel$display != "rgl")
+      panel$surf.ids <- rep(NA, 2)
    panel$opt$theta   <- panel$theta
    panel$opt$phi     <- panel$phi
    panel$opt$se      <- panel$se
    panel$opt$test    <- panel$test
    if (panel$model == "none") panel$opt$test <- FALSE
    if (panel$display == "rgl") {
-   	  if (panel$display.old == "rgl") {
+   	  if (panel$display.old == "rgl")
          panel$opt$add <- TRUE
-         pop3d()
-         pop3d()
-   	     }
    	  else
    	     panel$opt$add <- FALSE
       }
    result <- sm.regression.2d(panel$x, panel$y, h2, panel$model, panel$weights, 
                     panel$rawdata, panel$opt)
+   if (panel$display == "rgl") {
+      if (!is.na(sum(panel$surf.ids)))
+         rgl.pop(id = panel$surf.ids)
+      panel$surf.ids <- result$surf.ids
+   }
    if (panel$display == "rgl" & !panel$opt$add) panel$opt$scaling <- result$scaling
    with(panel, {
-      if (display == "image") sm.regression.2d(x, y, h2, model, weights, rawdata, opt1)
+      if (display == "image")
+         sm.regression.2d(x, y, h2, model, weights, rawdata, opt1)
       if (!(display == "rgl")) {
          df.h    <- approx(hvec, dfvec, h, rule = 2)$y
          df.text <- paste("df =", as.character(round(df.h, 1)))
@@ -127,10 +143,10 @@ plot.smooth2 <- function(panel) {
          else
             p.text <- ""
          title(paste(df.text, h.text, p.text))
-         }
+      }
       else if ("p" %in% names(result))
          cat("Test (", panel$model, "):  p = ", round(result$p, 3), "\n", sep = "") 
-      })
+   })
    panel$display.old <- panel$display
    panel
    }
@@ -179,9 +195,9 @@ rp.smooth2 <- function(x, y, h, model, weights, rawdata, opt) {
                       x = x, y = y, h = h[1], structure.2d = opt$structure.2d,
                       model = model, weights = weights, rawdata = rawdata,
                       opt = opt, hvec = hvec, dfvec = dfvec, h.manual = h[1], 
-                      display = opt$display, display.old = "none",
+                      display = opt$display, display.old = "none", surf.ids = rep(NA, 2),
                       theta = opt$theta, phi = opt$phi,
-                      method = "manual", se = opt$se, test = opt$test)
+                      method = "manual", method.old = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
       rp.tkrplot(smooth.panel, smplot, plot.smooth2, pos = "right")
       plotfun <- replot.smooth2
@@ -190,7 +206,7 @@ rp.smooth2 <- function(x, y, h, model, weights, rawdata, opt) {
       plotfun <- plot.smooth2
    rp.radiogroup(smooth.panel, method,
                       c("aicc", "cv", "manual"), title = "Choice of bandwidth",
-                      action = set.bandwidth)
+                      action = plotfun)
    rp.slider(smooth.panel, h.manual, hvec[1], hvec[nvec], 
                       plotfun, "df", log = TRUE)
    rp.checkbox(smooth.panel, se, plotfun, title = "Standard errors")
@@ -289,7 +305,17 @@ rp.density1 <- function(x, h, model, weights, rawdata, opt) {
 
 
 plot.density2 <- function(panel) {
-   if (panel$method == "manual") panel$h <- panel$h.manual
+
+   if (panel$method != panel$method.old) {
+      if (panel$method != "manual") {
+         panel$h <- h.select(panel$x, NA, panel$weights, method = panel$method)
+         panel$h <- panel$h[1]
+       }
+      panel$method.old <- panel$method
+   }
+   
+   if (panel$method == "manual")
+      panel$h <- panel$h.manual
    if (panel$structure.2d == "common")
       h2 <- rep(panel$h, 2)
    else 
@@ -301,21 +327,26 @@ plot.density2 <- function(panel) {
       opt1$display <- "slice"
       opt1$add     <- TRUE
       }
+   if (panel$display != "rgl")
+      panel$surf.ids <- rep(NA, 2)
    panel$opt$theta   <- panel$theta
    panel$opt$phi     <- panel$phi
    panel$opt$se      <- panel$se
    panel$opt$test    <- panel$test
    if (panel$model == "none") panel$opt$test <- FALSE
    if (panel$display == "rgl") {
-   	  if (panel$display.old == "rgl") {
+   	  if (panel$display.old == "rgl")
          panel$opt$add <- TRUE
-         pop3d()
-         pop3d()
-   	     }
    	  else
    	     panel$opt$add <- FALSE
       }
    result <- sm.density.2d(panel$x, h2, panel$weights, panel$rawdata, panel$opt)
+   if (panel$display == "rgl") {
+      if (!is.na(sum(panel$surf.ids)))
+         rgl.pop(id = panel$surf.ids)
+      panel$surf.ids <- result$surf.ids
+   }
+
    if (panel$display == "rgl" & !panel$opt$add) panel$opt$scaling <- result$scaling
    with(panel, {
       if (display == "image") sm.density.2d(x, h2, weights, rawdata, opt1)
@@ -354,8 +385,9 @@ rp.density2 <- function(x, h, model, weights, rawdata, opt) {
                       model = model, weights = weights, rawdata = rawdata,
                       opt = opt, h.manual = h[1], 
                       display = opt$display, display.old = "none",
-                      theta = opt$theta, phi = opt$phi,
-                      method = "manual", se = opt$se, test = opt$test)
+                      theta = opt$theta, phi = opt$phi, surf.ids = rep(NA, 2),
+                      method = "manual", method.old = "manual", se = opt$se, test = opt$test)
+
    if (opt$panel.plot) {
       rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right")
       plotfun <- replot.density2
@@ -364,7 +396,7 @@ rp.density2 <- function(x, h, model, weights, rawdata, opt) {
       plotfun <- plot.density2
    rp.radiogroup(smooth.panel, method,
                       c("normal", "cv", "manual"), title = "Choice of bandwidth",
-                      action = set.bandwidth.d)
+                      action = plotfun)
    rp.slider(smooth.panel, h.manual, h[1] / 10, h[1] * 10, 
                       plotfun, "h", log = TRUE)
    # rp.checkbox(smooth.panel, se, plotfun, title = "Standard errors")
@@ -387,6 +419,14 @@ rp.density2 <- function(x, h, model, weights, rawdata, opt) {
 
 
 plot.density3 <- function(panel) {
+   if (panel$method != panel$method.old) {
+      if (panel$method != "manual") {
+         panel$h <- h.select(panel$x, panel$y, panel$weights, method = panel$method)
+         panel$h <- panel$h[1]
+       }
+      panel$method.old <- panel$method
+   }
+
    if (panel$method == "manual") panel$h <- panel$h.manual
    if (panel$structure.2d == "common")
       h3 <- rep(panel$h, 3)
@@ -396,14 +436,16 @@ plot.density3 <- function(panel) {
                        panel$h * sqrt(wvar(panel$x[,3], panel$weights) /
                                       wvar(panel$x[,1], panel$weights)))
    panel$opt$display <- panel$display
-   if (panel$display.old == "rgl") {
+   if (panel$display.old == "rgl")
       panel$opt$add <- TRUE
-      for (i in 1:length(panel$opt$props)) pop3d()
-   	  }
    else
    	  panel$opt$add <- FALSE
    result <- sm.density.3d(panel$x, h3, panel$weights, panel$rawdata, panel$opt)
    if (panel$display == "rgl" & !panel$opt$add) panel$opt$scaling <- result$scaling
+   if (!all(is.na(panel$surf.ids)))
+      pop3d(id = panel$surf.ids)
+   panel$surf.ids <- result$surf.ids
+
    panel$display.old <- panel$display
    panel
    }
@@ -429,8 +471,8 @@ rp.density3 <- function(x, h, model, weights, rawdata, opt) {
                       model = model, weights = weights, rawdata = rawdata,
                       opt = opt, h.manual = h[1], 
                       display = opt$display, display.old = "none",
-                      theta = opt$theta, phi = opt$phi,
-                      method = "manual", se = opt$se, test = opt$test)
+                      theta = opt$theta, phi = opt$phi, surf.ids = NA,
+                      method = "manual", method.old = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
       rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right")
       plotfun <- replot.density3
@@ -439,7 +481,7 @@ rp.density3 <- function(x, h, model, weights, rawdata, opt) {
       plotfun <- plot.density3
    rp.radiogroup(smooth.panel, method,
                       c("normal", "manual"), title = "Choice of bandwidth",
-                      action = set.bandwidth.d)
+                      action = plotfun)
    rp.slider(smooth.panel, h.manual, h[1] / 3, h[1] * 3, 
                       plotfun, "h", log = TRUE)
        

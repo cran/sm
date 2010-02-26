@@ -63,7 +63,10 @@ initial estimate.
   obtained with the new function \code{h.select}, via
   \code{h.select(x, method="cv")}. Users are encouraged to adopt
   this route, since \code{hcv} might be not accessible directly
-  in future releases of the package.
+  in future releases of the package.  When the
+  sample size is large \code{hcv} uses the raw data while
+  \code{h.select(x, method="cv")} uses binning.  The latter is 
+  likely to produce a more stable choice for \code{h}.
 }
 \references{
 Bowman, A.W. and Azzalini, A. (1997).

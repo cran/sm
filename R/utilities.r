@@ -124,7 +124,7 @@
         if (missing(y))
             y <- rep(NA, nrow(x))
         if (missing(nbins))
-            nbins <- round(log(nrow(x))/log(2) + 1)
+            nbins <- round(log(nrow(x)) / log(2) + 1)
         if (missing(breaks)) {
             breaks <- cbind(seq(min(x[, 1]), max(x[, 1]), length = nbins + 1),
                             seq(min(x[, 2]), max(x[, 2]), length = nbins + 1))
@@ -273,8 +273,7 @@
     }
 
 "pause" <- function () {
-    cat("Pause. Press <Enter> to continue...")
-    readline()
+    if(interactive()) readline("Pause. Press <Enter> to continue...")
     invisible()
     }
 

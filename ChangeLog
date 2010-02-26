@@ -1,3 +1,6 @@
+Version 2.2-4  2010-02-26  sm.ancova returns the boundaries of the reference band.
+                           Minor corrections to sm.discontinuity, pause and help files.
+
 Version 2.2-3  2008-09-24  Minor corrections to citation(), density estimation 
                            in 2d and 3d when rpanel is used and sm.discontinuity.  
                            Periodic covariates allowed.  Other small bug fixes.

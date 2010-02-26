@@ -1,6 +1,5 @@
 
-"sm.sphere" <-
-function (lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
+"sm.sphere" <- function (lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
           addpoints = FALSE, ...)
 {
     opt <- sm.options(list(...))
@@ -83,9 +82,7 @@ function (lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
     invisible(list(theta = theta, phi = phi, kappa = kap))
 }
 
-"sphdraw" <-
-function (theta, phi)
-{
+"sphdraw" <- function (theta, phi) {
     a1 <- 0
     a2 <- 30
     a3 <- 60
@@ -113,11 +110,9 @@ function (theta, phi)
     longlines(a5, theta, phi)
     longlines(a6, theta, phi)
     circle(1)
-}
+    }
 
-"sphimage" <-
-function (latitude, longitude, kap, theta, phi, ngrid = 32)
-{
+"sphimage" <- function (latitude, longitude, kap, theta, phi, ngrid = 32) {
     values <- seq(-1 + 1/ngrid, 1 - 1/ngrid, length = ngrid)
     xgrid <- rep(values, rep(ngrid, ngrid))
     ygrid <- rep(values, ngrid)

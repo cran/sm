@@ -226,6 +226,7 @@
        }
     if (is.na(opt$col))  opt$col <- "green"
     if (opt$col == "se") opt$se <- TRUE
+    surf.ids <- rep(NA, 2)
        	  
     if (!is.na(opt$band) && opt$band)          opt$col <- "se"
     if (!is.na(opt$col)  && opt$col == "se" && is.na(opt$se))   opt$se  <- TRUE
@@ -405,7 +406,7 @@
                          xlab = opt$xlab, ylab = opt$zlab, zlab = opt$ylab,
                          xlim = opt$xlim, ylim = opt$ylim, zlim = opt$zlim,
                          size = opt$size, col = opt$col.points)
-            sm.surface3d(cbind(x1grid, x2grid), est, opt$scaling, 
+            surf.ids <- sm.surface3d(cbind(x1grid, x2grid), est, opt$scaling, 
                    col = opt$col, col.mesh = opt$col.mesh, 
                    alpha = opt$alpha, alpha.mesh = opt$alpha.mesh,
                    lit = opt$lit)
@@ -414,7 +415,7 @@
 
     r <- list(eval.points = opt$eval.points, estimate = est, model.y = model.y,
         sigma = sigma, h = h * opt$hmult, hweights = opt$h.weights,
-        weights = weights, scaling = opt$scaling)
+        weights = weights, scaling = opt$scaling, surf.ids = surf.ids)
     if (opt$se) 
        r$se <- se
     if (model != "none" & opt$test) {
@@ -614,8 +615,7 @@
     if (hull) {
         hull.points <- x[order(x[, 1], x[, 2]), ]
         dh <- diff(hull.points)
-        hull.points <- hull.points[c(TRUE, !((dh[, 1] == 0) & (dh[,
-            2] == 0))), ]
+        hull.points <- hull.points[c(TRUE, !((dh[, 1] == 0) & (dh[, 2] == 0))), ]
         hull.points <- hull.points[chull(hull.points), ]
         nh <- nrow(hull.points)
         gstep <- matrix(rep(eval.points[2, ] - eval.points[1, ], nh),

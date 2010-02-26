@@ -4,7 +4,7 @@
 Bootstrap goodness-of-fit test for a logistic regression model. 
 }
 \description{
-This function is associated with \code{sm.logit} for the underlying fitting
+This function is associated with \code{sm.binomial} for the underlying fitting
 procedure.  It performs a Pseudo-Likelihood Ratio Test for the
 goodness-of-fit of a standard parametric logistic regression of specified
 \code{degree} in the covariate \code{x}.

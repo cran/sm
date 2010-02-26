@@ -200,6 +200,7 @@
         display <- "persp"
         cat("The rpanel package is not available.\n")
         }
+    surf.ids <- rep(NA, 2)
 
     if (!opt$eval.grid)
         est <- sm.density.eval.2d(x, y, h,
@@ -380,8 +381,8 @@
                 ts.star <- 0
                 for (i in 1:nlev) {
                   ts.star <- ts.star + ni[i] * sum((est.star[i,] - sm.mean)^2)
+                  }
                 }
-            }
             if (ts.star > ts)
                 p <- p + 1
             if (opt$verbose > 1) {
@@ -666,12 +667,12 @@
                          xlim = opt$xlim, ylim = opt$zlim, zlim = opt$ylim,
                          size = opt$size, col = opt$col.points)
         }
-     sm.surface3d(cbind(xgrid, ygrid), dgrid, opt$scaling, 
+     surf.ids <- sm.surface3d(cbind(xgrid, ygrid), dgrid, opt$scaling, 
                    col = opt$col, col.mesh = opt$col.mesh, alpha = opt$alpha, 
                    lit = opt$lit)
     invisible(list(eval.points = cbind(xgrid, ygrid), estimate = dgrid,
         h = h * opt$hmult, h.weights = opt$h.weights, weights = weights, 
-        scaling = opt$scaling))
+        scaling = opt$scaling, surf.ids = surf.ids))
     }
 
 "sm.density.3d" <- function(x, h = hnorm(x, weights), 
@@ -728,6 +729,7 @@
     hmult     <- opt$hmult
     result    <- list(eval.points = eval.points,
                       h = h * hmult, h.weights = h.weights, weights = weights)
+    surf.ids <- NA
     
     Wh <- matrix(rep(h.weights, nnew), ncol = n, byrow = TRUE)
     W1 <- matrix(rep(eval.points[, 1], rep(n, nnew)), ncol = n, byrow = TRUE)
@@ -761,13 +763,15 @@
                                   col = opt$col.points, size = opt$size)
                 result$scaling <- opt$scaling
                 }
+             surf.ids <- integer(0)
              for (i in 1:length(opt$props)) {
              	if (length(opt$props) > 1) strct <- struct[[i]] else strct <- struct
                 trngs.x <- c(t(cbind(strct$v1[, 1], strct$v2[, 1],strct$v3[, 1])))
                 trngs.y <- c(t(cbind(strct$v1[, 2], strct$v2[, 2],strct$v3[, 2])))
                 trngs.z <- c(t(cbind(strct$v1[, 3], strct$v2[, 3],strct$v3[, 3])))
                 a <- opt$scaling(trngs.x, trngs.y, trngs.z)
-                triangles3d(a$x, a$y, a$z, col = opt$col[i], alpha = opt$alpha[i])
+                surf.ids <- c(surf.ids, 
+                      triangles3d(a$x, a$y, a$z, col = opt$col[i], alpha = opt$alpha[i]))
                 }
              }
           else if (opt$verbose > 0) cat("at least one of the rpanel, rgl or misc3d packages",
@@ -775,6 +779,7 @@
           }
        }
     result$estimate <- est
+    result$surf.ids <- surf.ids
     invisible(result)
     }
 

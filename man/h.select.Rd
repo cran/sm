@@ -49,6 +49,11 @@ a vector of reponses, in regression case.
 \details{
   see the two references below for discussion of the methods of
   smoothing parameter selection.
+  
+  If the sample size is large, binning will be employed.  In the 
+  case of \code{method = "cv"} the answer will therefore be
+  different from that obtained through the function \code{hcv}
+  where binning is not used.
 
   When the \code{group} argument is set, the chosen method of
   smoothing parameter selection is applied to each group and the

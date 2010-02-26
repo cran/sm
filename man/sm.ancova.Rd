@@ -67,7 +67,9 @@ see the documentation of  \code{\link{sm.options}} for their description.
 a list containing an estimate of the error standard deviation and, where
 appropriate, a p-value and reference model.  If the parallelism model has
 been selected then a vector of estimates of the vertical separations of the 
-underlying regression curves is also returned.
+underlying regression curves is also returned.  If a reference band has been
+requested, the upper and lower boundaries and their common evaluation points
+are also returned.
 }
 \section{Side Effects}{
 a plot on the current graphical device is produced, unless \code{display="none"}

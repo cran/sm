@@ -1,10 +1,10 @@
 			Geyser data
 			
 These data document the duration of eruptions, and the time between
-eruptions, for the Old Faithfl Geyser in Yellowstone National Park.
+eruptions, for the Old Faithful Geyser in Yellowstone National Park.
 
 The variables are:
-	Waiting:      the waiting time before each eription (minutes)
+	Waiting:      the waiting time before each eruption (minutes)
 	Next.waiting: the waiting time following each eruption (minutes)
 	Duration:     the length of an eruption ( minutes)
 	
