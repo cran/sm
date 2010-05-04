@@ -1,9 +1,7 @@
 "sm.options" <- function (...) {
     if (nargs() == 0) return(.sm.Options)
     current <- .sm.Options
-    if (is.character(...))
-        temp <- eval(parse(text = paste(c("list(", ..., ")"))))
-    else temp <- list(...)
+    temp <- list(...)
     if (length(temp) == 1 && is.null(names(temp))) {
         arg <- temp[[1]]
         switch(mode(arg),
@@ -62,7 +60,7 @@
         if (!all(is.na(y))) {
             result$means <- as.vector(tapply(y, f, mean))[id]
             result$sums <- as.vector(tapply(y, f, sum))[id]
-            result$devs <- as.vector(tapply(y, f, function(x) 
+            result$devs <- as.vector(tapply(y, f, function(x)
                               sum((x - mean(x))^2)))[id]
             }
         result
@@ -128,14 +126,14 @@
         if (missing(breaks)) {
             breaks <- cbind(seq(min(x[, 1]), max(x[, 1]), length = nbins + 1),
                             seq(min(x[, 2]), max(x[, 2]), length = nbins + 1))
-            if (ndim == 3) 
+            if (ndim == 3)
                breaks <- cbind(breaks, seq(min(x[, 3]), max(x[, 3]), length = nbins + 1))
             breaks[1, ] <- breaks[1, ] - rep(10^(-5), ncol(breaks))
             }
         else nbins <- nrow(breaks) - 1
         if (max(abs(breaks)) == Inf | is.na(max(abs(breaks))))
             stop("illegal breaks")
-        if (ndim == 2) 
+        if (ndim == 2)
            result <- binning.2d(x, y, breaks = breaks, nbins = nbins)
         else
            result <- binning.3d(x, y, breaks = breaks, nbins = nbins)
@@ -229,15 +227,15 @@
       else  X <- cbind(x, y)
 
    if(all(is.na(weights)) | all(weights == 1))
-      X <- cbind(X, 1) 
+      X <- cbind(X, 1)
    else{
-      if(!is.na(opt$nbins) & opt$nbins!=0) 
+      if(!is.na(opt$nbins) & opt$nbins!=0)
          stop("if weights are set, nbins must be either 0 or NA")
-      if(any(weights<0 | is.na(weights))) 
+      if(any(weights<0 | is.na(weights)))
          stop("negative or NA weights are meaningless")
       if(any(weights!=round(weights))) {
          weights <- round(weights/min(weights[weights>0]))
-         if(opt$verbose>0) 
+         if(opt$verbose>0)
             cat("Warning: weights have been rescaled to integer values\n")
          }
       X <- cbind(X, weights)
@@ -251,7 +249,7 @@
    if (!all(is.na(opt$h.weights))) {
       X <- cbind(X,opt$h.weights)
       hw.col <- ncol(X)
-      } 
+      }
    if (any(is.na(X)) & opt$verbose > 0) cat("missing data are removed\n")
    X <- na.omit(data.matrix(X))
    if (ndim > 2 + density) stop("x has too many columns")
@@ -260,7 +258,7 @@
    x <- if (ndim == 1) as.vector(X[, 1]) else X[, 1:ndim]
    if (!all(is.na(group))) group <- as.vector(X[, group.col])
    if (!all(is.na(opt$h.weights))) opt$h.weights <- X[, hw.col]
-   list(x = x, y = y, weights = weights, group = group, ndim = ndim, 
+   list(x = x, y = y, weights = weights, group = group, ndim = ndim,
         nobs = nrow(X), density = density, options = opt)
    }
 

@@ -1,27 +1,27 @@
 ".sm.Options" <-
     list(hmult = 1, h.weights = NA, period = NA,
          add = FALSE, band = NA, props = c(75, 50, 25), nbins = NA,
-         positive = FALSE, delta = NA, display = NA, 
-         xlab = NA, ylab = NA, zlab = NA, 
+         positive = FALSE, delta = NA, display = NA,
+         xlab = NA, ylab = NA, zlab = NA,
          xlim = NA, ylim = NA, zlim = NA, yht = NA,
          panel = FALSE, panel.plot = NA,
-         ngrid = NA, eval.points = NA, rugplot = TRUE, 
-         col = NA, col.band = "cyan", col.mesh = "black", 
+         ngrid = NA, eval.points = NA, rugplot = TRUE,
+         col = NA, col.band = "cyan", col.mesh = "black",
          col.palette = topo.colors(12), col.points = "black",
          se = NA, se.breaks = c(-3, -2, 2, 3), lty = 1, pch = 1, cex = NA,
-         theta = -30, phi = 40, size = 2, scaling = NULL, 
+         theta = -30, phi = 40, size = 2, scaling = NULL,
          alpha = 0.7, alpha.mesh = 1, lit = FALSE,
-         poly.index = 1, diff.ord = 2, test = NA, hull = TRUE, verbose = 1, 
-         df = NA, method = NA, structure.2d = "scaled", nboot = 100, 
+         poly.index = 1, diff.ord = 2, test = NA, hull = TRUE, verbose = 1,
+         df = NA, method = NA, structure.2d = "scaled", nboot = 100,
          describe = TRUE, show.script = TRUE, eval.grid = TRUE)
 
 .onAttach <- function(library, pkg)
 {
     ## we can't do this in .onLoad
     unlockBinding(".sm.Options", asNamespace("sm"))
-    cat("Package `sm', version 2.2-4-not-for-public-release; ",
-        "Copyright (C) 1997, 2000, 2005, 2007, 2008, A.W.Bowman & A.Azzalini\n")
-    cat("type help(sm) for summary information\n")
+    packageStartupMessage("Package `sm', version 2.2-4.1\n",
+        "Copyright (C) 1997, 2000, 2005, 2007, 2008, A.W.Bowman & A.Azzalini\n",
+        "Type help(sm) for summary information\n")
     invisible()
 }
 
