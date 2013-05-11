@@ -183,7 +183,7 @@
         polygon(c(rnew$eval.points, rev(rnew$eval.points)), c(lower,
             rev(upper)), col = opt$col.band, border = 0)
     }
-    lines(rnew$eval.points, rnew$estimate, lty = opt$lty, col = opt$col)
+    lines(rnew$eval.points, rnew$estimate, lty = opt$lty, col = opt$col, lwd = opt$lwd)
     if ((model == "none") & (opt$se | (opt$display %in% "se"))) {
         upper <- rnew$estimate + 2 * rnew$se
         upper <- pmin(pmax(upper, par()$usr[3]), par()$usr[4])
@@ -416,8 +416,10 @@
     r <- list(eval.points = opt$eval.points, estimate = est, model.y = model.y,
         sigma = sigma, h = h * opt$hmult, hweights = opt$h.weights,
         weights = weights, scaling = opt$scaling, surf.ids = surf.ids)
-    if (opt$se) 
+    if (opt$se) {
        r$se <- se
+       r$sdiff <- sdiff
+    }
     if (model != "none" & opt$test) {
         rtest <- sm.regression.test(x, y, design.mat = NA, h,
                     model, weights, rawdata, opt)
@@ -659,7 +661,7 @@
     if (length(dim(x)) > 0) {
         ndim <- 2
         n <- dim(x)[1]
-        W <- sm.weight2(x, x, h, weights = weights, option = opt)
+        W <- sm.weight2(x, x, h, weights = weights, options = opt)
         S <- cbind(rep(1, n), x[, 1] - mean(x[, 1]), x[, 2] - mean(x[, 2]))
         }
     else {
@@ -806,7 +808,7 @@ function(A, Sigma, cnst)
   #  Repeated values can cause difficulties with zero nearest neighbour
   #  distances, so use the unique values.
   
-  if (all(weights == rep(1, length(y))) & (nrow(unique(X)) < nrow(X)) & (!(opt$nbins == 0))) {
+  if (all(weights == rep(1, length(y))) & (nrow(unique(X)) < nrow(X))) {
     X <- paste(as.character(X[,1]), as.character(X[,2]), sep = ",")
     weights <- table(X)
     rawdata$devs <- tapply(y, factor(X), function(x) sum((x - mean(x))^2))
@@ -862,7 +864,7 @@ function(A, Sigma, cnst)
     pseudo.res <- P %*% y
     svcomp     <- sqrt(abs(pseudo.res))
 
-    S  <- sm.weight2(X, X, h, option = list())
+    S  <- sm.weight2(X, X, h, options = list())
     S  <- diag(n) - S
     S  <- t(S) %*% S
     L  <- matrix(1/n, ncol = n, nrow=n)

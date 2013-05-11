@@ -92,16 +92,17 @@ See \code{sm.options} for details.
 \code{\link{sm.regression}}, \code{\link{sm.options}}
 }
 \examples{
-provide.data(coalash)
-Position <- cbind(East, North)
-sm.options(df = 6)
+with(coalash, {
+   Position <- cbind(East, North)
+   sm.options(list(df = 6, se = TRUE))
 
-par(mfrow=c(2,2))
-sm.variogram(Position, Percent, band = FALSE)
-sm.variogram(Position, Percent)
-sm.variogram(East,     Percent)
-sm.variogram(North,    Percent)
-par(mfrow=c(1,1))
+   par(mfrow=c(2,2))
+   sm.variogram(Position, Percent, band = FALSE)
+   sm.variogram(Position, Percent)
+   sm.variogram(East,     Percent)
+   sm.variogram(North,    Percent)
+   par(mfrow=c(1,1))
+})
 }
 \keyword{smooth}
 \keyword{regression}

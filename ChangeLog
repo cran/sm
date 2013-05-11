@@ -1,3 +1,7 @@
+Version 2.2-5.3 2013-05-11  Addition of lwd parameter to sm.regression.
+                            All datasets given their own help files.
+                            Minor corrections to help files and sm.options.
+
 Version 2.2-4  2010-02-26  sm.ancova returns the boundaries of the reference band.
                            Minor corrections to sm.discontinuity, pause and help files.
 

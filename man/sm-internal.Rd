@@ -2,7 +2,7 @@
 \alias{addplot}
 \alias{aicc.crit.reg}
 % \alias{ask}
-\alias{attach.frame}
+% \alias{attach.frame}
 \alias{britmap}
 \alias{change}
 \alias{circle}
@@ -53,7 +53,6 @@
 }
 \usage{
 addplot(d, f, theta, phi)
-attach.frame(data, name, ...)
 britmap()
 change(th, ph)
 circle(r)

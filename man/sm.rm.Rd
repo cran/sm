@@ -93,14 +93,14 @@ Oxford University Press, Oxford.
 \code{\link{sm.regression}}, \code{\link{sm.regression.autocor}}, \code{\link{optim}}
 }
 \examples{
-provide.data(citrate, options=list(describe=FALSE))
-provide.data(dogs, options=list(describe=FALSE))
-a <- sm.rm(y=citrate, display.rice=TRUE)
+sm.rm(y=as.matrix(citrate), display.rice=TRUE)
 #
-Time <- seq(1,13,by=2)
-gr1  <- as.matrix(dogs[dogs$Group==1,2:8])
-plot(c(1,13), c(3,6),xlab="time", ylab="potassium", type="n") 
-sm1  <- sm.rm(Time, gr1, display="se", add=TRUE)
+with(dogs, {
+   Time <- seq(1,13,by=2)
+   gr1  <- as.matrix(dogs[dogs$Group==1,2:8])
+   plot(c(1,13), c(3,6),xlab="time", ylab="potassium", type="n") 
+   sm1  <- sm.rm(Time, gr1, display="se", add=TRUE)
+})
 }
 \keyword{nonparametric}
 \keyword{smooth}

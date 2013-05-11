@@ -70,14 +70,14 @@ sm.binomial(dose, failure, h=0.5)
 # in the next example, (some of) the dose levels are replicated 
 sm.binomial(dose, failure, n.trials, h=0.5)
 }
-#
-provide.data(birth)
-sm.binomial(Lwt[Smoke=="S"], Low[Smoke=="S"], h=20,
-        xlab='mother weight[Smoke=="S"]')
-#
-x<- seq(0,1,length=30)
-y<- rbinom(30,10,prob=2*sin(x)/(1+x))
-sm.binomial(x,y,N=rep(10,30), h=0.25)
+
+with(birth, {
+   sm.binomial(Lwt[Smoke=="S"], Low[Smoke=="S"], h=20,
+           xlab='mother weight[Smoke=="S"]')
+   x<- seq(0,1,length=30)
+   y<- rbinom(30,10,prob=2*sin(x)/(1+x))
+   sm.binomial(x,y,N=rep(10,30), h=0.25)
+})
 }
 \keyword{nonparametric}
 \keyword{smooth}

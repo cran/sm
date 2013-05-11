@@ -60,10 +60,11 @@ Oxford University Press, Oxford.
   \code{\link{binning}}, \code{\link{glm}}
 }
 \examples{
-provide.data(muscle)
-TypeI <- TypeI.R+ TypeI.P+TypeI.B
-sm.poisson(x=log(TypeI), y=TypeII, h=0.25,display="se")
-sm.poisson(x=log(TypeI), y=TypeII, h=0.75, col=2, add=TRUE)
+with(muscle, {
+   TypeI <- TypeI.R+ TypeI.P+TypeI.B
+   sm.poisson(x=log(TypeI), y=TypeII, h=0.25,display="se")
+   sm.poisson(x=log(TypeI), y=TypeII, h=0.75, col=2, add=TRUE)
+})
 }
 \keyword{nonparametric}
 \keyword{smooth}

@@ -60,7 +60,7 @@
         if (!all(is.na(y))) {
             result$means <- as.vector(tapply(y, f, mean))[id]
             result$sums <- as.vector(tapply(y, f, sum))[id]
-            result$devs <- as.vector(tapply(y, f, function(x)
+            result$devs <- as.vector(tapply(y, f, function(x) 
                               sum((x - mean(x))^2)))[id]
             }
         result
@@ -126,14 +126,14 @@
         if (missing(breaks)) {
             breaks <- cbind(seq(min(x[, 1]), max(x[, 1]), length = nbins + 1),
                             seq(min(x[, 2]), max(x[, 2]), length = nbins + 1))
-            if (ndim == 3)
+            if (ndim == 3) 
                breaks <- cbind(breaks, seq(min(x[, 3]), max(x[, 3]), length = nbins + 1))
             breaks[1, ] <- breaks[1, ] - rep(10^(-5), ncol(breaks))
             }
         else nbins <- nrow(breaks) - 1
         if (max(abs(breaks)) == Inf | is.na(max(abs(breaks))))
             stop("illegal breaks")
-        if (ndim == 2)
+        if (ndim == 2) 
            result <- binning.2d(x, y, breaks = breaks, nbins = nbins)
         else
            result <- binning.3d(x, y, breaks = breaks, nbins = nbins)
@@ -168,55 +168,60 @@
     }
 
 
-"attach.frame" <- function (data, name, ...) {
-    if (missing(name))
-        name <- deparse(substitute(data))
-    if (is.data.frame(data)) {
-        if (!is.na(pos <- match(name, search()))) {
-            cat(paste(name, "already attached, re-attached in 2nd position\n"))
-            detach(pos = pos)
-            }
-        cat(paste("attaching", name, "\n", sep = " "))
-        attach(what = data, pos = 2, name = name, ...)
-        }
-    else {
-        cat(name)
-        cat(" is not a data.frame\n")
-        }
-    invisible()
-    }
+# "attach.frame" <- function (data, name, ...) {
+    # if (missing(name))
+        # name <- deparse(substitute(data))
+    # if (is.data.frame(data)) {
+        # if (!is.na(pos <- match(name, search()))) {
+            # cat(paste(name, "already attached, re-attached in 2nd position\n"))
+            # detach(pos = pos)
+            # }
+        # cat(paste("attaching", name, "\n", sep = " "))
+        # attach(what = data, pos = 2, name = name, ...)
+        # }
+    # else {
+        # cat(name)
+        # cat(" is not a data.frame\n")
+        # }
+    # invisible()
+    # }
 
 
 "provide.data" <- function (data, path, options = list()) {
-    describe <- sm.options(options)$describe
-    name <- deparse(substitute(data))
-    if (missing(path))
-        path <- system.file("smdata", package="sm")
-    datafile <- file.path(path, paste(name, ".dat", sep = ""))
-    docfile <- file.path(path, paste(name, ".doc", sep = ""))
-    if (!exists(name, where=.GlobalEnv, inherits = FALSE)) {
-        if (file.exists(datafile)) {
-            cat("Data file being loaded\n")
-            assign(name, read.table(datafile, header = TRUE),
-                   envir = .GlobalEnv)
-            attach(what = data, name = name)
-            }
-        else cat("Data file does not exist\n")
-        }
-    else {
-        if (!is.data.frame(data))
-            cat("object exists, not as a data.frame\n")
-        else {
-            cat(paste(name, "already loaded\n"))
-            attach.frame(data, name = name)
-            }
-        }
-    if (describe) {
-        if(file.exists(docfile)) file.show(docfile)
-        else cat("Data description file not found\n")
-        }
-    invisible()
-    }
+	cat("This function is no longer available in the sm package.\n")
+	cat("The data and attach functions should be used instead.\n")
+}
+	
+# "provide.data" <- function (data, path, options = list()) {
+    # describe <- sm.options(options)$describe
+    # name <- deparse(substitute(data))
+    # if (missing(path))
+        # path <- system.file("smdata", package="sm")
+    # datafile <- file.path(path, paste(name, ".dat", sep = ""))
+    # docfile <- file.path(path, paste(name, ".doc", sep = ""))
+    # if (!exists(name, where=.GlobalEnv, inherits = FALSE)) {
+        # if (file.exists(datafile)) {
+            # cat("Data file being loaded\n")
+            # env <- .GlobalEnv
+            # assign(name, read.table(datafile, header = TRUE), envir = env)
+            # attach(what = data, name = name)
+            # }
+        # else cat("Data file does not exist\n")
+        # }
+    # else {
+        # if (!is.data.frame(data))
+            # cat("object exists, not as a data.frame\n")
+        # else {
+            # cat(paste(name, "already loaded\n"))
+            # attach.frame(data, name = name)
+            # }
+        # }
+    # if (describe) {
+        # if(file.exists(docfile)) file.show(docfile)
+        # else cat("Data description file not found\n")
+        # }
+    # invisible()
+    # }
 
 
 "sm.check.data" <- function (x, y = NA, weights = NA, group = NA, ...) {
@@ -227,15 +232,15 @@
       else  X <- cbind(x, y)
 
    if(all(is.na(weights)) | all(weights == 1))
-      X <- cbind(X, 1)
+      X <- cbind(X, 1) 
    else{
-      if(!is.na(opt$nbins) & opt$nbins!=0)
+      if(!is.na(opt$nbins) & opt$nbins!=0) 
          stop("if weights are set, nbins must be either 0 or NA")
-      if(any(weights<0 | is.na(weights)))
+      if(any(weights<0 | is.na(weights))) 
          stop("negative or NA weights are meaningless")
       if(any(weights!=round(weights))) {
          weights <- round(weights/min(weights[weights>0]))
-         if(opt$verbose>0)
+         if(opt$verbose>0) 
             cat("Warning: weights have been rescaled to integer values\n")
          }
       X <- cbind(X, weights)
@@ -249,7 +254,7 @@
    if (!all(is.na(opt$h.weights))) {
       X <- cbind(X,opt$h.weights)
       hw.col <- ncol(X)
-      }
+      } 
    if (any(is.na(X)) & opt$verbose > 0) cat("missing data are removed\n")
    X <- na.omit(data.matrix(X))
    if (ndim > 2 + density) stop("x has too many columns")
@@ -258,13 +263,12 @@
    x <- if (ndim == 1) as.vector(X[, 1]) else X[, 1:ndim]
    if (!all(is.na(group))) group <- as.vector(X[, group.col])
    if (!all(is.na(opt$h.weights))) opt$h.weights <- X[, hw.col]
-   list(x = x, y = y, weights = weights, group = group, ndim = ndim,
+   list(x = x, y = y, weights = weights, group = group, ndim = ndim, 
         nobs = nrow(X), density = density, options = opt)
    }
 
 "britmap" <- function () {
-    provide.data(britpts)
-    jump <- c(0, sqrt(diff(britlat)^2 + diff(britlong)^2))
+    jump <- c(0, sqrt(diff(britpts$britlat)^2 + diff(britpts$britlong)^2))
     flag <- rep(1, nrow(britpts))
     flag[jump >= 0.6] <- NA
     lines(britpts * flag)
@@ -281,3 +285,11 @@
 "wvar" <- function (x, w)
     sum(w * (x - wmean(x, w))^2)/(sum(w) - 1)
 
+if(getRversion() >= "2.15.1")
+   utils::globalVariables(c("xyzcheck", "llong", "llat", "X", "Y",
+        "britlat", "britlong", "theta", "phi", "h.weights", "nbins",
+        "hmult", "long2", "lat2", "invislong", "invislat", "smplot",
+        "display", "se", "panel.plot", "method", "h.manual", "se.test",
+        "smplot", "band", "xgrid", "xlab", "ylab", "xlim", "ylim", 
+        "eval.points", "ndim", "delta", "col.band", "col.points", 
+        "yht", "pch", "test", "cex", "zlab", "fmat", "ngrid", "zlim"))

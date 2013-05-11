@@ -4,12 +4,10 @@
 Making data available as data.frame
 }
 \description{
-This is a utility function, widely used in the scripts acconpanying
-the book described below.
-The function provides access to the dataset identified by \code{name}.
-For flexibility, the datasets are provided in ASCII form, with the name
-of each variable listed in the first row of the file.
-This function reads the files and makes the data available as a data frame.
+This function is no longer available in the sm package.  It should be replaced by the use of \code{attach}, if necessary.  Each dataset now also has its own help file.
+
+It was a utility function, widely used in the scripts accompanying
+the book described below.  The function provided access to the dataset identified by \code{name}.  For flexibility, the datasets were provided in ASCII form, with the name of each variable listed in the first row of the file.  This function reads the files and makes the data available as a data frame.
 }
 \usage{
 provide.data(data, path, options = list())

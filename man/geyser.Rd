@@ -15,10 +15,12 @@ having originally been described as `short', `medium' or `long'.
 \format{A data frame with 299 observations on 2 variables.
   \tabular{lll}{
     \code{duration}  \tab numeric  \tab Eruption time, in minutes \cr
-    \code{waiting}   \tab numeric  \tab Waiting time to next eruption,
+    \code{waiting}   \tab numeric  \tab Waiting time before the eruption,
                                          in minutes \cr
   }
+Note that in versions of the \code{sm} package before 2.2-5 the \code{waiting} variable was incorrectly described as `waiting time to next eruption'.
 }
+
 \seealso{\code{\link{faithful}}}
 \references{
   Azzalini, A. and Bowman, A. W. (1990) A look at some

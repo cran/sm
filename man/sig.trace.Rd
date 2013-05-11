@@ -9,9 +9,6 @@ on a nonparametric smoothing procedure.  The p-value of the test is
 plotted against a range of smoothing parameters.
 }
 \usage{
-sig.trace(expn, hvec, display="lines")
-}
-\synopsis{
 sig.trace(expn, hvec, ...)
 }
 \arguments{
@@ -23,10 +20,10 @@ the function call.
 \item{hvec}{
 a vector of smoothing parameters for which the test will be performed.
 }
-\item{display}{
-any character setting other than \code{"none"} will cause the significance
-trace to be plotted.
+\item{...}{
+further arguments which will be passed to \code{sm.options}.
 }}
+
 \value{
 a list containing vectors with the smoothing parameters and p-values.
 }

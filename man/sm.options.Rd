@@ -23,24 +23,24 @@ functions of the \code{sm} library; in this case, their effect is
 limited to that function call.  See the documentation of specific
 functions for the list of options which are recognised by that function.
 Notice that some options are relevant only to some functions.
-\describe{
-\item{\code{add}:}{
+\itemize{
+\item{add}{
 a logical value which controls whether the estimate is added to
 the current plot.  Its default value is \code{FALSE}, which creates a new plot.
 This argument applies only with one-dimensional data or to contour and \code{rgl}
 created from two-dimensional data.
 }
-\item{\code{alpha}:}{
+\item{alpha}{
 an parameter, lying between 0 and 1, which controls the transparency of the 
 surface used to construct an \code{rgl} plot for regression with two covariates.  
 The default value is \code{0.7}.
 }
-\item{\code{alpha.mesh}:}{
+\item{alpha.mesh}{
 an parameter, lying between 0 and 1, which controls the transparency of the 
 mesh lines used to construct an \code{rgl} plot for regression with two covariates.  
 The default value is \code{1}.
 }
-\item{\code{band}:}{
+\item{band}{
 a logical value which controls whether the distance between the nonparametric
 estimate and a reference model should be indicated as a band (one covariate),
 or through colour painting of the regression surface (two covariates).  This
@@ -49,7 +49,7 @@ parameter.  In the case of two covariates, the setting of the argument
 \code{col} has priority over \code{band}.  The setting \code{se = TRUE} can
 also activate this feature.
 }
-\item{\code{col}:}{
+\item{col}{
 the colour used for plotting observed points and estimated curves.
 Where groups are used, with one covariate, \code{col} may be set to a vector of
 colours associated with the groups.  In regression with two covariates
@@ -59,28 +59,28 @@ cause the surface to be painted according to its height or to standard
 error information; see the information on the parameters \code{se}, 
 \code{se.breaks} and \code{model}.  Default: \code{col=1}.
 }
-\item{\code{col.band}:}{
+\item{col.band}{
 the colour used for the reference band when a \code{model} is specified in 
 regression with one covariate.
 Default: \code{col.band="cyan"}.
 }
-\item{\code{col.mesh}:}{
+\item{col.mesh}{
 the colour used for the `wire mesh' representation plotting observed points 
 in an rgl display for regression with two covariates.  This can also be set by the
 second component of a vector of length two which is set for \code{col}.
 Default: \code{col.mesh="black"}.
 }
-\item{\code{col.palette}:}{
+\item{col.palette}{
 the colours used for shading an image plot, or for surface painting in an rgl 
 display, for regression with two covariates.
 Default: \code{col.palette=topo.colors(12)}.
 }
-\item{\code{col.points}:}{
+\item{col.points}{
 the colour used for plotting observed points in a regression with one 
 covariate or an \code{rgl} display for regression with two covariates.
 Default: \code{col.points="black"}.
 }
-\item{\code{delta}:}{in \code{sm.density},
+\item{delta}{in \code{sm.density},
 a value which will be added to the data before they are log transformed in
 the procedure to handle positive data.  The value of \code{delta} is used
 only when \code{positive} takes the value \code{TRUE}.  The default value
@@ -88,12 +88,12 @@ is the smallest value observed in each dimension.  This argument does not
 apply with three-dimensional data.
 Default: \code{delta=NA}
 }
-\item{\code{describe}:}{
+\item{describe}{
   logical flag whiich affects the behaviour of \code{sm.script} and
   \code{provide.data}. 
   If \code{describe=TRUE} (default), a data documentation file is printed. 
 }
-\item{\code{df}:}{approximate degrees-of-freedom of the smoothing parameter used 
+\item{df}{approximate degrees-of-freedom of the smoothing parameter used 
    in \code{sm.regression}, when a numerical value of \code{h} is not
    specified.
    In this case, the equivalent value of \code{h} will be computed and
@@ -101,7 +101,7 @@ Default: \code{delta=NA}
    Default value is 6 if \code{x} is a vector and 12 if \code{x} is
    a matrix.
   }
-\item{\code{diff.ord}:}{in \code{sm.regression},
+\item{diff.ord}{in \code{sm.regression},
 an integer defining the degree of differencing to be applied in the
 estimation process.
 When this argument is set to 1, the method of Rice,
@@ -110,7 +110,7 @@ is used.  When the argument is set to 2 (deafult), the method of Gasser,
 Sroka and Jennen-Steinmetz, based on differences between each observation 
 and a linear interplotation from its two neighbours, is used.
 }
-\item{\code{display}:}{
+\item{display}{
 This argument applies only with one- or two-dimensional data.  The
 setting \code{"none"} will prevent any graphical output from being
 produced.  In one dimensions, the default setting \code{"line"} will
@@ -123,7 +123,7 @@ to \code{TRUE}.)  In two dimensions, the default setting
 while the settings \code{"slice"}, \code{"image"}  and \code{"rgl"} 
 will produce slice (contour), image or \code{rgl} plots.
 }
-\item{\code{eval.grid}:}{
+\item{eval.grid}{
   logical flag which controls how the options \code{eval.points} are
   used fow two-dimensional data. If \code{eval.grid=TRUE} (default),
   evaluation is perfomed at points obtained by the cross-product of the
@@ -131,23 +131,23 @@ will produce slice (contour), image or \code{rgl} plots.
   then evaluation is performed at points with coordinates specified by
   the coordinates in \code{eval.points}
   }
-\item{\code{eval.points}:}{
+\item{eval.points}{
 the points at which the density or the regression curve or surface estimate 
 should be evaluated, for the values returned in the result of the function.  
 This should be a vector for one-dimensional data and a two-column matrix 
 for two-dimensional data.
 This argument does not apply with three-dimensional data.
 }
-\item{\code{h.weights}:}{ 
+\item{h.weights}{ 
 a vector of weights which multiply the smoothing parameter used in the
 kernel function at each observation.  This argument does not apply with 
 three-dimensional data. Default value: 1.
 }
-\item{\code{hmult}:}{
+\item{hmult}{
 a factor which can be used to multiply the normal smoothing parameter
 before construction of the density estimate. Default value: 1.
 }
-\item{\code{hull}:}{  
+\item{hull}{  
 a logical value which controls whether the estimate is evaluated and
 plotted only on grid points which fall within the convex hull of the
 data. When this argument is set to \code{FALSE}, evaluation and plotting
@@ -157,12 +157,12 @@ the estimate is not evaluated at points where there are no observations
 nearby.  This argument applies only to \code{sm.regression} and
 \code{sm.discontinuity} in the case of two covariates.
 }
-\item{\code{lty}:}{
+\item{lty}{
   the line type used to plot the estimate.  This argument applies only
   when the estimate is displayed as a curve or a countour.
   Default value: 1.
 }
-\item{\code{method}:}{
+\item{method}{
   the method used to select smoothing parameters.  In density estimation
   the default is \code{"normal"} which uses a value which is asymptotically
   optimal for the normal distribution.  Other possibilities are \code{"cv"}
@@ -174,7 +174,7 @@ nearby.  This argument applies only to \code{sm.regression} and
   \code{"aicc"} for an AIC-based method proposed by Hurvich, Simonoff and
   Tsai.
 }
-\item{\code{nbins}:}{
+\item{nbins}{
 the number of bins used in one-dimensional binning operations;
 in two-dimensional cases, \code{nbins} refers to the number of bins 
 formed along each axis. Bins with 0 observed frequencies are ignored.
@@ -182,10 +182,10 @@ If \code{nbins=0}, binning is not performed; if \code{nbins=NA} (default),
 binning is switched on when the number of observations exceeds
 a certain threshold, which depends on the function.
 }
-\item{\code{nboot}:}{
+\item{nboot}{
 number of samples generated in bootstraps. Default value: 100.
 }
-\item{\code{ngrid}:}{
+\item{ngrid}{
 the number of points in the regular grid used to plot the estimate.
 For two- and three-dimensional data, \code{ngrid} refers to the
 number of points along the axis in each dimension.
@@ -196,35 +196,37 @@ Default value for \code{sm.regression}:
 Default value for \code{sm.density}:
   100, 50 and 20 for 1-, 2- and 3-dimensional data, respectively.
 }
-\item{\code{panel}:}{
+\item{panel}{
 a logical value which, when set to true, creates a panel which allows interactive
 control of \code{sm.regression} or \code{sm.density} plots
 for one- or two-dimensional data.  The panel can be used to alter the
 value of the smoothing parameter and control a variety of other settings. 
 }
-\item{\code{panel.plot}:}{
+\item{panel.plot}{
 a logical value which, when set to true (the default), places the plot
 inside the control panel (see the \code{panel} argument above),  This creates 
 a neater screen arrangement.
 }
-\item{\code{pch}:}{
+\item{pch}{
   the standard plotting charater identified for data plotting.
   Default value: 1.
 }
-\item{\code{period}:}{
+\item{period}{
   a vector of length one or two identifying the period for covariates which
-  are on a periodic scale.  Non-periodic covariates are identified by NA.
+  are on a periodic scale.  Periodic smoothing is implemented by local mean
+  estimation, using a von Mises kernel function.  Non-periodic covariates are
+  identified by NA.
   Default value: NA.
 }
-\item{\code{phi}:}{
+\item{phi}{
 the vertical rotation (in degrees) of perspective plots of
 estimate in the form of surfaces.  Default value: 40.
 }
-\item{\code{poly.index}:}{
+\item{poly.index}{
 an integer defining local constant (0) or local linear (1) smoothing.
 Default value: 1.
 }
-\item{\code{positive}:}{
+\item{positive}{
 a logical value which indicates whether the data should be assumed to take
 positive values only, in \code{sm.density}.
 When this argument is set to \code{TRUE}, a log transformation
@@ -232,39 +234,39 @@ is applied to the data before construction of a density estimate.  The result
 is transformed back to the original scale.  This argument does not apply with 
 three-dimensional data. Default value: \code{FALSE}.
 }
-\item{\code{props}:}{
+\item{props}{
 a vector defining the proportions of the data to be included within each
 contour in a slice plot, from two-dimensional data, or a contour surface
 plot, from three-dimensional data.  In the three-dimensional case only
 the first element of the vector will be used.  This argument does not apply 
 to one-dimensional data.  Default value: \code{c(75,50,25)}.
 }
-\item{\code{rugplot}:}{
+\item{rugplot}{
 logical flag which regulates whether a rugplot is superimposed to the
 density estimate, in the univariate case. Default value: \code{TRUE}.
 }
-\item{\code{se}:}{
+\item{se}{
 logical flag which regulates whether a standard error information is
 added to the plot produced by \code{sm.regression}. If a \code{model}
 is specified, then these standard errors refer to the difference between
 this fitted model and the nonparametric regression estimate.
 Default value: \code{TRUE}.
 }
-\item{\code{se.breaks}:}{
+\item{se.breaks}{
 a numerical vector which defines the cut-points, on a standard error 
 scale, for the assignment of colours when painting a regression surface
 with standard error information.  Default value: \code{c(-3, -2, 3, 3)}.
 }
-\item{\code{show.script}:}{
+\item{show.script}{
   logical flag which affects the behaviour of \code{sm.script} when
   this is called with non-empty   argument. If \code{show.script=TRUE}
   (default) a window is opened to display the source code of the script.
   }
-\item{\code{size}:}{
+\item{size}{
   an integer which defines the size of plotted points in \code{rgl}
   displays.  The default value is \code{2}.
   }
-\item{\code{structure.2d}:}{
+\item{structure.2d}{
   the structure of the smoothing parameter in two-dimensional settings.
   The default is \code{"scaled"}, which uses the structure
   (h*sd(x[,1]), h*sd(x[,2])).  Other possibilities are \code{"separate"},
@@ -274,44 +276,44 @@ with standard error information.  Default value: \code{c(-3, -2, 3, 3)}.
   meaning.  Note that the \code{"separate"} option is not available
   when \code{"method"} is set to \code{"df"}.
   }
-\item{\code{test}:}{
+\item{test}{
 a logical flag controlling the production of a formal test, using the 
 reference model as the null hypothesis. Default value: \code{TRUE}.
 }
-\item{\code{theta}:}{
+\item{theta}{
  the horizontal rotation (in degrees) of perspective plots of
  estimates in the form of surfaces.  Default value: -30.
 }
-\item{\code{verbose}:}{
+\item{verbose}{
   regulates the amount of messages and other output printed out.
   If \code{verbose=0} only errors produce messages; if \code{verbose=1}
   (default value) warnings  and the more relevant numerical
   output are printed ; if \code{verbose=2} more messages and more
   numerical output are printed.
   }
-\item{\code{xlab}:}{
+\item{xlab}{
   the label attached to the x-axis.
 }
-\item{\code{xlim}:}{
+\item{xlim}{
   the range of the horizontal axis of the plot.  This argument does not apply
   with three-dimensional data.
 }
-\item{\code{yht}:}{
+\item{yht}{
   the upper limit of the vertical axis in a plot of a one-dimensional density
   estimate.  The lower limit is always set to 0.  This argument does not apply 
   with two- or three-dimensional data.
 }
-\item{\code{ylab}:}{
+\item{ylab}{
   the label attached to the y-axis. 
 }
-\item{\code{ylim}:}{
+\item{ylim}{
   the range of the vertical axis of the plot.  This argument does not apply 
   with three-dimensional data.
 }
-\item{\code{zlab}:}{
+\item{zlab}{
   the label attached to the z-axis (three-dimensional plots only).
 }
-\item{\code{zlim}:}{ the range of the vertical axis when estimates are
+\item{zlim}{ the range of the vertical axis when estimates are
   displayed as perspective plots.}
 }}}
 \value{

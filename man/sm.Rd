@@ -1,4 +1,4 @@
-\name{sm-package}
+\name{sm}
 \alias{sm}
 \title{
 The sm package: summary information

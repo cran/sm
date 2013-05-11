@@ -22,10 +22,6 @@ memory available.
 sm.sphere(lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
           addpoints = FALSE, \dots)
 }
-\synopsis{
-sm.sphere(lat, long, kappa = 20, hidden = FALSE, sphim = FALSE,
-          addpoints = FALSE, ...)
-}
 \arguments{
   \item{lat}{
     a vector giving the latitude component of the data in degrees from the 

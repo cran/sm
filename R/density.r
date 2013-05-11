@@ -46,7 +46,7 @@
             h <- h.select(xlog, y = NA, weights = weights, ...)
             }
         else 
-            h <- h.select(x = x, y = NA, weight = weights, ...)
+            h <- h.select(x = x, y = NA, weights = weights, ...)
     }
     
     if (opt$panel) 
@@ -252,7 +252,7 @@
                 par()$usr[4] * 0.999), c(2, 2)), col = 0, border = 0)
     }
     box()
-    lines(est$eval.points, est$estimate, lty = opt$lty, col = opt$col)
+    lines(est$eval.points, est$estimate, lty = opt$lty, col = opt$col, lwd = opt$lwd)
     if (opt$rugplot && !opt$add)
         rug(jitter(rawdata$x, amount = 0), 0.015)
     if ((opt$se | opt$display %in% "se") & (!opt$band) & 
@@ -286,7 +286,7 @@
     polygon(c(par()$usr[1:2], par()$usr[2:1]), rep(c(par()$usr[3],
         par()$usr[4] * 0.999), c(2, 2)), col = 0, border = FALSE)
     polygon(c(x.points, rev(x.points)), c(upper, rev(lower)),
-            col = "cyan", border = FALSE)
+            col = opt$col.band, border = FALSE)
 }
 
 "sm.density.compare" <- function (x, group, h, model = "none", ...) {
@@ -344,10 +344,11 @@
     }
     eval.points <- sm$eval.points
     if (!(opt$display %in% "none" | band)) {
-        plot(xlim, c(0, 1.1 * max(as.vector(estimate))),
-	    xlab = opt$xlab, ylab = opt$ylab, type = "n")
+        replace.na(opt, yht, 1.1 * max(as.vector(estimate)))
+        replace.na(opt, ylim, c(0, opt$yht))
+        plot(xlim, opt$ylim, xlab = opt$xlab, ylab = opt$ylab, type = "n")
         for (i in 1:nlev) lines(eval.points, estimate[i, ],
-	    lty = opt$lty[i], col = opt$col[i])
+	          lty = opt$lty[i], col = opt$col[i], lwd = opt$lwd)
     }
     est <- NULL
     p <- NULL
@@ -392,20 +393,22 @@
         }
         p <- p/nboot
         cat("\nTest of equal densities:  p-value = ", round(p,3), "\n")
-        est <- list(p = p, h = h)
+        est <- list(p = p, estimaate = estimate, eval.points = eval.points, h = h)
     }
     if (model == "equal" & band) {
         av <- (sqrt(estimate[1, ]) + sqrt(estimate[2, ]))/2
         se <- sqrt(se[1, ]^2 + se[2, ]^2)
         upper <- (av + se)^2
         lower <- pmax(av - se, 0)^2
-        plot(xlim, c(0, 1.1 * max(as.vector(estimate), upper)),
-            xlab = opt$xlab, ylab = opt$ylab, type = "n")
+        replace.na(opt, yht, 1.1 * max(as.vector(estimate), upper))
+        replace.na(opt, ylim, c(0, opt$yht))
+        plot(xlim, opt$ylim, xlab = opt$xlab, ylab = opt$ylab, type = "n")
         polygon(c(eval.points, rev(eval.points)), c(upper, rev(lower)),
             col = "cyan", border = 0)
         lines(eval.points, estimate[1, ], lty = opt$lty[1], col = opt$col[1])
         lines(eval.points, estimate[2, ], lty = opt$lty[2], col = opt$col[2])
-        est <- list(p = p, upper = upper, lower = lower, h = h)
+        est <- list(p = p, estimate = estimate, eval.points = eval.points, 
+                    upper = upper, lower = lower, h = h)
     }
     invisible(est)
 }
@@ -682,9 +685,9 @@
     opt <- sm.options(options)
 
     replace.na(opt, ngrid, 20)
-    replace.na(opt, xlab,    deparse(substitute(x)))
-    replace.na(opt, ylab,    deparse(substitute(y)))
-    replace.na(opt, zlab,    deparse(substitute(z)))
+    replace.na(opt, xlab, deparse(substitute(x)))
+    replace.na(opt, ylab, deparse(substitute(y)))
+    replace.na(opt, zlab, deparse(substitute(z)))
     replace.na(opt, display, "rgl")
     if (any(is.na(opt$col)) | length(opt$col) != length(opt$props))
        opt$col <- topo.colors(length(opt$props))

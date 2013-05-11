@@ -50,6 +50,7 @@ to control various features of the plot.
             \code{eval.points},
             \code{se},
             \code{se.breaks},
+            \code{period},
             \code{xlab},
             \code{ylab},
             \code{zlab},
@@ -141,21 +142,22 @@ to control various features of the plot.
    \code{\link{sm.options}}, \code{\link{sm.surface3d}}
    }
 \examples{
-provide.data(trawl)
-Zone92   <- (Year == 0 & Zone == 1)
-Position <- cbind(Longitude - 143, Latitude)
-dimnames(Position)[[2]][1] <- "Longitude - 143"
+with(trawl, {
+   Zone92   <- (Year == 0 & Zone == 1)
+   Position <- cbind(Longitude - 143, Latitude)
+   dimnames(Position)[[2]][1] <- "Longitude - 143"
 
-par(mfrow = c(2, 2))
-sm.regression(Longitude, Score1, method = "aicc", col = "red",
-    model = "linear")
-sm.regression(Position[Zone92, ], Score1[Zone92], display = "image", 
-    theta = 120)
-sm.regression(Position[Zone92, ], Score1[Zone92], df = 12, col = "se",
-    theta = 120)
-sm.regression(Position[Zone92, ], Score1[Zone92], df = 12, col = "se", 
-    model = "linear", theta = 120)
-par(mfrow = c(1, 1))
+   par(mfrow = c(2, 2))
+   sm.regression(Longitude, Score1, method = "aicc", col = "red",
+       model = "linear")
+   sm.regression(Position[Zone92, ], Score1[Zone92], display = "image", 
+       theta = 120)
+   sm.regression(Position[Zone92, ], Score1[Zone92], df = 12, col = "se",
+       theta = 120)
+   sm.regression(Position[Zone92, ], Score1[Zone92], df = 12, col = "se", 
+       model = "linear", theta = 120)
+   par(mfrow = c(1, 1))
+})
 
 # sm.regression(Position[Zone92, 2:1], Score1[Zone92], display = "rgl", df = 12)
 # sm.regression(Position[Zone92, 2:1], Score1[Zone92], display = "rgl", df = 12,

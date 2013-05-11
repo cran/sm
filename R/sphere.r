@@ -151,47 +151,45 @@
     dvec <- exp(kap * cbind(x, y, z) %*% rbind(xj, yj, zj)) %*% rep(1/n, n)
     dvec[is.na(xgrid)] <- 0
     dvec <- dvec/max(dvec)
-    fmat <<- matrix(dvec, ngrid, ngrid, byrow = TRUE)
+    fmat <- matrix(dvec, ngrid, ngrid, byrow = TRUE)
     x <- seq(-1 + 1/ngrid, 1 - 1/ngrid, length = ngrid)
     y <- x
     image(x, y, fmat, add = TRUE)
     angle <- seq(0, pi/2, length = 50)
     xx <- cos(angle)
     yy <- sin(angle)
-    polygon(c(xx, 0, 1, 1), c(yy, 1, 1, 0), col = 0, border = 0)
+    polygon(c(xx, 0, 1, 1), c(yy, 1, 1, 0), col = "white", border = "white")
     angle <- seq(pi/2, pi, length = 50)
     xx <- cos(angle)
     yy <- sin(angle)
-    polygon(c(xx, -1, -1, 0), c(yy, 0, 1, 1), col = 0, border = 0)
+    polygon(c(xx, -1, -1, 0), c(yy, 0, 1, 1), col = "white", border = "white")
     angle <- seq(pi, 3 * pi/2, length = 50)
     xx <- cos(angle)
     yy <- sin(angle)
-    polygon(c(xx, 0, -1, -1), c(yy, -1, -1, 0), col = 0, border = 0)
+    polygon(c(xx, 0, -1, -1), c(yy, -1, -1, 0), col = "white", border = "white")
     angle <- seq(3 * pi/2, 2 * pi, length = 50)
     xx <- cos(angle)
     yy <- sin(angle)
-    polygon(c(xx, 1, 1, 0), c(yy, 0, -1, -1), col = 0, border = 0)
+    polygon(c(xx, 1, 1, 0), c(yy, 0, -1, -1), col = "white", border = "white")
     sphdraw(theta, phi)
 }
 
-"addplot" <-
-function (d, f, theta, phi)
-{
+"addplot" <- function (d, f, theta, phi) {
     a <- (f * pi)/180
     b <- (d * pi)/180
     radtheta <- (theta * pi)/180
     radphi <- (phi * pi)/180
-    xyzcheck <<- ((cos(a) * cos(b) * sin(radtheta) * cos(radphi)) +
+    xyzcheck <- ((cos(a) * cos(b) * sin(radtheta) * cos(radphi)) +
         (sin(b) * sin(radphi)) - (sin(a) * cos(b) * cos(radphi) *
         cos(radtheta)))
-    llong <<- a[xyzcheck >= 0]
-    llat <<- b[xyzcheck >= 0]
+    llong <- a[xyzcheck >= 0]
+    llat <- b[xyzcheck >= 0]
     if (length(llat) == 0) {
         break
     }
-    X <<- (cos(llong) * cos(llat) * cos(radtheta)) + (sin(llong) *
+    X <- (cos(llong) * cos(llat) * cos(radtheta)) + (sin(llong) *
         cos(llat) * sin(radtheta))
-    Y <<- (sin(llat) * cos(radphi)) + ((cos(llat) * sin(radphi)) *
+    Y <- (sin(llat) * cos(radphi)) + ((cos(llat) * sin(radphi)) *
         ((sin(llong) * cos(radtheta)) - (cos(llong) * sin(radtheta))))
     par(pty = "s")
     points(X, Y)
@@ -204,12 +202,12 @@ function (th, ph)
     cat("Phi =", ph, "\n")
     scan(n = 1)
     cat("Change theta to ? \n")
-    theta <<- scan(n = 1)
-    if (theta >= 360) theta <<- theta - 360
+    theta <- scan(n = 1)
+    if (theta >= 360) theta <- theta - 360
     cat("\n", "Change phi to ? \n")
-    phi <<- scan(n = 1)
-    if (phi > 90) phi <<- 90
-    if (phi < -90) phi <<- -90
+    phi <- scan(n = 1)
+    if (phi > 90) phi <- 90
+    if (phi < -90) phi <- -90
     cat("Theta =", theta, "\n")
     cat("Phi =", phi, "\n")
     list(theta = theta, phi = phi)
@@ -239,9 +237,9 @@ function (invis, theta, phi)
         points(0, 0, type = "n")
         break
     }
-    X <<- (cos(invislong) * cos(invislat) * cos(radtheta)) +
+    X <- (cos(invislong) * cos(invislat) * cos(radtheta)) +
         (sin(invislong) * cos(invislat) * sin(radtheta))
-    Y <<- (sin(invislat) * cos(radphi)) + ((cos(invislat) * sin(radphi)) *
+    Y <- (sin(invislat) * cos(radphi)) + ((cos(invislat) * sin(radphi)) *
         ((sin(invislong) * cos(radtheta)) - (cos(invislong) *
             sin(radtheta))))
     points(X, Y)
@@ -250,9 +248,9 @@ function (invis, theta, phi)
 "incphi" <-
 function (ph, inc)
 {
-    phi <<- ph + inc
-    if (phi > 90) phi <<- 90
-    if (phi < -90) phi <<- -90
+    phi <- ph + inc
+    if (phi > 90) phi <- 90
+    if (phi < -90) phi <- -90
     cat("Phi =", phi, "\n")
     phi
 }
@@ -260,8 +258,8 @@ function (ph, inc)
 "inctheta" <-
 function (th, inc)
 {
-    theta <<- th + inc
-    if (theta >= 360) theta <<- theta - 360
+    theta <- th + inc
+    if (theta >= 360) theta <- theta - 360
     theta
 }
 
@@ -274,7 +272,7 @@ function (beta, theta, phi)
     radbeta <- (beta * pi)/180
     radphi <- (phi * pi)/180
     alpha <- seq(0, (2 * pi), by = 0.05)
-    xyzcheck <<- ((cos(alpha) * cos(radbeta) * sin(radtheta) *
+    xyzcheck <- ((cos(alpha) * cos(radbeta) * sin(radtheta) *
         cos(radphi)) + (sin(radbeta) * sin(radphi)) - (sin(alpha) *
         cos(radbeta) * cos(radphi) * cos(radtheta)))
     alphaplot <- alpha[xyzcheck >= 0]
@@ -295,7 +293,7 @@ function (beta, theta, phi)
     radbeta <- (beta * pi)/180
     radphi <- (phi * pi)/180
     alpha <- seq(0, (2 * pi), by = 0.005)
-    xyzcheck <<- ((cos(alpha) * cos(radbeta) * sin(radtheta) *
+    xyzcheck <- ((cos(alpha) * cos(radbeta) * sin(radtheta) *
         cos(radphi)) + (sin(radbeta) * sin(radphi)) - (sin(alpha) *
         cos(radbeta) * cos(radphi) * cos(radtheta)))
     alphaplot <- alpha[xyzcheck >= 0]
@@ -314,7 +312,7 @@ function (alpha, theta, phi)
     radalpha <- (alpha * pi)/180
     radphi <- (phi * pi)/180
     beta <- seq(0, (2 * pi), by = 0.05)
-    xyzcheck <<- ((cos(radalpha) * cos(beta) * sin(radtheta) *
+    xyzcheck <- ((cos(radalpha) * cos(beta) * sin(radtheta) *
         cos(radphi)) + (sin(beta) * sin(radphi)) - (sin(radalpha) *
         cos(beta) * cos(radphi) * cos(radtheta)))
     betaplot <- beta[xyzcheck >= 0]
@@ -334,7 +332,7 @@ function (alpha, theta, phi)
     radalpha <- (alpha * pi)/180
     radphi <- (phi * pi)/180
     beta <- seq(0, (2 * pi), by = 0.005)
-    xyzcheck <<- ((cos(radalpha) * cos(beta) * sin(radtheta) *
+    xyzcheck <- ((cos(radalpha) * cos(beta) * sin(radtheta) *
         cos(radphi)) + (sin(beta) * sin(radphi)) - (sin(radalpha) *
         cos(beta) * cos(radphi) * cos(radtheta)))
     betaplot <- beta[xyzcheck >= 0]
@@ -353,19 +351,19 @@ function (latitude2, longitude2, theta, phi)
     b <- (latitude2 * pi)/180
     radtheta <- (theta * pi)/180
     radphi <- (phi * pi)/180
-    xyzcheck <<- ((cos(a) * cos(b) * sin(radtheta) * cos(radphi)) +
+    xyzcheck <- ((cos(a) * cos(b) * sin(radtheta) * cos(radphi)) +
         (sin(b) * sin(radphi)) - (sin(a) * cos(b) * cos(radphi) *
         cos(radtheta)))
-    long2 <<- a[xyzcheck >= 0]
-    lat2 <<- b[xyzcheck >= 0]
+    long2 <- a[xyzcheck >= 0]
+    lat2 <- b[xyzcheck >= 0]
     if (length(lat2) == 0) {
         points(0, 0, type = "n")
         text(0.6, -1.2, labels = "Data set:")
         break
     }
-    X <<- (cos(long2) * cos(lat2) * cos(radtheta)) + (sin(long2) *
+    X <- (cos(long2) * cos(lat2) * cos(radtheta)) + (sin(long2) *
         cos(lat2) * sin(radtheta))
-    Y <<- (sin(lat2) * cos(radphi)) + ((cos(lat2) * sin(radphi)) *
+    Y <- (sin(lat2) * cos(radphi)) + ((cos(lat2) * sin(radphi)) *
         ((sin(long2) * cos(radtheta)) - (cos(long2) * sin(radtheta))))
     points(X, Y)
 }
@@ -378,13 +376,13 @@ function (d, f, theta, phi)
     b <- (d * pi)/180
     radtheta <- (theta * pi)/180
     radphi <- (phi * pi)/180
-    xyzcheck <<- ((cos(a) * cos(b) * sin(radtheta) * cos(radphi)) +
+    xyzcheck <- ((cos(a) * cos(b) * sin(radtheta) * cos(radphi)) +
         (sin(b) * sin(radphi)) - (sin(a) * cos(b) * cos(radphi) *
         cos(radtheta)))
-    llong <<- a[xyzcheck >= 0]
-    llat <<- b[xyzcheck >= 0]
-    invislong <<- a[xyzcheck < 0]
-    invislat <<- b[xyzcheck < 0]
+    llong <- a[xyzcheck >= 0]
+    llat <- b[xyzcheck >= 0]
+    invislong <- a[xyzcheck < 0]
+    invislat <- b[xyzcheck < 0]
     if (length(llat) == 0) {
         par(pty = "s")
         plot(0, 0, type = "n", axes = FALSE, xlab = "", ylab = "",
@@ -392,9 +390,9 @@ function (d, f, theta, phi)
         list(invislong = invislong, invislat = invislat)
         break
     }
-    X <<- (cos(llong) * cos(llat) * cos(radtheta)) + (sin(llong) *
+    X <- (cos(llong) * cos(llat) * cos(radtheta)) + (sin(llong) *
         cos(llat) * sin(radtheta))
-    Y <<- (sin(llat) * cos(radphi)) + ((cos(llat) * sin(radphi)) *
+    Y <- (sin(llat) * cos(radphi)) + ((cos(llat) * sin(radphi)) *
         ((sin(llong) * cos(radtheta)) - (cos(llong) * sin(radtheta))))
     par(pty = "s")
     plot(X, Y, axes = FALSE, xlab = "", ylab = "", xlim = c(-1, 1),

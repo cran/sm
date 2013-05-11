@@ -41,18 +41,19 @@
            \emph{Statistics \& Computing}, to appear.}
 \seealso{\code{\link{sm.sigma2.compare}}}
 \examples{
-data(airquality)
-attach(airquality)
-x     <- cbind(Wind, Temp)
-y     <- Ozone^(1/3)
-group <- (Solar.R < 200)
-sig1 <- sm.sigma(x[ group, ], y[ group], ci = TRUE)
-sig2 <- sm.sigma(x[!group, ], y[!group], ci = TRUE)
-print(c(sig1$estimate, sig1$ci))
-print(c(sig2$estimate, sig2$ci))
-print(sm.sigma(x[ group, ], y[ group], model = "constant", h = c(3, 5))$p)
-print(sm.sigma(x[!group, ], y[!group], model = "constant", h = c(3, 5))$p)
-print(sm.sigma2.compare(x[group, ], y[group], x[!group, ], y[!group]))
-}
+\dontrun{
+with(airquality, {
+   x     <- cbind(Wind, Temp)
+   y     <- Ozone^(1/3)
+   group <- (Solar.R < 200)
+   sig1 <- sm.sigma(x[ group, ], y[ group], ci = TRUE)
+   sig2 <- sm.sigma(x[!group, ], y[!group], ci = TRUE)
+   print(c(sig1$estimate, sig1$ci))
+   print(c(sig2$estimate, sig2$ci))
+   print(sm.sigma(x[ group, ], y[ group], model = "constant", h = c(3, 5))$p)
+   print(sm.sigma(x[!group, ], y[!group], model = "constant", h = c(3, 5))$p)
+   print(sm.sigma2.compare(x[group, ], y[group], x[!group, ], y[!group]))
+})
+}}
 \keyword{nonparametric}
 \keyword{smooth}

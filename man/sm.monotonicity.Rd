@@ -80,18 +80,22 @@ the \code{method} which is currently active.  See \code{sm.options} and
 \code{\link{sm.regression}}, \code{\link{sm.options}}
 }
 \examples{
+	\dontrun{
 #     Radiocarbon dating data
 
-provide.data(radioc)
-ind     <- (Cal.age>5000 & Cal.age<6000)
-cal.age <- Cal.age[ind]
-rc.age  <- Rc.age[ind]
-sm.monotonicity(cal.age, rc.age, method = "aicc", nboot = 200)
+with(radioc, {
+   ind     <- (Cal.age>5000 & Cal.age<6000)
+   cal.age <- Cal.age[ind]
+   rc.age  <- Rc.age[ind]
+   sm.monotonicity(cal.age, rc.age, method = "aicc", nboot = 200)
+})
 
 #     Hosmer & Lemeshow birth data
 
-provide.data(birth)
-sm.monotonicity(Lwt[Smoke == "N"], Low[Smoke == "N"], type = "binomial")
-}
+with(birth, {
+   sm.monotonicity(Lwt[Smoke == "N"], Low[Smoke == "N"],
+          type = "binomial")
+})
+}}
 \keyword{smooth}
 \keyword{regression}

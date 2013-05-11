@@ -63,9 +63,10 @@ Oxford University Press, Oxford.
 }
 \examples{
 ## takes a while: extend sm.script(muscle)
-provide.data(muscle, options=list(describe=FALSE))
-TypeI <- TypeI.P + TypeI.R + TypeI.B
-sm.poisson.bootstrap(log(TypeI), TypeII, h = 0.5)
+with(muscle, {
+   TypeI <- TypeI.P + TypeI.R + TypeI.B
+   sm.poisson.bootstrap(log(TypeI), TypeII, h = 0.5)
+})
 }
 \keyword{nonparametric}
 \keyword{smooth}

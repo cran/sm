@@ -1,8 +1,10 @@
 \name{sm.discontinuity}
+
 \alias{sm.discontinuity}
-\title{
-The detection of discontinuities in a regression curve or surface.
+
+\title{The detection of discontinuities in a regression curve or surface.
 }
+
 \description{
   This function uses a comparison of left and right handed nonparametric 
   regression curves to assess the evidence for the presence of one or
@@ -12,6 +14,7 @@ The detection of discontinuities in a regression curve or surface.
   locations where the evidence for a discontinuity is strongest is also
   available.
 }
+
 \usage{
 sm.discontinuity(x, y, h, hd, \dots)
 }
@@ -35,7 +38,7 @@ a smoothing parameter to be used in smoothing the differences of the
 left and right sided nonparametric regression estimates.  A normal kernel
 function is used and \code{hd} is its standard deviation(s).  However, if
 this argument is omitted \code{hd} will be set to \code{h * sqrt(0.25)}, and
-\code{h} reset to \code{h * sqrt(0.25)}, when \code{x} is a vector
+\code{h} reset to \code{h * sqrt(0.75)}, when \code{x} is a vector
 When \code{x} is a matrix, \code{hd} will be set to \code{h * sqrt(0.5)}
 and \code{h} will be reset to the same value.
 }
@@ -85,8 +88,9 @@ and \code{h} will be reset to the same value.
 }
 \details{
   The reference below describes the statistical methods used in the function.
-  There are minor differences in somecomputational details of the 
-  implementation.
+  There are minor differences in somecomputational details of the implementation.
+  
+  Currently duplicated rows of \code{x} cause a difficulty in the two covariate case.  Duplicated rows should be removed.
 }
 \references{
    Bowman, A.W., Pope, A. and Ismail, B. (2006).
@@ -100,31 +104,35 @@ and \code{h} will be reset to the same value.
 \examples{
 par(mfrow = c(3, 2))
 
-provide.data(nile)
-sm.discontinuity(Year, Volume, hd = 0)
-sm.discontinuity(Year, Volume)
+with(nile, {
+   sm.discontinuity(Year, Volume, hd = 0)
+   sm.discontinuity(Year, Volume)
 
-ind <- (Year > 1898)
-plot(Year, Volume)
-h <- h.select(Year, Volume)
-sm.regression(Year[!ind], Volume[!ind], h, add = TRUE)
-sm.regression(Year[ ind], Volume[ ind], h, add = TRUE)
+   ind <- (Year > 1898)
+   plot(Year, Volume)
+   h <- h.select(Year, Volume)
+   sm.regression(Year[!ind], Volume[!ind], h, add = TRUE)
+   sm.regression(Year[ ind], Volume[ ind], h, add = TRUE)
 
-hvec <- 1:15
-p <- numeric(0)
-for (h in hvec) {
-   result <- sm.discontinuity(Year, Volume, h, display = "none", verbose = 0)
-   p <- c(p, result$p)
+   hvec <- 1:15
+   p <- numeric(0)
+   for (h in hvec) {
+      result <- sm.discontinuity(Year, Volume, h,
+                          display = "none", verbose = 0)
+      p <- c(p, result$p)
    }
-plot(hvec, p, type = "l", ylim = c(0, max(p)), xlab = "h")
-lines(range(hvec), c(0.05, 0.05), lty = 2)
+   plot(hvec, p, type = "l", ylim = c(0, max(p)), xlab = "h")
+   lines(range(hvec), c(0.05, 0.05), lty = 2)
+})
 
-provide.data(trawl)
-Position  <- cbind(Longitude, Latitude)
-ind <- (Longitude < 143.8)
-sm.regression(Position[ind,], Score1[ind], theta = 35, phi = 30)
-sm.discontinuity(Position[ind,], Score1[ind], col = "blue")
-
+with(trawl, {
+   Position  <- cbind(Longitude, Latitude)
+   ind <- (Longitude < 143.8)
+   # Remove a repeated point which causes difficulty with sm.discontinuity
+   ind[54] <- FALSE
+   sm.regression(Position[ind,], Score1[ind], theta = 35, phi = 30)
+   sm.discontinuity(Position[ind,], Score1[ind], col = "blue")
+})
 par(mfrow = c(1, 1))
 	
 #  The following example takes longer to run.
