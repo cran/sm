@@ -442,27 +442,39 @@
       if (all(is.na(col)))                  col   <- "green"
       if ((length(col) == 1) && (col == 1)) col   <- "green"
 
-      ep       <- eval.points
-      ngrid    <- nrow(ep)
-      col      <- matrix(c(col),      nrow = ngrid, ncol = ngrid)
-      col.mesh <- matrix(c(col.mesh), nrow = ngrid, ncol = ngrid)
+      ep <- eval.points
+      if (is.matrix(ep) && ncol(ep) == 2) {
+         ep1 <- ep[ , 1]
+         ep2 <- ep[ , 2]
+      }
+      else if (is.list(ep) && length(ep) == 2) {
+         ep1 <- ep[[1]]
+         ep2 <- ep[[2]]
+      }
+      else
+         stop("the form of eval.points in sm.surface3d is invalid.")
+
+      ngrid1 <- length(ep1)
+      ngrid2 <- length(ep2)         
+      col      <- matrix(c(col),      nrow = ngrid1, ncol = ngrid2)
+      col.mesh <- matrix(c(col.mesh), nrow = ngrid1, ncol = ngrid2)
       
-      xg1    <- rep(ep[-ngrid, 1], ngrid - 1)
-      xg2    <- rep(ep[    -1, 1], ngrid - 1)
-      xg3    <- rep(ep[    -1, 1], ngrid - 1)
-      xg4    <- rep(ep[-ngrid, 1], ngrid - 1)
-      zg1    <- rep(ep[-ngrid, 2], each = ngrid - 1)
-      zg2    <- rep(ep[-ngrid, 2], each = ngrid - 1)
-      zg3    <- rep(ep[    -1, 2], each = ngrid - 1)
-      zg4    <- rep(ep[    -1, 2], each = ngrid - 1)
-      yg1    <- c(surf[-ngrid, -ngrid])
-      yg2    <- c(surf[    -1, -ngrid])
-      yg3    <- c(surf[    -1,     -1])
-      yg4    <- c(surf[-ngrid,     -1])
-      col1   <- c(col[-ngrid, -ngrid])
-      col2   <- c(col[    -1, -ngrid])
-      col3   <- c(col[    -1,     -1])
-      col4   <- c(col[-ngrid,     -1])
+      xg1    <- rep(ep1[-ngrid1], ngrid2 - 1)
+      xg2    <- rep(ep1[     -1], ngrid2 - 1)
+      xg3    <- rep(ep1[     -1], ngrid2 - 1)
+      xg4    <- rep(ep1[-ngrid1], ngrid2 - 1)
+      zg1    <- rep(ep2[-ngrid2], each = ngrid1 - 1)
+      zg2    <- rep(ep2[-ngrid2], each = ngrid1 - 1)
+      zg3    <- rep(ep2[     -1], each = ngrid1 - 1)
+      zg4    <- rep(ep2[     -1], each = ngrid1 - 1)
+      yg1    <- c(surf[-ngrid1, -ngrid2])
+      yg2    <- c(surf[     -1, -ngrid2])
+      yg3    <- c(surf[     -1,      -1])
+      yg4    <- c(surf[-ngrid1,      -1])
+      col1   <- c(col[-ngrid1, -ngrid2])
+      col2   <- c(col[     -1, -ngrid2])
+      col3   <- c(col[     -1,      -1])
+      col4   <- c(col[-ngrid1,      -1])
       ind1   <- !is.na(yg1 + yg2 + yg3)
       ind2   <- !is.na(yg1 + yg3 + yg4)
       xg     <- c(c(rbind( xg1,  xg2,  xg3)[, ind1]), c(rbind( xg1,  xg3,  xg4)[, ind2]))
@@ -482,22 +494,22 @@
       a      <- scaling(xg, yg, zg)
       id1    <- triangles3d(a$x, a$y, a$z, col = colg, alpha = alpha, lit = lit,...)
       
-      xg1    <- rep(ep[-ngrid, 1], ngrid)
-      xg2    <- rep(ep[    -1, 1], ngrid)
-      xg3    <- rep(ep[      , 1], each = ngrid - 1)
-      xg4    <- rep(ep[      , 1], each = ngrid - 1)
-      zg1    <- rep(ep[      , 2], each = ngrid - 1)
-      zg2    <- rep(ep[      , 2], each = ngrid - 1)
-      zg3    <- rep(ep[-ngrid, 2], ngrid)
-      zg4    <- rep(ep[    -1, 2], ngrid)
-      yg1    <- c(surf[-ngrid, ])
-      yg2    <- c(surf[    -1, ])
-      yg3    <- c(t(surf[    , -ngrid]))
-      yg4    <- c(t(surf[    ,     -1]))
-      col1   <- c(col.mesh[-ngrid, ])
-      col2   <- c(col.mesh[    -1, ])
-      col3   <- c(t(col.mesh[    , -ngrid]))
-      col4   <- c(t(col.mesh[    ,     -1]))
+      xg1    <- rep(ep1[-ngrid1], ngrid2)
+      xg2    <- rep(ep1[     -1], ngrid2)
+      xg3    <- rep(ep1         , each = ngrid2 - 1)
+      xg4    <- rep(ep1         , each = ngrid2 - 1)
+      zg1    <- rep(ep2         , each = ngrid1 - 1)
+      zg2    <- rep(ep2         , each = ngrid1 - 1)
+      zg3    <- rep(ep2[-ngrid2], ngrid1)
+      zg4    <- rep(ep2[     -1], ngrid1)
+      yg1    <- c(surf[-ngrid1, ])
+      yg2    <- c(surf[     -1, ])
+      yg3    <- c(t(surf[     , -ngrid2]))
+      yg4    <- c(t(surf[     ,      -1]))
+      col1   <- c(col.mesh[-ngrid1,        ])
+      col2   <- c(col.mesh[     -1,        ])
+      col3   <- c(t(col.mesh[     , -ngrid2]))
+      col4   <- c(t(col.mesh[     ,      -1]))
       ind1   <- !is.na(yg1 + yg2)
       ind2   <- !is.na(yg3 + yg4)
       xg     <- c(c(rbind( xg1,  xg2)[, ind1]), c(rbind( xg3,  xg4)[, ind2]))

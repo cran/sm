@@ -26,8 +26,7 @@ functions intended for direct access by the user are:
 \code{sm.ancova}, \code{sm.autoregression}, \code{sm.binomial},
 \code{sm.binomial.bootstrap}, \code{sm.poisson}, \code{sm.poisson.bootstrap},
 \code{sm.options}, \code{sm.rm}, \code{sm.script}, \code{sm.sphere},
-\code{sm.survival}, \code{sm.ts.pdf}.  There are undocumented functions
-which are called by these.
+\code{sm.survival}, \code{sm.ts.pdf}, \code{sm.variogram}, \code{sm.pca}.  There are undocumented functions which are called by these.
 }
 \section{Scripts}{
   The function \code{sm.script} is used to run a set of examples (called

@@ -2,6 +2,7 @@
     list(hmult = 1, h.weights = NA, period = NA,
          add = FALSE, band = NA, props = c(75, 50, 25), nbins = NA,
          positive = FALSE, delta = NA, display = NA, 
+         hscale = 1, vscale = 1,
          xlab = NA, ylab = NA, zlab = NA, 
          xlim = NA, ylim = NA, zlim = NA, yht = NA,
          model = "none", reference = "none",
@@ -23,7 +24,7 @@
 {
     ## we can't do this in .onLoad
     unlockBinding(".sm.Options", asNamespace("sm"))
-    packageStartupMessage("Package `sm', version 2.2-5: type help(sm) for summary information")
+    packageStartupMessage("Package 'sm', version 2.2-5.4: type help(sm) for summary information")
     invisible()
 }
 

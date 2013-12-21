@@ -1,19 +1,22 @@
 \name{sm.variogram}
 \alias{sm.variogram}
+
 \title{
-A test of spatial independence based on smoothing an empirical variogram.
+Confidence intervals and tests based on smoothing an empirical variogram.
 }
 \description{
   This function constructs an empirical variogram, using the robust form
   of construction based on square-root absolute value differences of the
-  data.  Nonparametric regression is used to assess whether the mean
-  value of the empirical variogram changes with distance.  A hypothesis
-  test and a graphical reference band are both available, under the
-  assumption that the errors in the data are approximately normally
-  distributed.
+  data.  Flexible regression is used to assess a variety of questions about
+  the structure of the data used to construct the variogram, including 
+  independence, isotropy and stationarity.  Confidence bands for the underlying
+  variogram, and reference bands for the independence, isotropy and stationarity
+  models, can also be constructed under the assumption that the errors in the 
+  data are approximately normally distributed.
 }
 \usage{
-sm.variogram(x, y, h, \dots)
+sm.variogram(x, y, h, df.se = "automatic", max.dist = NA, original.scale = TRUE, 
+                      varmat = FALSE, \ldots)
 }
 \arguments{
 \item{x}{
@@ -29,10 +32,31 @@ this argument is omitted \code{h} will be selected by an approximate
 degrees of freedom criterion, controlled by the \code{df} parameter.
 See \code{sm.options} for details.
 }
+\item{df.se}{
+  the degrees of freedom used when smoothing the empirical variogram to estimate
+  standard errors.  The default value of "automatic" selects the degrees of
+  smoothing described in the Bowman and Crujeiras (2013) reference below.
+}
+\item{max.dist}{
+  this can be used to constrain the distances used in constructing the variogram.
+  The default is to use all distances.
+}
+\item{original.scale}{
+  a logical value which determines whether the plots are constructed on the
+  original variogram scale (the default) or on the square-root absolute value scale
+  on which the calculations are performed.
+}
+\item{varmat}{
+  a logical value which determines whether the variance matrix of the estimated
+  variogram is returned.
+}
 \item{\dots}{
   other optional parameters are passed to the \code{sm.options}
   function, through a mechanism which limits their effect only to this
-  call of the function; those relevant for this function are 
+  call of the function.  An important parameter here is \code{model} which, for
+  \code{sm.variogram}, can be set to \code{"none"}, \code{"independent"},
+  \code{"isotropic"} or \code{"stationary"}.
+  Other relevant parameters are 
   \code{add},
   \code{eval.points}, 
   \code{ngrid}, 
@@ -45,22 +69,36 @@ See \code{sm.options} for details.
   see the documentation of  \code{\link{sm.options}} for their
   description.  See the details section below for a discussion of
   the \code{display} and \code{se} parameters in this setting.
-}}  
+}}
+
 \value{
-  a list containing the raw (\code{sqrtdiff}, \code{distance}) and binned 
-  (\code{sqrtdiff.mean}, \code{distance.mean}) differences and distances,
-  the frequencies of the bins (\code{weights}), 
-  the values of the estimate (\code{estimate}) at the evaluation points 
-  (\code{eval.points}) the value of the smoothing parameter (\code{h}) used,
-  an indicator (\code{ibin}) of the bin in which the distance between
-  each pair of observations was placed and the indices (\code{ipair}) of
-  the original observations used to construct each pair.  
-  If a test of spatial independence has been performed, the p-value (\code{p}) 
-  is returned.  If \code{se} was set to \code{TRUE} then the standard errors
-  (\code{se}) of the binned values, under the assumption of spatial independence, 
-  are returned.  If a reference band has been requested, the standard error 
-  (\code{se.band}) of the difference between the smooth estimate and the mean
-  of all the data points is also returned.
+  A list with the following components:
+  \item{\code{sqrtdiff}, \code{distance}}{the raw differences and distances}
+  \item{\code{sqrtdiff.mean}, \code{distance.mean}}{the binned differences and distances}
+  \item{\code{weights}}{the frequencies of the bins}
+  \item{\code{estimate}}{the values of the estimate at the evaluation points}
+  \item{\code{eval.points}}{the evaluation points}
+  \item{\code{h}}{the value of the smoothing parameter used}
+  \item{\code{ibin}}{an indicator of the bin in which the distance between
+        each pair of observations was placed}
+  \item{\code{ipair}}{the indices of the original observations used to construct each pair}
+
+  The suitability of a particular model can be assessed by setting the \code{model}
+  argument, in which case the following components may also be returned, determined by
+  the arguments passed in \ldots or the settings in \code{sm.options}.
+  \item{\code{p}}{the p-value of the test}
+  \item{\code{se}}{the standard errors of the binned values 
+  		(if the argument \code{se} was set to \code{TRUE})}
+  \item{\code{se.band}}{when an independence model is examined, this gives the 
+  	    standard error of the difference between the smooth estimate and the mean 
+  	    of all the data points, if a reference band has been requested}
+  \item{\code{V}}{the variance matrix of the binned variogram.  When \code{model} is set to
+  		\code{"isotropic"} or \code{"stationary"}, the variance matrix is computed
+  		under those assumptions.}
+  \item{\code{sdiff}}{the standardised difference between the estiamte of the variogram
+  	    and the reference model, evaluated at \code{eval.points}}
+  \item{\code{levels}}{the levels of standarised difference at which contours are drawn 
+  	    in the case of \code{model = "isotropy"}.}
 }
 \section{Side Effects}{
   a plot on the current graphical device is produced, unless the option 
@@ -68,6 +106,9 @@ See \code{sm.options} for details.
 }
 \details{
   The reference below describes the statistical methods used in the function.
+  
+  Note that, apart from the simple case of the indpendence model, the calculations
+  required are extensive and so the function can be slow.
 
   The \code{display} argument has a special meaning for
   this function.  Its default value is \code{"binned"}, which plots the
@@ -75,34 +116,101 @@ See \code{sm.options} for details.
   will suppress the graphical display.  Any other value will lead to a plot 
   of the individual differences between all observations.  This will lead
   to a very large number of plotted points, unless the dataset is small.
-  
-  Setting \code{se = TRUE} produces standard errors for the binned values of the 
-  empirical variogram.  They are constructed to account for the correlation which
-  arises from the differencing involved in the variogram.  However, the calculations
-  assume spatial independence and they therefore simply give an indication of the 
-  variability under this assumption.  
-}
+  }
 \references{
   Diblasi, A. and Bowman, A.W. (2001).
-  On the use of the variogram for checking independence in a 
-  Gaussian spatial process.
+  On the use of the variogram for checking independence in a Gaussian spatial process.
   \emph{Biometrics}, 57, 211-218.
+  
+  Bowman, A.W. and Crujeiras, R.M. (2013).
+  Inference for variograms.
+  \emph{Computational Statistics and Data Analysis}, 66, 19-31.
 }
 \seealso{
 \code{\link{sm.regression}}, \code{\link{sm.options}}
 }
+
 \examples{
 with(coalash, {
    Position <- cbind(East, North)
    sm.options(list(df = 6, se = TRUE))
 
    par(mfrow=c(2,2))
-   sm.variogram(Position, Percent, band = FALSE)
-   sm.variogram(Position, Percent)
-   sm.variogram(East,     Percent)
-   sm.variogram(North,    Percent)
+   sm.variogram(Position, Percent, original.scale = FALSE, se = FALSE)
+   sm.variogram(Position, Percent, original.scale = FALSE)
+   sm.variogram(Position, Percent, original.scale = FALSE, model = "independent")
+   sm.variogram(East,     Percent, original.scale = FALSE, model = "independent")
    par(mfrow=c(1,1))
 })
+
+\dontrun{
+# Comparison of Co in March and September
+   
+with(mosses, {
+	
+   nbins <- 12
+   vgm.m <- sm.variogram(loc.m, Co.m, nbins = nbins, original.scale = TRUE,
+                        ylim = c(0, 1.5))
+   vgm.s <- sm.variogram(loc.s, Co.s, nbins = nbins, original.scale = TRUE,
+                        add = TRUE, col.points = "blue")
+                        
+   trns <- function(x) (x / 0.977741)^4
+   del <- 1000
+   plot(vgm.m$distance.mean, trns(vgm.m$sqrtdiff.mean), type = "b",
+         ylim = c(0, 1.5), xlab = "Distance", ylab = "Semi-variogram")
+   points(vgm.s$distance.mean - del, trns(vgm.s$sqrtdiff.mean), type = "b",
+         col = "blue", pch = 2, lty = 2)
+
+   plot(vgm.m$distance.mean, trns(vgm.m$sqrtdiff.mean), type = "b",
+         ylim = c(0, 1.5), xlab = "Distance", ylab = "Semi-variogram")
+   points(vgm.s$distance.mean - del, trns(vgm.s$sqrtdiff.mean), type = "b",
+         col = "blue", pch = 2, lty = 2)
+   segments(vgm.m$distance.mean, trns(vgm.m$sqrtdiff.mean - 2 * vgm.m$se),
+         vgm.m$distance.mean, trns(vgm.m$sqrtdiff.mean + 2 * vgm.m$se))
+   segments(vgm.s$distance.mean - del, trns(vgm.s$sqrtdiff.mean - 2 * vgm.s$se),
+         vgm.s$distance.mean - del, trns(vgm.s$sqrtdiff.mean + 2 * vgm.s$se),
+         col = "blue", lty = 2)
+
+   mn <- (vgm.m$sqrtdiff.mean + vgm.s$sqrtdiff.mean) / 2
+   se <- sqrt(vgm.m$se^2 + vgm.s$se^2)
+   plot(vgm.m$distance.mean, trns(vgm.m$sqrtdiff.mean), type = "n",
+        ylim = c(0, 1.5), xlab = "Distance", ylab = "Semi-variogram")
+   polygon(c(vgm.m$distance.mean, rev(vgm.m$distance.mean)),
+        c(trns(mn - se), rev(trns(mn + se))),
+        border = NA, col = "lightblue")  
+   points(vgm.m$distance.mean, trns(vgm.m$sqrtdiff.mean))
+   points(vgm.s$distance.mean, trns(vgm.s$sqrtdiff.mean), col = "blue", pch = 2)
+
+   vgm1 <- sm.variogram(loc.m, Co.m, nbins = nbins, varmat = TRUE, 
+                        display = "none")
+   vgm2 <- sm.variogram(loc.s, Co.s, nbins = nbins, varmat = TRUE,
+                        display = "none")
+
+   nbin  <- length(vgm1$distance.mean)
+   vdiff <- vgm1$sqrtdiff.mean - vgm2$sqrtdiff.mean
+   tstat <- c(vdiff \%*\% solve(vgm1$V + vgm2$V) \%*\% vdiff)
+   pval  <- 1 - pchisq(tstat, nbin)
+   print(pval)
+})
+
+# Assessing isotropy for Hg in March
+
+with(mosses, {
+   sm.variogram(loc.m, Hg.m, model = "isotropic")
+})
+
+# Assessing stationarity for Hg in September
+
+with(mosses, {
+   vgm.sty <- sm.variogram(loc.s, Hg.s, model = "stationary")
+   i <- 1
+   image(vgm.sty$eval.points[[1]], vgm.sty$eval.points[[2]], vgm.sty$estimate[ , , i],
+         col = topo.colors(20))
+   contour(vgm.sty$eval.points[[1]], vgm.sty$eval.points[[2]], vgm.sty$sdiff[ , , i],
+         col = "red", add = TRUE)
+})
+
+}
 }
 \keyword{smooth}
 \keyword{regression}

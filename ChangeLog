@@ -1,3 +1,7 @@
+Version 2.2-5.3 2014-01-16  Addition of sm.pca function.
+                            Extension of sm.variogram function.
+                            Other minor bug fixes.
+
 Version 2.2-5.3 2013-05-11  Addition of lwd parameter to sm.regression.
                             All datasets given their own help files.
                             Minor corrections to help files and sm.options.

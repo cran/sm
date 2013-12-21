@@ -15,7 +15,7 @@ Missing values can be accommodated.
 }
 \arguments{
 \item{eval.points}{
-a two-column matrix defining the marginal grids of covariate values.
+if this is a two-column matrix then each column defines the marginal grids of covariate values.  Alternatively, a list with two components can also be used to handle cases where the grids are of different size.
 }
 \item{surf}{
 a matrix of heights corresponding to the grid of covariate values.

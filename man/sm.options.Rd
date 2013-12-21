@@ -2,28 +2,16 @@
 \alias{sm.options}
 \title{Set or return options of sm library}
 \description{
-Provides a means to control the behaviour of the \code{sm} library
-such as the colour of the plotted lines, the size of the grid in 2-D
-estimation, the set of evaluations points, and many others.
+This function provides a means to control the behaviour of the \code{sm} library such as the colour of the plotted lines, the size of the grid in 2-d estimation, the set of evaluations points, and many others.  A list may be given as the only argument, or any number of arguments may be in the \code{name=value} form.  If no arguments are specified then the function returns the current settings of all the arguments.
 }
 \usage{
-sm.options(\dots)
+sm.options(...)
 }
 \arguments{
-  \item{\dots}{    
-  a list may be given as the only argument, or any number of arguments may be in
-  the \code{name=value} form, or no argument at all may be given.  See
-  the Value and Details sections for explanation.
-
-Arguments which are set by a function call will remain
-in effect until the end of the
-current S-plus session, unless overwritten by a subsequent call.  In
-addition, they can be added as optional parameters of calls to specific
-functions of the \code{sm} library; in this case, their effect is
-limited to that function call.  See the documentation of specific
-functions for the list of options which are recognised by that function.
-Notice that some options are relevant only to some functions.
-\itemize{
+\item{...}{
+A list may be given as the only argument, or any number of arguments may be in the \code{name=value} form.  The valid names of the arguments are given below.
+}
+\describe{
 \item{add}{
 a logical value which controls whether the estimate is added to
 the current plot.  Its default value is \code{FALSE}, which creates a new plot.
@@ -313,22 +301,22 @@ reference model as the null hypothesis. Default value: \code{TRUE}.
 \item{zlab}{
   the label attached to the z-axis (three-dimensional plots only).
 }
-\item{zlim}{ the range of the vertical axis when estimates are
-  displayed as perspective plots.}
-}}}
+\item{zlim}{
+  the range of the vertical axis when estimates are displayed as perspective plots.
+}
+}
+}
+
 \value{
  a list with  the updated values of the parameters. If the argument list
  is not empty, the returned list is invisible.
 }
-\details{
-  The parameter values set via a call to this function will remain in
-  effect for the rest of the session, affecting the subsequent behaviour
-  of the other functions of the \code{sm} library for which the given
-  parameters are relevant.
 
-  This offers the possibility of customizing the functioning of the \code{sm}
-  library, for instance by insertions of appropriate calls to \code{sm.options}
-  in a load hook for package \pkg{sm}.
+\details{
+Arguments which are set by a function call will remain in effect until the end of the current S-plus session, unless overwritten by a subsequent call.  In addition, they can be added as optional parameters of calls to specific functions of the \code{sm} package; in this case, their effect is
+limited to that function call.  
+
+See the documentation of specific functions for the list of options which are recognised by that function.  Notice that some options are relevant only to some functions.
 }
 \examples{
 \dontrun{sm.options(poly.index = 0)

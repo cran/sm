@@ -66,7 +66,8 @@ rp.smooth1 <- function(x, y, h, design.mat, model, weights, rawdata, opt) {
                       opt = opt, hvec = hvec, dfvec = dfvec, h.manual = h,
                       method = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
-      rp.tkrplot(smooth.panel, plot, plot.smooth1, pos = "right")
+      rp.tkrplot(smooth.panel, plot, plot.smooth1, pos = "right",
+                 hscale = opt$hscale, vscale = opt$vscale)
       plotfun <- replot.smooth1
       }
    else
@@ -199,7 +200,8 @@ rp.smooth2 <- function(x, y, h, model, weights, rawdata, opt) {
                       theta = opt$theta, phi = opt$phi,
                       method = "manual", method.old = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
-      rp.tkrplot(smooth.panel, smplot, plot.smooth2, pos = "right")
+      rp.tkrplot(smooth.panel, smplot, plot.smooth2, pos = "right",
+                 hscale = opt$hscale, vscale = opt$vscale)
       plotfun <- replot.smooth2
       }
    else
@@ -286,7 +288,8 @@ rp.density1 <- function(x, h, model, weights, rawdata, opt) {
                       opt = opt, h.manual = h,
                       method = "manual", se = opt$se)
    if (opt$panel.plot) {
-      rp.tkrplot(smooth.panel, plot, plot.density1, pos = "right")
+      rp.tkrplot(smooth.panel, plot, plot.density1, pos = "right",
+                 hscale = opt$hscale, vscale = opt$vscale)
       plotfun <- replot.density1
       }
    else
@@ -389,7 +392,8 @@ rp.density2 <- function(x, h, model, weights, rawdata, opt) {
                       method = "manual", method.old = "manual", se = opt$se, test = opt$test)
 
    if (opt$panel.plot) {
-      rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right")
+      rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right",
+                 hscale = opt$hscale, vscale = opt$vscale)
       plotfun <- replot.density2
       }
    else
@@ -474,7 +478,8 @@ rp.density3 <- function(x, h, model, weights, rawdata, opt) {
                       theta = opt$theta, phi = opt$phi, surf.ids = NA,
                       method = "manual", method.old = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
-      rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right")
+      rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right",
+                 hscale = opt$hscale, vscale = opt$vscale)
       plotfun <- replot.density3
       }
    else
