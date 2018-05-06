@@ -185,7 +185,7 @@
     llong <- a[xyzcheck >= 0]
     llat <- b[xyzcheck >= 0]
     if (length(llat) == 0) {
-        break
+        return()
     }
     X <- (cos(llong) * cos(llat) * cos(radtheta)) + (sin(llong) *
         cos(llat) * sin(radtheta))
@@ -235,7 +235,7 @@ function (invis, theta, phi)
     radphi <- (phi * pi)/180
     if (length(invislat) == 0) {
         points(0, 0, type = "n")
-        break
+        return()
     }
     X <- (cos(invislong) * cos(invislat) * cos(radtheta)) +
         (sin(invislong) * cos(invislat) * sin(radtheta))
@@ -359,7 +359,7 @@ function (latitude2, longitude2, theta, phi)
     if (length(lat2) == 0) {
         points(0, 0, type = "n")
         text(0.6, -1.2, labels = "Data set:")
-        break
+        return()
     }
     X <- (cos(long2) * cos(lat2) * cos(radtheta)) + (sin(long2) *
         cos(lat2) * sin(radtheta))
@@ -388,7 +388,7 @@ function (d, f, theta, phi)
         plot(0, 0, type = "n", axes = FALSE, xlab = "", ylab = "",
             xlim = c(-1, 1), ylim = c(-1, 1))
         list(invislong = invislong, invislat = invislat)
-        break
+        return()
     }
     X <- (cos(llong) * cos(llat) * cos(radtheta)) + (sin(llong) *
         cos(llat) * sin(radtheta))

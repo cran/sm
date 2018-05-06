@@ -268,10 +268,10 @@
    }
 
 "britmap" <- function () {
-    jump <- c(0, sqrt(diff(britpts$britlat)^2 + diff(britpts$britlong)^2))
-    flag <- rep(1, nrow(britpts))
+    jump <- c(0, sqrt(diff(sm::britpts$britlat)^2 + diff(sm::britpts$britlong)^2))
+    flag <- rep(1, nrow(sm::britpts))
     flag[jump >= 0.6] <- NA
-    lines(britpts * flag)
+    lines(sm::britpts * flag)
     }
 
 "pause" <- function () {

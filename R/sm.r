@@ -343,19 +343,19 @@ sm <- function(x, y, weights, bdeg = 3, pord = 2, h, model, ...
             pam.panel$opt$se       <- pam.panel$se
             pam.panel$opt$theta    <- pam.panel$theta
             pam.panel$opt$phi      <- pam.panel$phi
-            rp.tkrreplot(pam.panel, plot)
+            rpanel::rp.tkrreplot(pam.panel, plot)
             pam.panel
          }
          opt1 <- opt
          opt1$panel <- FALSE
-         pam.panel <- rp.control(model = result, opt = opt1, Pall = rbind(0, cbind(0, P[[1]])),
+         pam.panel <- rpanel::rp.control(model = result, opt = opt1, Pall = rbind(0, cbind(0, P[[1]])),
                                  df = opt$df, df.fun = df.fun, theta = opt$theta, phi = opt$phi)
-         rp.tkrplot(pam.panel, plot, sm.pam.draw, hscale = opt$hscale, vscale = opt$vscale, pos = "right")
-         rp.slider(pam.panel, df, df.min, df.max, sm.pam.redraw, showvalue = TRUE)
-         rp.checkbox(pam.panel, se, sm.pam.redraw, title = "Standard errors")
+         rpanel::rp.tkrplot(pam.panel, plot, sm.pam.draw, hscale = opt$hscale, vscale = opt$vscale, pos = "right")
+         rpanel::rp.slider(pam.panel, df, df.min, df.max, sm.pam.redraw, showvalue = TRUE)
+         rpanel::rp.checkbox(pam.panel, se, sm.pam.redraw, title = "Standard errors")
          if (ndims[[1]] == 2) {
-            rp.slider(pam.panel, theta, -180, 180, sm.pam.redraw, "persp angle 1")
-            rp.slider(pam.panel, phi,      0,  90, sm.pam.redraw, "persp angle 2")
+            rpanel::rp.slider(pam.panel, theta, -180, 180, sm.pam.redraw, "persp angle 1")
+            rpanel::rp.slider(pam.panel, phi,      0,  90, sm.pam.redraw, "persp angle 2")
          }
       }
       else if (opt$display != "none")

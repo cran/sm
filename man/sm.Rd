@@ -43,15 +43,13 @@ Datasets of arbitrary size can be handled by the current version of
 binning operations. 
 }
 \section{Requirements}{
-R version >= 2.1.0. Packages \code{gam} and \code{akima} are used by
+R version >= 3.1.0. Packages \code{gam} and \code{akima} are used by
 some of the scripts launched via \code{sm.script}, but they are not
 used by the functions of this package.
 }
 \section{Version}{
-This is version 2.1.
-The most recent version of the package can be obtained from either of
-the web pages: \url{http://www.stats.gla.ac.uk/~adrian/sm},
-\url{http://azzalini.stat.unipd.it/Book\_sm}
+This is version 2.2.
+The most recent version of the package can be obtained from the CRAN archive.
 }
 \section{Details}{
   The book by Bowman and Azzalini (1997) provides more detailed and

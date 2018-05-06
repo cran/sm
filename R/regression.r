@@ -48,7 +48,7 @@
      nx <- nobs
   
    replace.na(opt, h.weights, rep(1,nx))
-   if (opt$panel && !require(rpanel)) {
+   if (opt$panel && !requireNamespace("rpanel", quietly = TRUE)) {
       opt$panel <- FALSE
       cat("The rpanel package is not available.\n")
       }
@@ -399,10 +399,10 @@
                   theta = opt$theta, phi = opt$phi,
                   ticktype = "detailed", col = c(opt$col), d = 4)
             }
-        else if ((opt$display %in% "rgl") && (require(rgl) & require(rpanel))) {
+        else if ((opt$display %in% "rgl") && (requireNamespace("rgl", quietly = TRUE) & requireNamespace("rpanel", quietly = TRUE))) {
             replace.na(opt, ylim, range(y, est, na.rm = TRUE))
             if (!opt$add)
-               opt$scaling <- rp.plot3d(rawdata$x[, 1], rawdata$y, rawdata$x[, 2],
+               opt$scaling <- rpanel::rp.plot3d(rawdata$x[, 1], rawdata$y, rawdata$x[, 2],
                          xlab = opt$xlab, ylab = opt$zlab, zlab = opt$ylab,
                          xlim = opt$xlim, ylim = opt$ylim, zlim = opt$zlim,
                          size = opt$size, col = opt$col.points)
@@ -492,7 +492,7 @@
       zg     <- c(  zg, c(rbind( zg2,  zg3,  zg4)[, ind4]))
       colg   <- c(colg, c(rbind(col2, col3, col4)[, ind4]))
       a      <- scaling(xg, yg, zg)
-      id1    <- triangles3d(a$x, a$y, a$z, col = colg, alpha = alpha, lit = lit,...)
+      id1    <- rgl::triangles3d(a$x, a$y, a$z, col = colg, alpha = alpha, lit = lit,...)
       
       xg1    <- rep(ep1[-ngrid1], ngrid2)
       xg2    <- rep(ep1[     -1], ngrid2)
@@ -517,7 +517,7 @@
       zg     <- c(c(rbind( zg1,  zg2)[, ind1]), c(rbind( zg3,  zg4)[, ind2]))
       colg   <- c(c(rbind(col1, col2)[, ind1]), c(rbind(col3, col4)[, ind2]))
       a      <- scaling(xg, yg, zg)
-      id2    <- segments3d(a$x, a$y, a$z, col = colg, alpha = alpha.mesh, lit = lit, ...)
+      id2    <- rgl::segments3d(a$x, a$y, a$z, col = colg, alpha = alpha.mesh, lit = lit, ...)
 
       invisible(c(id1, id2))
       }

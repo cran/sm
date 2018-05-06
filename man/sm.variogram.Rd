@@ -131,6 +131,8 @@ See \code{sm.options} for details.
 }
 
 \examples{
+
+\dontrun{
 with(coalash, {
    Position <- cbind(East, North)
    sm.options(list(df = 6, se = TRUE))
@@ -143,7 +145,6 @@ with(coalash, {
    par(mfrow=c(1,1))
 })
 
-\dontrun{
 # Comparison of Co in March and September
    
 with(mosses, {

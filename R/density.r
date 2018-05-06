@@ -49,11 +49,14 @@
             h <- h.select(x = x, y = NA, weights = weights, ...)
     }
     
-    if (opt$panel) 
-       if (!require(rpanel)) {
+    if (opt$panel) {
+       if (!requireNamespace("rpanel",  quietly = TRUE)  | 
+           !requireNamespace("tkrplot", quietly = TRUE)  |
+           !requireNamespace("tcltk",   quietly = TRUE)) {
        	  if (opt$verbose > 0) cat("The rpanel package is not available.\n")
           opt$panel <- FALSE
-          }
+       }
+    }
     if (is.na(opt$band)) {
        if (model == "none") opt$band <- FALSE
           else              opt$band <- TRUE
@@ -192,11 +195,13 @@
     replace.na(opt, h.weights, rep(1, length(x)))
     hmult <- opt$hmult
     display <- opt$display
-    if ((display == "rgl") & (!require(rgl))) {
+    if ((display == "rgl") & (!requireNamespace("rgl", quietly = TRUE))) {
         display <- "persp"
         cat("The rgl package is not available.\n")
         }
-    if ((display == "rgl") & (!require(rpanel))) {
+    if ((display == "rgl") & (!requireNamespace("rpanel", quietly = TRUE)  |
+                              !requireNamespace("tkrplot", quietly = TRUE) |
+                              !requireNamespace("tcltk", quietly = TRUE))) {
         display <- "persp"
         cat("The rpanel package is not available.\n")
         }
@@ -665,7 +670,7 @@
      
      if (!opt$add) {
      	if (any(is.na(opt$zlim))) opt$zlim <- c(0, max(dgrid * 1.5))
-        opt$scaling <- rp.plot3d(xgrid, dgrid, ygrid, type = "n",
+        opt$scaling <- rpanel::rp.plot3d(xgrid, dgrid, ygrid, type = "n",
                          xlab = opt$xlab, ylab = opt$zlab, zlab = opt$ylab,
                          xlim = opt$xlim, ylim = opt$zlim, zlim = opt$ylim,
                          size = opt$size, col = opt$col.points)
@@ -756,12 +761,15 @@
                       (sum(weights) * (2 * pi)^1.5 * h[1] * h[2] * h[3] * hmult^3))
        est <- array(c(est), dim = rep(opt$ngrid, 3))
        if (opt$display != "none") {
-          if (require(rpanel) & require(rgl) & require(misc3d)) {
-             struct <- contour3d(est, levels, 
+          if (requireNamespace("rpanel", quietly = TRUE) &
+              requireNamespace("tcltk",  quietly = TRUE) &
+              requireNamespace("rgl",    quietly = TRUE) &
+              requireNamespace("misc3d", quietly = TRUE)) {
+             struct <- misc3d::contour3d(est, levels, 
                            eval.points[, 1], eval.points[, 2], eval.points[, 3], 
                            engine = "none")
              if (!opt$add) {
-             	opt$scaling <- rp.plot3d(rawdata$x[, 1], rawdata$x[, 2], rawdata$x[, 3],
+             	opt$scaling <- rpanel::rp.plot3d(rawdata$x[, 1], rawdata$x[, 2], rawdata$x[, 3],
                                   xlab = opt$xlab, ylab = opt$ylab, zlab = opt$zlab,
                                   col = opt$col.points, size = opt$size)
                 result$scaling <- opt$scaling
@@ -774,7 +782,7 @@
                 trngs.z <- c(t(cbind(strct$v1[, 3], strct$v2[, 3],strct$v3[, 3])))
                 a <- opt$scaling(trngs.x, trngs.y, trngs.z)
                 surf.ids <- c(surf.ids, 
-                      triangles3d(a$x, a$y, a$z, col = opt$col[i], alpha = opt$alpha[i]))
+                      rgl::triangles3d(a$x, a$y, a$z, col = opt$col[i], alpha = opt$alpha[i]))
                 }
              }
           else if (opt$verbose > 0) cat("at least one of the rpanel, rgl or misc3d packages",

@@ -276,7 +276,7 @@
                         as.integer(results$ibin),
                         matrix(as.integer(results$ipair), ncol = 2),
                         as.double(gamma.hat.V),
-                        res = as.double(result), PACKAGE = "sm")
+                        res = as.double(result))
             se     <- sqrt(output$res)
          }
          if (type != "binned" | varmat) {
@@ -303,7 +303,7 @@
             as.integer(results$ibin),
             matrix(as.integer(results$ipair), ncol = 2),
             as.double(gamma.hat.V),
-            res=as.double(result), PACKAGE = "sm")
+            res=as.double(result))
          V <- matrix(data=output$res, nrow=length(gamma.hat.V), ncol=length(gamma.hat.V), byrow= TRUE)
 
             # if (opt$verbose > 0) cat("\n")
@@ -522,7 +522,7 @@
                          as.integer(results$ibin),
                          matrix(as.integer(results$ipair), ncol = 2),
                          as.double(gamma.hat.V),
-                         res=as.double(result), PACKAGE = "sm")
+                         res=as.double(result))
       V <- matrix(data=output$res, nrow=length(gamma.hat.V), ncol=length(gamma.hat.V), byrow= TRUE)
 
       # if (opt$verbose > 0) cat("\n")
@@ -649,7 +649,7 @@
          #          alpha = 0.5, alpha.mesh = 0)
       }
       else if (opt$display == "image") {
-      	 if (!require(akima)) stop("this option requires the akima package.")
+      	 if (!requireNamespace("akima", quietly = TRUE)) stop("this option requires the akima package.")
          a     <- U
          a     <- rbind(a, cbind(a[ , 1], a[ , 2] + pi))
          a1    <- a[ , 1] * cos(a[ , 2])
@@ -657,8 +657,8 @@
          b     <- rep(c(est1), 2)
          sdiff <- rep(c(sdiff), 2)
          ind   <- !is.na(b) & !duplicated(cbind(a1, a2))
-         inte  <- interp(a1[ind], a2[ind], b[ind])
-         ints  <- interp(a1[ind], a2[ind], sdiff[ind])
+         inte  <- akima::interp(a1[ind], a2[ind], b[ind])
+         ints  <- akima::interp(a1[ind], a2[ind], sdiff[ind])
          cts   <- contourLines(ints)
          lvls  <- rep(0, length(cts))
          for (i in 1:length(cts)) lvls[i] <- cts[[i]]$level
@@ -803,7 +803,7 @@
                          as.integer(results$ibin),
                          matrix(as.integer(results$ipair), ncol = 2),
                          as.double(gamma.hat.V),
-                         res=as.double(result), PACKAGE = "sm")
+                         res=as.double(result))
       V <- matrix(data=output$res, nrow=length(gamma.hat.V), ncol=length(gamma.hat.V), byrow= TRUE)
 
       # if (opt$verbose > 0) cat("\n")
