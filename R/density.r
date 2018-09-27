@@ -149,11 +149,16 @@
         est <- smplot.density(x, h, weights, rawdata, options = opt)
     if (all(!is.na(opt$eval.points))) {
         if (opt$positive)
-            est <- sm.density.positive.1d(x, h, weights, options = opt)
-        else est <- sm.density.eval.1d(x, h, weights, options = opt)
+           est <- sm.density.positive.1d(x, h, weights, options = opt)
+        else
+           est <- sm.density.eval.1d(x, h, weights, options = opt)
         }
-    else if (opt$display %in% "none")
-        est <- sm.density.eval.1d(x, h, weights = weights, options = opt)
+    else if (opt$display %in% "none") {
+       if (opt$positive)
+          est <- sm.density.positive.1d(x, h, weights, options = opt)
+       else
+          est <- sm.density.eval.1d(x, h, weights = weights, options = opt)
+    }
     if (all(opt$h.weights == rep(1, length(x))) & opt$positive == FALSE) {
         se <- sqrt(dnorm(0, sd = sqrt(2))/(4 * sum(weights) *
             h))

@@ -1,9 +1,12 @@
-# run this script immediately after "bissel3"
+# run this script immediately after "bissel2"
 # which produces the nonparametric regression estimate
+
+with(bissell, {
+   
 plot(Length, Flaws, xlim=c(0,1000), pch="o")
 Y <- Flaws[order(Length)]
 X <- sort(Length)
-h <- ask("Please type a value for the smoothing parameter, h")
+h <- 100
 beta <- sum(Y)/sum(X)
 abline(0,beta,col=2)
 dev<-function(y,mu){
@@ -34,6 +37,5 @@ for (i in 1:nboot) {
 cat("\n")
 lines(x,sm.beta*x,col=1)
 cat("Observed significance = ", p.boot/nboot,"\n")
-   
-  
- 
+
+})

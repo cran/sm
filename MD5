@@ -1,8 +1,8 @@
-df39d0232154f8d81811e9a5a41959d1 *ChangeLog
-a207c762e421414b5693db557895a167 *DESCRIPTION
+8007cdb9490e8bbd674ecb1375fe4310 *ChangeLog
+8712fbbc6a2ffb34102c752f11397d39 *DESCRIPTION
 e3bf56e1fa88815637553f98aebb7d85 *NAMESPACE
 0d85843ac88c93837937e68313895635 *R/ancova.r
-1f4c7b6f5cc2296482c8949bb369140e *R/density.r
+6d20741dc909a03015b5a88ce3a23082 *R/density.r
 59752d6033d4ce39bc12ccd221f0d05f *R/discontinuity.r
 bd6cf90c8fbbbead5ec16e493ce2188b *R/glm.r
 d6a4da1114823667624e6967b12141bd *R/hselect.r
@@ -16,7 +16,7 @@ d6a4da1114823667624e6967b12141bd *R/hselect.r
 f044ed7d790dd89af28c8ef9abf83457 *R/survival.r
 620c083e3b62157b1bd0fe1e4b64684b *R/utilities.r
 44a24863b13eea14afb3c1f1bdff539d *R/variogram.r
-6d329f865617f6250b2a892c79fbe9e3 *R/zzz.R
+6b353498b9e0bd5c8806fd93c91a360d *R/zzz.R
 2adb64c8e856f6367c806993979144ac *data/aircraft.rda
 ca1386a986a51ab9cb8abb4363fb2673 *data/airpc.rda
 5eea8b36e9cd414522e9a6a44b91e920 *data/birth.rda
@@ -45,7 +45,7 @@ c15aa2d4f55f1c45cf1e24c60fe556fd *data/poles.rda
 1a6178af4e9deadbd2d9f5fa28b61199 *data/trout.rda
 7807e25afbb20fef5ceff89726633202 *data/wonions.rda
 fe3a402bdd4c15c9425c176d8c1507a7 *data/worm.rda
-4d81474fdabdc3678fd151d8d6c916bf *inst/CITATION
+2b2dfc48065b0b94d06eb34f4912d99e *inst/CITATION
 18810669f13b87348459e611d31ab760 *inst/COPYING
 fcb45a6f6bb640defe536940520e44cb *inst/history.txt
 7dd9e52ca8850d71091c13cf5eb1f2ab *inst/scripts/air_band.q
@@ -60,9 +60,9 @@ c7a19cfaf442545bf00afdf38871c6e5 *inst/scripts/air_dens.q
 89c16fa5ae2e32cb96fc84dbea70b1f3 *inst/scripts/bin_use.q
 3248a5db9f59bb801119e9549d9ee3f1 *inst/scripts/birth1.q
 99d85bae71b0db70a8a00c95a6c83910 *inst/scripts/birth2.q
-cd796c83109fcc319203ee0997ebdd6c *inst/scripts/bissell1.q
-07337f17dfc56e690f5e49878bb6cf93 *inst/scripts/bissell2.q
-1271b05de74526f6a598c7ccf413fcbf *inst/scripts/bissell3.q
+8c6d54967810f8b9866604c4becb2be9 *inst/scripts/bissell1.q
+e8a331392f0138c0c568627e8bff21e9 *inst/scripts/bissell2.q
+0076cc0e61e3d1b06fd159628c2f7c78 *inst/scripts/bissell3.q
 43dc65caf724f870d589f416c6573759 *inst/scripts/citrate.q
 77edac994c2c42a4e1b6d76e35917de9 *inst/scripts/dogs.q
 0b1125dcf1c1437eb7cd796274d5d4c4 *inst/scripts/edfgrad.q
