@@ -18,13 +18,15 @@ to control various features of the plot.
 }
 \arguments{
    \item{x}{a vector, or two-column matrix, of covariate values.}
-   \item{y}{a vector of reponses.}
+   \item{y}{a vector of responses.}
    \item{h}{a vector of length 1 or 2 giving the smoothing parameter.  A normal kernel
             function is used and \code{h} is its standard deviation.}
    \item{design.mat}{the design matrix used to produce \code{y} when these are assumed to be the 
             residuals from a linear model.}
-   \item{model}{a character variable which defines a reference model.  The values
-            \code{"none"}, \code{"no effect"} and \code{"linear"} and are possible.}
+   \item{model}{a character variable which defines a reference model.  The settings
+            \code{"none"}, \code{"no effect"} and \code{"linear"} and all valid.  Note that
+            when a \code{group} argument is used then \code{model} should be set to 
+            \code{"equal"} or \code{"parallel"}, as befits an analysis of covariance model.}
    \item{weights}{a vector  which allows the kernel functions associated with the observations 
             to take different weights.  This is useful, in particular, when different
             observations have different precisions.
@@ -36,7 +38,8 @@ to control various features of the plot.
             Use of this parameter is incompatible with \code{binning}; hence
             \code{nbins} must then be set to 0 or left at its default value \code{NA}.}
    \item{group}{a vector of groups indicators (numeric or character values) or
-            a factor}
+            a factor.  If this argument is used then the data are passed to the \code{sm.ancova}
+            function.  See the details of the \code{model} argument above in that case.}
    \item{\dots}{other optional parameters are passed to the \code{sm.options}
             function, through a mechanism which limits their effect only to this
             call of the function; those relevant for this function are the following:
@@ -70,7 +73,7 @@ to control various features of the plot.
    If a reference model has been specified and \code{test} set to
    \code{TRUE}, then the p-value of the test
    is also returned.  When there is only one covariate, the weights associated
-   with different obserations, an estimate of the error standard deviation and 
+   with different observations, an estimate of the error standard deviation and 
    the standard error of the estimate are also returned.  If a reference model 
    has been specified, this standard error refers to the comparison between 
    the estimate and the reference model, and the values defining the reference 

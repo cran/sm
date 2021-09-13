@@ -53,7 +53,7 @@ other optional parameters which are passed to \code{material3d} in the
 }}
 \value{
 a vector of length 2 containing the ids of the filled surface and lines
-aded to the \code{rgl} plot.
+added to the \code{rgl} plot.
 }
 \section{Side Effects}{
   a surface is added to the \code{rgl} plot.  

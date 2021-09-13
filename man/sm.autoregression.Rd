@@ -43,7 +43,7 @@ a list with the outcome of the final estimation (corresponding to
 the last value or pairs of values of lags), as returned by \code{sm.regression}.
 }
 \section{Side Effects}{
-graphical output is producved on the current device.
+graphical output is produced on the current device.
 }
 \details{
 see Section 7.3 of the reference below.

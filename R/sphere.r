@@ -195,8 +195,7 @@
     points(X, Y)
 }
 
-"change" <-
-function (th, ph)
+"change" <- function (th, ph)
 {
     cat("Theta =", th, "\n")
     cat("Phi =", ph, "\n")
@@ -213,9 +212,7 @@ function (th, ph)
     list(theta = theta, phi = phi)
 }
 
-"circle" <- 
-function (r)
-{
+"circle" <- function (r) {
     angle <- seq(0, 7, by = 0.1)
     x <- r * cos(angle)
     y <- r * sin(angle)
@@ -223,9 +220,7 @@ function (r)
     lines(x, y)
 }
 
-"hidplot" <-
-function (invis, theta, phi)
-{
+"hidplot" <- function (invis, theta, phi) {
     invislong <- invis$invislong
     invislat <- invis$invislat
     par(pch = "O")
@@ -245,9 +240,7 @@ function (invis, theta, phi)
     points(X, Y)
 }
 
-"incphi" <-
-function (ph, inc)
-{
+"incphi" <- function (ph, inc) {
     phi <- ph + inc
     if (phi > 90) phi <- 90
     if (phi < -90) phi <- -90
@@ -255,17 +248,13 @@ function (ph, inc)
     phi
 }
 
-"inctheta" <-
-function (th, inc)
-{
+"inctheta" <- function (th, inc) {
     theta <- th + inc
     if (theta >= 360) theta <- theta - 360
     theta
 }
 
-"latlines" <-
-function (beta, theta, phi)
-{
+"latlines" <- function (beta, theta, phi) {
     if (beta < (phi - 90) | beta > (phi + 90)) return()
     par(pch = ".")
     radtheta <- (theta * pi)/180
@@ -283,9 +272,7 @@ function (beta, theta, phi)
     points(X, Y)
 }
 
-"latlines.e" <-
-function (beta, theta, phi)
-{
+"latlines.e" <- function (beta, theta, phi) {
     if (beta < (phi - 90) | beta > (phi + 90)) return()
     par(lty = 2)
     par(pch = ".")
@@ -304,9 +291,7 @@ function (beta, theta, phi)
     points(X, Y)
 }
 
-"longlines" <-
-function (alpha, theta, phi)
-{
+"longlines" <- function (alpha, theta, phi) {
     par(pch = ".")
     radtheta <- (theta * pi)/180
     radalpha <- (alpha * pi)/180
@@ -323,9 +308,7 @@ function (alpha, theta, phi)
     points(X, Y)
 }
 
-"longlines.e" <-
-function (alpha, theta, phi)
-{
+"longlines.e" <- function (alpha, theta, phi) {
     par(lty = 2)
     par(pch = ".")
     radtheta <- (theta * pi)/180
@@ -343,9 +326,7 @@ function (alpha, theta, phi)
     points(X, Y)
 }
 
-"plot2" <-
-function (latitude2, longitude2, theta, phi)
-{
+"plot2" <- function (latitude2, longitude2, theta, phi) {
     par(pch = "x")
     a <- (longitude2 * pi)/180
     b <- (latitude2 * pi)/180
@@ -368,9 +349,7 @@ function (latitude2, longitude2, theta, phi)
     points(X, Y)
 }
 
-"plot2d" <-
-function (d, f, theta, phi)
-{
+"plot2d" <- function (d, f, theta, phi) {
     par(pch = "*")
     a <- (f * pi)/180
     b <- (d * pi)/180

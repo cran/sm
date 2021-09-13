@@ -15,7 +15,7 @@ The variables are:
 	\code{Low}   \tab  indicator variable of low weight
 }
 
-Hosmer & Lemeshow (1989).  Applied  Logistic Regresion. 
+Hosmer & Lemeshow (1989).  Applied  Logistic Regression. 
         Wiley, NY.
 	The original source contains additional variables; see Appendix 1 of
 	Hosmer & Lemeshow for a full list of the data, pp.29-30 and p.92 for 

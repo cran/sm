@@ -1,5 +1,5 @@
 "sm.variogram" <- function(x, y, h,
-                       df.se = "automatic", max.dist = NA, original.scale = TRUE, 
+                       df.se = "automatic", max.dist = NA, n.zero.dist = 1, original.scale = TRUE, 
                        varmat = FALSE, ...) {
 
    type     <- "binned"
@@ -21,12 +21,18 @@
    # rawdata <- list(x = x, y = y, nbins = opt$nbins, nobs = n, ndim = ndim)
    
    model <- opt$model
+   if (!(model %in% c("none", "independent", "isotropic", "stationary"))) {
+      cat("The 'model' argument is not recognised - reverting to 'none'.\n")
+      model <- "none"
+   }
    replace.na(opt, band, (model != "none"))
    if (model == "isotropic") {
+      if (ndim == 1) stop("a test of isotropy is appropriate only for 2-d data.")
       replace.na(opt, ngrid, 20)
       replace.na(opt, display, "image")
       }
    if (model == "stationary") {
+      if (ndim == 1) stop("a test of stationarity is implemented only for 2-d data.")
       replace.na(opt, ngrid, 12)
       }
    else {
@@ -84,6 +90,7 @@
    
    results <- list(distance = hall, sqrtdiff = dall, ipair = ipair)
    
+   
 #------------------------------------------------------------
 #                   Bin the differences
 #------------------------------------------------------------
@@ -127,12 +134,10 @@
          dd   <- tapply(dall, ibin, mean)
       }
       else if (bin.type == "log") {
-         #  This doesn't handle 0 distances.  They should be added as a separate bin.
          breaks <- -1
          ind    <- (hall < 2 * .Machine$double.eps)
          nzero  <- length(which(ind))
-         if (nzero > 4) breaks <- c(breaks, 2 * .Machine$double.eps)
-         else           ind <- rep(FALSE, length(hall))
+         if (nzero >= max(n.zero.dist, 1)) breaks <- c(breaks, 2 * .Machine$double.eps)
          breaks <- c(breaks, exp(min(log(hall[!ind])) + 
                             (1:opt$nbins) * diff(range(log(hall[!ind]))) / opt$nbins))
          nbrks  <- length(breaks)
@@ -329,7 +334,7 @@
       Sigma <- diag(vv / wts) + Sigma
 
       if (opt$test | opt$band) {
-      	 h    <- h.select(hh, hh, weights = wts, df = opt$df)
+      	h    <- h.select(hh, hh, weights = wts, df = opt$df)
          W    <- sm.weight(hh, hh, h, weights = wts, options = opt)
          est  <- W %*% dd
          r0   <- sum(wts * (dd - mean(dall))^2)
@@ -369,29 +374,29 @@
    	  	
       	 replace.na(opt, xlab, "Distance")
       	 replace.na(opt, ylab, if (original.scale) " Squared difference" else "Square-root abs. difference")
-         replace.na(opt, xlim, range(xx))
+          replace.na(opt, xlim, range(xx))
 
-         r <- yy
-         if (model == "independent") {
+          r <- yy
+          if (model == "independent") {
             replace.na(opt, eval.points, seq(min(hall), max(hall), length = opt$ngrid))
             ev  <- opt$eval.points
             W   <- sm.weight(hh, ev, h, weights = wts, options = opt)
             est <- c(W %*% dd)
             r <- c(r, fn(est))
             if (opt$band | opt$se) {
-               sigmahat <- sqrt(var(y))
-               nmeans   <- length(wts)
-               V        <- matrix(rep(wts / sum(wts), length(ev)), ncol = nmeans, byrow = TRUE)
-               se.band  <- sigmahat * sqrt(diag((W - V) %*% Sigma %*% t(W - V)))
-               r        <- c(r, fn(mean(dall) + 2 * se.band), fn(mean(dall) - 2 * se.band))
+              sigmahat <- sqrt(var(y))
+              nmeans   <- length(wts)
+              V        <- matrix(rep(wts / sum(wts), length(ev)), ncol = nmeans, byrow = TRUE)
+              se.band  <- sigmahat * sqrt(diag((W - V) %*% Sigma %*% t(W - V)))
+              r        <- c(r, fn(mean(dall) + 2 * se.band), fn(mean(dall) - 2 * se.band))
             }
-         }
-         if (model == "none" & opt$se)
+          }
+          if (model == "none" & opt$se)
             r <- c(r, fn(gamma.hat - 2 * se), fn(gamma.hat + 2 * se))
-         replace.na(opt, ylim, range(r))
-         xlm <- opt$xlim
-         if (!is.na(max.dist)) xlm[2] <- max.dist
-         plot(xx, yy, xlab = opt$xlab, ylab = opt$ylab, xlim = xlm, ylim = opt$ylim, type = "n")
+          replace.na(opt, ylim, range(r))
+          xlm <- opt$xlim
+          if (!is.na(max.dist)) xlm[2] <- max.dist
+          plot(xx, yy, xlab = opt$xlab, ylab = opt$ylab, xlim = xlm, ylim = opt$ylim, type = "n")
    	  }
 
       if (model == "independent" & opt$band)
@@ -428,10 +433,11 @@
       amat[amat < 0] <- amat[amat < 0] + pi
       angles <- (as.vector(amat))[ind > 0]
       
-      # Remember to handle the case of 0 distances.
       centres1 <- seq(0, pi, length = opt$nbins + 1)
       centres1 <- centres1[-1] - diff(centres1) / 2
-      centres2 <- c(0, exp(min(log(hall)) + (1:opt$nbins) * diff(range(log(hall))) / opt$nbins))
+      ind      <- (hall < 2 * .Machine$double.eps)
+      centres2 <- c(0, exp(min(log(hall[!ind])) +
+                                 (1:opt$nbins) * diff(range(log(hall[!ind]))) / opt$nbins))
       centres2 <- centres2[-1] - diff(centres2) / 2
       centres  <- as.matrix(expand.grid(centres1, centres2))
 
@@ -550,20 +556,20 @@
          S0  <- mdl0$B %*% mdl0$B1 %*% t(mdl0$B * wts)  
          # est1  <- S0 %*% dd
 
-#         S1   <- S0 - S1
-#         V1   <- solve(V)
-#         # V1   <- solve(S1 %*% V %*% t(S1))
-#         ds   <- S1 %*% dd
-#         tobs <- c(t(ds) %*% V1 %*% ds)
-#         pval1 <- p.quad.moment.adjusted(t(S1) %*% V1 %*% S1, V, tobs)
+#        S1   <- S0 - S1
+#        V1   <- solve(V)
+#        # V1   <- solve(S1 %*% V %*% t(S1))
+#        ds   <- S1 %*% dd
+#        tobs <- c(t(ds) %*% V1 %*% ds)
+#        pval1 <- p.quad.moment.adjusted(t(S1) %*% V1 %*% S1, V, tobs)
 #         
-      	 # S0   <- sm.weight(hh, hh, h[1], weights = wts) 
+      	# S0   <- sm.weight(hh, hh, h[1], weights = wts) 
          # S1   <- sm.weight2(cbind(hh, ang), cbind(hh, ang), h, weights = wts, options = opt)
          # cat("traces:", round(sum(diag(S0))), round(sum(diag(S1))), "\n")
-#         est0 <- S0 %*% dd
-#         plot(range(hh), range(est1, est0), type = "n")
-#         points(hh, est0)
-#         points(hh, est1, col = "green")
+#        est0 <- S0 %*% dd
+#        plot(range(hh), range(est1, est0), type = "n")
+#        points(hh, est0)
+#        points(hh, est1, col = "green")
          # sm.regression(cbind(hh, ang), dd, h, weights = wts, options = opt, display = "image")
 
          # S0   <- t(diag(nbins) - S0) %*% V1 %*% (diag(nbins) - S0)
@@ -584,15 +590,15 @@
          
          # cat(round(pval, 3), round(pval1, 3), "\n")
          
-#         mdl <- sm(dd ~ s(hh, df = 4) * s(ang, df = 4, period = pi), 
-#                     weights = wts, display = "none")
-#         # save(model, V, wts, file = "temp.dmp")
-#         ind  <- c(mdl$b.ind[[2]], mdl$b.ind[[3]])
-#         tobs <- sum(mdl$alpha[ind]^2)
-#         I.i  <- rep(0, ncol(mdl$B))
-#         I.i[ind] <- 1
-#         A    <- mdl$B1 %*% t(mdl$B * wts)
-#         pval <- p.quad.moment.adjusted(t(A) %*% diag(I.i) %*% A, V, tobs)
+#        mdl <- sm(dd ~ s(hh, df = 4) * s(ang, df = 4, period = pi), 
+#                  weights = wts, display = "none")
+#        # save(model, V, wts, file = "temp.dmp")
+#        ind  <- c(mdl$b.ind[[2]], mdl$b.ind[[3]])
+#        tobs <- sum(mdl$alpha[ind]^2)
+#        I.i  <- rep(0, ncol(mdl$B))
+#        I.i[ind] <- 1
+#        A    <- mdl$B1 %*% t(mdl$B * wts)
+#        pval <- p.quad.moment.adjusted(t(A) %*% diag(I.i) %*% A, V, tobs)
          
          if (opt$verbose > 0) cat("Test of isotropy: p = ", round(pval, 3), "\n")
          results$h <- h
@@ -716,7 +722,9 @@
 
       centres1  <- seq(min(av1), max(av1), length = opt$nbins + 1)
       centres2  <- seq(min(av2), max(av2), length = opt$nbins + 1)
-      centres3  <- c(0, exp(min(log(hall)) + (1:opt$nbins) * diff(range(log(hall))) / opt$nbins))
+      ind       <- (hall < 2 * .Machine$double.eps)
+      centres3  <- c(0, exp(min(log(hall[!ind])) +
+                               (1:opt$nbins) * diff(range(log(hall[!ind]))) / opt$nbins))
       centres1  <- centres1[-1] - diff(centres1) / 2
       centres2  <- centres2[-1] - diff(centres2) / 2
       centres3  <- centres3[-1] - diff(centres3) / 2
@@ -811,15 +819,15 @@
       model1 <- sm(dd ~ s(xx, df = opt$df), weights = wts, display = "none")
             
       if (opt$test) {
-      	 df0 <- ceiling(opt$df^(1/3))
-      	 # df0 <- ceiling(opt$df / 3)
-      	 # df0 <- ceiling(opt$df / 2)
-      	 model0 <- sm(dd ~ s(hh, df = df0), weights = wts, display = "none")
+      	df0 <- ceiling(opt$df^(1/3))
+      	# df0 <- ceiling(opt$df / 3)
+      	# df0 <- ceiling(opt$df / 2)
+      	model0 <- sm(dd ~ s(hh, df = df0), weights = wts, display = "none")
          # mdl0  <- sm(dd ~ s(hh, lambda = mdl$lambda[[1]][1] * (mdl$nseg[[1]][1] + 3)^2), 
          #                 weights = wts, display = "none")
-      	 # model0 <- sm(dd ~ s(hh, df = 3), weights = wts, display = "none")
+      	# model0 <- sm(dd ~ s(hh, df = 3), weights = wts, display = "none")
          S0     <- model0$B %*% model0$B1 %*% t(model0$B * wts)
-      	 S1     <- model1$B %*% model1$B1 %*% t(model1$B * wts)
+      	S1     <- model1$B %*% model1$B1 %*% t(model1$B * wts)
          V1     <- solve(V)
          S0     <- t(S0 - S1) %*% V1 %*% (S0 - S1)
          tobs   <- c(dd %*% S0 %*% dd)

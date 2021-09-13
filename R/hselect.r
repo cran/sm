@@ -1,5 +1,6 @@
 "h.select" <- function(x, y = NA, weights = NA, group = NA, ...) {
 
+  group   <- as.numeric(factor(group))
   data    <- sm.check.data(x, y, weights = weights, group = group, ...)
   x       <- data$x
   y       <- data$y
@@ -9,7 +10,7 @@
   ndim    <- data$ndim
   density <- data$density
   opt     <- data$options
-  
+
   if (all(!is.na(group))) {
      group.fac <- factor(group)
      h.all <- matrix(0, ncol = ndim, nrow = 0)
@@ -50,13 +51,12 @@
 
   replace.na(opt, nbins, round((nobs > 100) * 8 * log(nobs) / ndim))
   if (opt$nbins > 0 & ndim < 3) {
-     if (!all(weights == 1) & opt$verbose > 0) 
-            cat("Warning: weights overwritten by binning\n")
+     if (!all(weights == 1) & opt$verbose > 0)
+        cat("Warning: weights overwritten by binning\n")
      data <- binning(x, y, nbins = opt$nbins)
-     }
+  }
   else
-     data <- list(x = x, means = y, x.freq = rep(1,nobs),
-                  devs = rep(0,nobs))
+     data <- list(x = x, means = y, x.freq = rep(1,nobs), devs = rep(0, nobs))
 
   h.weights <- opt$h.weights
   if (opt$verbose > 0 & !all(is.na(h.weights)) & opt$nbins > 0) {

@@ -47,20 +47,18 @@
 
 "binning" <- function (x, y, breaks, nbins) {
     binning.1d <- function(x, y, breaks, nbins) {
-        f <- cut(x, breaks = breaks)
-        if (any(is.na(f)))
-            stop("breaks do not span the range of x")
-        freq <- tabulate(f, length(levels(f)))
+        f        <- cut(x, breaks = breaks)
+        if (any(is.na(f))) stop("breaks do not span the range of x")
+        freq      <- tabulate(f, length(levels(f)))
         midpoints <- (breaks[-1] + breaks[-(nbins + 1)])/2
-        id <- (freq > 0)
-        x <- midpoints[id]
-        x.freq <- as.vector(freq[id])
-        result <- list(x = x, x.freq = x.freq, table.freq = freq,
-            breaks = breaks)
+        id        <- (freq > 0)
+        x         <- midpoints[id]
+        x.freq    <- as.vector(freq[id])
+        result    <- list(x = x, x.freq = x.freq, table.freq = freq, breaks = breaks)
         if (!all(is.na(y))) {
             result$means <- as.vector(tapply(y, f, mean))[id]
-            result$sums <- as.vector(tapply(y, f, sum))[id]
-            result$devs <- as.vector(tapply(y, f, function(x) 
+            result$sums  <- as.vector(tapply(y, f, sum))[id]
+            result$devs  <- as.vector(tapply(y, f, function(x) 
                               sum((x - mean(x))^2)))[id]
             }
         result
@@ -80,7 +78,7 @@
         dimnames(X) <- list(NULL, dimnames(x)[[2]])
         X.f <- X.f[id]
         result <- list(x = X, x.freq = X.f, midpoints = midpoints,
-            breaks = breaks, table.freq = freq)
+                       breaks = breaks, table.freq = freq)
         if (!all(is.na(y))) {
             result$means <- as.numeric(tapply(y, list(f1, f2), mean))[id]
             result$devs <- as.numeric(tapply(y, list(f1, f2),
@@ -110,10 +108,10 @@
             result$means <- as.numeric(tapply(y, list(f1, f2, f3), mean))[id]
             result$devs  <- as.numeric(tapply(y, list(f1, f2, f3),
                                         function(x) sum((x - mean(x))^2)))[id]
-            }
-        result
         }
-    if (length(dim(x)) > 0) {
+        result
+    }
+    if ((length(dim(x)) > 0) && (dim(x)[2] > 1)) {
         if (!isMatrix(x))
             stop("wrong parameter x for binning")
         ndim <- dim(x)[2]
@@ -228,23 +226,22 @@
    opt <- sm.options(list(...))
 
    density <- all(is.na(y))
-   if (density) X <- x
-      else  X <- cbind(x, y)
+   X       <- if (density) x else  X <- cbind(x, y)
 
    if(all(is.na(weights)) | all(weights == 1))
       X <- cbind(X, 1) 
    else{
       if(!is.na(opt$nbins) & opt$nbins!=0) 
          stop("if weights are set, nbins must be either 0 or NA")
-      if(any(weights<0 | is.na(weights))) 
-         stop("negative or NA weights are meaningless")
-      if(any(weights!=round(weights))) {
-         weights <- round(weights/min(weights[weights>0]))
-         if(opt$verbose>0) 
-            cat("Warning: weights have been rescaled to integer values\n")
-         }
+      if(any(weights < 0 | is.na(weights))) 
+         stop("negative or NA weights are inappropriate.")
+      # if(any(weights!=round(weights))) {
+      #    weights <- round(weights/min(weights[weights>0]))
+      #    if(opt$verbose>0) 
+      #       cat("Warning: weights have been rescaled to integer values\n")
+      # }
       X <- cbind(X, weights)
-      }
+   }
 
    ndim <- ncol(X) - 1 - (!density)            # dimensionality of x
    if (!all(is.na(group))) {

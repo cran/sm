@@ -21,7 +21,7 @@ export(binning, britmap, hcv, hnorm, hsj, nise, nmise, nnbr,
              "qchisq", "quantile", "rbeta", "rbinom", "residuals",
              "rgamma", "rpois", "sd", "terms", "uniroot", "var")
   importFrom("utils", "menu")
-  import(tcltk)
+# import(tcltk)
 # import(tkrplot)
 # import(rpanel)
 #   importFrom("rpanel", "rp.plot3d", "rp.do", "rp.tkrplot", "rp.tkrreplot",

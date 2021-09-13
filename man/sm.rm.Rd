@@ -23,8 +23,8 @@ to be the same for all individuals of matrix \code{y}.
 If \code{Time} is not given, this is assumed to be \code{1:ncol(y)}.
 }
 \item{minh}{
-the mimimum value of the interval where the optimal value of the smoothing
-parameter is seached according to the modified Rice criterion.
+the minimum value of the interval where the optimal value of the smoothing
+parameter is searched according to the modified Rice criterion.
 See reference below for details.
 }
 \item{maxh}{

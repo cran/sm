@@ -381,8 +381,10 @@ lambda.select <- function(btb, bty, P, df, method = "df") {
           lambda <- 1
           while (lambda.df(lambda, btb, P) >= df) lambda <- lambda * 10
           upper  <- lambda
-          lambda.crit <- function(lambda, btb, P, df)
+          # cat("lower, upper:", c(lower, upper), "\n")
+          lambda.crit <- function(lambda, btb, P, df) {
              lambda.df(lambda, btb, P) - df
+          }
           result <- uniroot(lambda.crit, interval = c(lower, upper), btb, P, df)
           # cat("result$root", result$root, "\n")
           lambda <- result$root

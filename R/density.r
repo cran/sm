@@ -9,54 +9,58 @@
     nobs   <- data$nobs
     ndim   <- data$ndim
     opt    <- data$options
-    
+
     if (ndim > 3) stop("data with >3 dimensions are not allowed.")
 
     if(!all(is.na(group))) {
        if (!all(weights == 1) & opt$verbose > 0)
-            cat("Warning: weights ignored in sm.density.compare\n")
+          cat("Warning: weights ignored in sm.density.compare\n")
        return(sm.density.compare(x, group, h, model, ...))
        }
 
     replace.na(opt, nbins, round((nobs > 500) * 8 * log(nobs) / ndim))
     rawdata <- list(nbins = opt$nbins, x = x, nobs = nobs, ndim = ndim)
     if(opt$nbins > 0) {
-        if (!all(weights == 1) & opt$verbose>0)
-            cat("Warning: weights overwritten by binning\n")
+        if (!all(weights == 1) & (opt$verbose > 0))
+           cat("Warning: weights overwritten by binning.  Set nbins = 0 to avoid this.\n")
         bins    <- binning(x, nbins = opt$nbins)
         x       <- bins$x
         weights <- bins$x.freq
         nx      <- length(bins$x.freq)
         if(!all(is.na(opt$h.weights))) 
-            stop("use of h.weights is incompatible with binning - set nbins = 0")
+          stop("use of h.weights is incompatible with binning.  Set nbins = 0 to avoid this.")
         }
     else
         nx <- nobs
-
+    
     if(opt$positive) {
         replace.na(opt, delta, apply(as.matrix(x), 2, min))
         if ((ndim == 3 ) & (opt$verbose > 0)) 
-           cat("the positive estimation is not available for 3 variables.\n")
+           cat("Positive estimation is not available for 3 variables.\n")
         }   
 
     if(missing(h)){ 
         if(opt$positive) {
             xlog <- log(as.matrix(x) + outer(rep(1, nx), opt$delta))
             if (ndim == 1) xlog <- as.vector(xlog)
-            h <- h.select(xlog, y = NA, weights = weights, ...)
+            h <- h.select(xlog, y = NA, weights = weights, nbins = 0, ...)
             }
         else 
-            h <- h.select(x = x, y = NA, weights = weights, ...)
+            h <- h.select(x = x, y = NA, weights = weights, nbins = 0, ...)
+    }
+
+    if (opt$panel) {
+       pack.rp <- requireNamespace("rpanel",  quietly = TRUE)
+       pack.tk <- requireNamespace("tkrplot", quietly = TRUE)
+       pack.tc <- requireNamespace("tcltk",   quietly = TRUE)
+       if (opt$verbose > 0) {
+          if (!pack.rp) cat("The rpanel package is not available.\n")
+          if (!pack.tk) cat("The tkrplot package is not available.\n")
+          if (!pack.tc) cat("The tcltk package is not available.\n")
+       }
+       if (!pack.rp | !pack.tk | !pack.tc) opt$panel <- FALSE
     }
     
-    if (opt$panel) {
-       if (!requireNamespace("rpanel",  quietly = TRUE)  | 
-           !requireNamespace("tkrplot", quietly = TRUE)  |
-           !requireNamespace("tcltk",   quietly = TRUE)) {
-       	  if (opt$verbose > 0) cat("The rpanel package is not available.\n")
-          opt$panel <- FALSE
-       }
-    }
     if (is.na(opt$band)) {
        if (model == "none") opt$band <- FALSE
           else              opt$band <- TRUE
@@ -64,7 +68,7 @@
     if ((model == "none") && opt$band) opt$band <- FALSE
 
     if (ndim == 1) { 
-        if(length(h)!=1) stop("length(h) != 1")
+        if(length(h) != 1) stop("length(h) != 1")
         replace.na(opt, xlab, x.name)
         replace.na(opt, ylab, "Probability density function")
         if (!opt$panel)
@@ -308,40 +312,37 @@
     replace.na(opt, display, "line")
     replace.na(opt, xlab, deparse(substitute(x)))
     replace.na(opt, ylab, "Density")
-    replace.na(opt, xlim, c(min(x) - diff(range(x))/4, max(x) +
-                            diff(range(x))/4))
-    replace.na(opt, eval.points,
-        seq(opt$xlim[1], opt$xlim[2], length=opt$ngrid))
+    replace.na(opt, xlim, c(min(x) - diff(range(x))/4, max(x) + diff(range(x))/4))
+    replace.na(opt, eval.points, seq(opt$xlim[1], opt$xlim[2], length=opt$ngrid))
+    replace.na(opt, col.band, "cyan")
     if (is.na(opt$band)) {
        if (model == "none") opt$band <- FALSE
           else              opt$band <- TRUE
        }
     if ((model == "none") && opt$band) opt$band <- FALSE
-    band <- opt$band
+    band  <- opt$band
     ngrid <- opt$ngrid
-    xlim <- opt$xlim
+    xlim  <- opt$xlim
     nboot <- opt$nboot
-    y <- x
+    y     <- x
     if (is.na(opt$test)) {
        if (model == "none") opt$test <- FALSE
           else              opt$test <- TRUE
        }
     if ((model == "none") && opt$test) opt$test <- FALSE
     test <- opt$test
-    if (opt$display %in% "none")
-        band <- FALSE
+    if (opt$display %in% "none") band <- FALSE
     fact <- factor(group)
     fact.levels <- levels(fact)
     nlev <- length(fact.levels)
     ni <- table(fact)
     if (band & (nlev > 2)) {
-        cat("Reference band available to compare two groups only.", "\n")
+        cat("Reference band available to compare two groups only.\n")
         band <- FALSE
     }
     if (length(opt$lty) < nlev) opt$lty <- 1:nlev
     if (length(opt$col) < nlev) opt$col <- 2:(nlev + 1)
-    if (missing(h))
-        h <- h.select(x, y = NA, group = group, ...)
+    if (missing(h)) h <- h.select(x, y = NA, group = group, ...)
     opt$band <- band
     opt$test <- test
     estimate <- matrix(0, ncol = opt$ngrid, nrow = nlev)
@@ -353,14 +354,15 @@
         se[i, ] <- sm$se
     }
     eval.points <- sm$eval.points
-    if (!(opt$display %in% "none" | band)) {
+    if (!(("none" %in% opt$display) | band)) {
         replace.na(opt, yht, 1.1 * max(as.vector(estimate)))
         replace.na(opt, ylim, c(0, opt$yht))
         plot(xlim, opt$ylim, xlab = opt$xlab, ylab = opt$ylab, type = "n")
         for (i in 1:nlev) lines(eval.points, estimate[i, ],
 	          lty = opt$lty[i], col = opt$col[i], lwd = opt$lwd)
     }
-    est <- NULL
+    est <- list(estimate = estimate, eval.points = eval.points, h = h,
+                levels = fact.levels, col = opt$col, lty = opt$lty, lwd = opt$lwd)
     p <- NULL
     if (model == "equal" & test) {
         if (nlev == 2) {
@@ -368,10 +370,9 @@
         }
         else {
             sm.mean <- sm.density(y, h = h, xlim = opt$xlim,
-                ngrid = opt$ngrid, display = "none")$estimate
+                                  ngrid = opt$ngrid, display = "none")$estimate
             ts <- 0
-            for (i in 1:nlev) ts <- ts + ni[i] *
-                sum((estimate[i,] - sm.mean)^2)
+            for (i in 1:nlev) ts <- ts + ni[i] * sum((estimate[i,] - sm.mean)^2)
         }
         p <- 0
         est.star <- matrix(0, ncol = opt$ngrid, nrow = nlev)
@@ -380,7 +381,8 @@
             for (i in 1:nlev) {
                 indi <- sample((1:length(ind)), ni[i])
                 est.star[i, ] <- sm.density(y[ind[indi]], h = h,
-                  ngrid = opt$ngrid, xlim = opt$xlim, display = "none")$estimate
+                                            ngrid = opt$ngrid, xlim = opt$xlim,
+                                            display = "none")$estimate
                 ind <- ind[-indi]
             }
             if (nlev == 2) {
@@ -388,12 +390,11 @@
             }
             else {
                 sm.mean <- sm.density(y, h = h, xlim = opt$xlim,
-                  ngrid = opt$ngrid, display = "none")$estimate
+                                      ngrid = opt$ngrid, display = "none")$estimate
                 ts.star <- 0
-                for (i in 1:nlev) {
+                for (i in 1:nlev)
                   ts.star <- ts.star + ni[i] * sum((est.star[i,] - sm.mean)^2)
-                  }
-                }
+            }
             if (ts.star > ts)
                 p <- p + 1
             if (opt$verbose > 1) {
@@ -402,8 +403,9 @@
             }
         }
         p <- p/nboot
-        cat("\nTest of equal densities:  p-value = ", round(p,3), "\n")
-        est <- list(p = p, estimaate = estimate, eval.points = eval.points, h = h)
+        if (opt$verbose > 1) cat("\n")
+        cat("Test of equal densities:  p-value = ", round(p,3), "\n")
+        est$p <- p
     }
     if (model == "equal" & band) {
         av <- (sqrt(estimate[1, ]) + sqrt(estimate[2, ]))/2
@@ -414,11 +416,11 @@
         replace.na(opt, ylim, c(0, opt$yht))
         plot(xlim, opt$ylim, xlab = opt$xlab, ylab = opt$ylab, type = "n")
         polygon(c(eval.points, rev(eval.points)), c(upper, rev(lower)),
-            col = "cyan", border = 0)
+            col = opt$col.band, border = 0)
         lines(eval.points, estimate[1, ], lty = opt$lty[1], col = opt$col[1], lwd = opt$lwd)
         lines(eval.points, estimate[2, ], lty = opt$lty[2], col = opt$col[2], lwd = opt$lwd)
-        est <- list(p = p, estimate = estimate, eval.points = eval.points, 
-                    upper = upper, lower = lower, h = h)
+        est$upper <- upper
+        est$lower <- lower
     }
     invisible(est)
 }

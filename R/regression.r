@@ -3,7 +3,7 @@
          weights = NA, group = NA, ... ) {
          	
    if(!all(is.na(group))) 
-      return(sm.ancova(x, y, group, h, model, weights=weights,...))
+      return(sm.ancova(x, y, group, h, model, weights = weights,...))
 
    x.name <- deparse(substitute(x))
    if (isMatrix(x)) x.names <- dimnames(x)[[2]]
@@ -51,8 +51,8 @@
    if (opt$panel && !requireNamespace("rpanel", quietly = TRUE)) {
       opt$panel <- FALSE
       cat("The rpanel package is not available.\n")
-      }
-
+   }
+   
    if (ndim == 1) {
       replace.na(opt, xlab,  x.name)
       replace.na(opt, ylab,  y.name)
@@ -435,9 +435,10 @@
                               col = "green", col.mesh = "black", alpha = 0.7, alpha.mesh = 1, 
                               lit = TRUE, ...) {
 
-      #     This function adds a surface to the current rgl plot.
+      #  This function adds a surface to the current rgl plot.
       
-      if (!is.function(scaling)) stop("a scaling must be specified.")
+      if (!is.function(scaling))
+         stop("a scaling must be specified.")
       
       if (all(is.na(col)))                  col   <- "green"
       if ((length(col) == 1) && (col == 1)) col   <- "green"
@@ -454,8 +455,8 @@
       else
          stop("the form of eval.points in sm.surface3d is invalid.")
 
-      ngrid1 <- length(ep1)
-      ngrid2 <- length(ep2)         
+      ngrid1   <- length(ep1)
+      ngrid2   <- length(ep2)         
       col      <- matrix(c(col),      nrow = ngrid1, ncol = ngrid2)
       col.mesh <- matrix(c(col.mesh), nrow = ngrid1, ncol = ngrid2)
       

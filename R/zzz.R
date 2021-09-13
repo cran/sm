@@ -24,7 +24,7 @@
 {
     ## we can't do this in .onLoad
     unlockBinding(".sm.Options", asNamespace("sm"))
-    packageStartupMessage("Package 'sm', version 2.2-5.6: type help(sm) for summary information")
+    packageStartupMessage("Package 'sm', version 2.2-5.7: type help(sm) for summary information")
     invisible()
 }
 
@@ -33,8 +33,7 @@ isMatrix <- function(x) length(dim(x)) == 2
 
 isInteger <- function(x) all(x == round(x))
 
-sm.script <- function(name, path)
-{
+sm.script <- function(name, path) {
     if (missing(path)) path <- system.file("scripts", package = "sm")
     else path <- as.character(substitute(path))
     if (missing(name)) {

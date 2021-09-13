@@ -24,7 +24,7 @@ vector of the response values; they must be nonnegative integers.
 the smoothing parameter; it must be positive.
 }
 \item{degree}{
-specifies the degree of the fitted polynomial in \code{x} on the logit scale
+specifies the degree of the fitted polynomial in \code{x} on the logarithm scale
 (default=1).
 }
 \item{fixed.disp}{if \code{TRUE}, the dispersion

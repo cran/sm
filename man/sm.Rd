@@ -36,7 +36,7 @@ functions intended for direct access by the user are:
   \code{sm}, but a few of them make used of the \code{gam} package.
 }
 \details{
-Missing data are allowed; they are simply removed, togeter with
+Missing data are allowed; they are simply removed, together with
 the associated variates from the same case, if any.
 Datasets of arbitrary size can be handled by the current version of  
 \code{sm.density},  \code{sm.regression} and \code{sm.ancova}, using
@@ -60,10 +60,9 @@ The most recent version of the package can be obtained from the CRAN archive.
   the package.
 }
 \author{
-Adrian Bowman (Dept Statistics, University of Glasgow, UK) and
+Adrian Bowman (School of Mathematics and Statistics, University of Glasgow, UK) and
 Adelchi Azzalini (Dept Statistical Sciences, University of Padua, Italy).
-Please send comments, error reports, etc. to the authors via the
-web pages mentioned above.
+Please send comments, error reports, etc. to the authors.
 }
 \section{Acknowledgements}{
 Important contributions to prototype versions of functions for some

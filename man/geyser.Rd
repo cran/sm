@@ -7,7 +7,7 @@
 A version of the eruptions data from the ``Old Faithful'' geyser in
 Yellowstone National  Park,  Wyoming. This version comes from
 Azzalini and Bowman (1990) and is of continuous measurement from 
-1st August to  15th August  1985. 
+1st August to 15th August 1985. 
 
 Some nocturnal duration measurements were coded as 2, 3 or 4 minutes,
 having originally been described as `short', `medium' or `long'.

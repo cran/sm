@@ -16,7 +16,7 @@ or two covariates.  Several methods of selection are available.
   a vector, or two-column matrix.
   }
 \item{y}{
-a vector of reponses, in regression case.
+a vector of responses, in regression case.
 }
 \item{weights}{
   a vector of integers representing frequencies of individual

@@ -35,8 +35,8 @@ is printed on the command windows or another windows, depending on
 the type of platform where the program is executed.
 }
 \details{
-the data file is assumed to be called \code{data}.dat and the documentation
-file describing the data (if present) is assumed to be called \code{data}.doc.
+the data file is assumed to be called \code{data.dat} and the documentation
+file describing the data (if present) is assumed to be called \code{data.doc}.
 If the \code{data.frame} is already attached, it is re-attached in the second
 position of the \code{search} list. 
 

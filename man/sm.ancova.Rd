@@ -45,7 +45,7 @@ sample size.
   for a full description.
 }
 \item{covar}{
-  the (estimated) covariance matrix of y.  The defaulty value assumes
+  the (estimated) covariance matrix of y.  The default value assumes
   the data to be independent.  Where appropriate, the covariance structure
   of \code{y} can be estimated by the user, externally to \code{sm.ancova},
   and passed through this argument.  This is used in the hypothesis tests

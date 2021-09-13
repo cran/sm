@@ -5,7 +5,7 @@
 \title{Coastline of the UK and Ireland}
 
 \description{
-These data provide the co-orinates of a set of points lying on the coastlines of the UK and Ireland.
+These data provide the co-ordinates of a set of points lying on the coastlines of the UK and Ireland.
 
 The variables are:
 \tabular{ll}{

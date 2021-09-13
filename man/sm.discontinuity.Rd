@@ -88,7 +88,7 @@ and \code{h} will be reset to the same value.
 }
 \details{
   The reference below describes the statistical methods used in the function.
-  There are minor differences in somecomputational details of the implementation.
+  There are minor differences in some computational details of the implementation.
   
   Currently duplicated rows of \code{x} cause a difficulty in the two covariate case.  Duplicated rows should be removed.
 }

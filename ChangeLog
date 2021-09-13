@@ -1,3 +1,6 @@
+Version 2.2-5.7 2021-09-13  Minor bug fixes.  Package can also be installed when the
+                            tcltk package is not available.
+
 Version 2.2-5.6 2018-09-27  Minor bug fixes.
 
 Version 2.2-5.5 2018-05-06  Minor bug fixes.
@@ -53,7 +56,7 @@ Version 2.0-7 2003-07-18  Documentation improvements.
 
 Version 2.0-6 2003-06-03  Avoid generating lty=NA, use PACKAGE=.
 
-2.0-5 was unreleased.
+Version 2.0-5 was unreleased.
 
 Version 2.0-4 2001/10/10  tree.q did not work in R, minor improvements
                           to documentation.
@@ -70,42 +73,3 @@ Version 1.0-2 1999/04/02  Modified for 0.64, using R's chull, jitter,
 			inst/* mechanism, data/00Index, file.* functions.
 
 Version 1.0-1 1999/02/20:
-
-I renamed plot.density (which causes a name clash, and is not a plot method)
-to smplot.density.
-
-All the example scripts work except those depending on gam:
-	trwlgam1 trwlgam2 mackgam trwlgam3 smackgam
-
-(and the gam in mgcv does not work with these).
-
-
-R discrepancies:
-===============
-
-is.matrix is false for data frames: I used isMatrix in zzz.R instead.
-
-Colours are (mainly) named in the R version.
-
-In polygon() border gives the colour, not a logical for plotting.
-
-points() does not use the current cex and pch in R.
-
-Labels formed by deparse(substitute(x)) need to evaluated before x is altered.
-
-persp() has fewer arguments, and the default viewpoint did not seem a
-good choice for these plots, so I altered it.
-
-glm.fit() has different arguments, and the X matrix must have column names.
-Further, weight-0 points do not get the linear predictor set.
-
-is.na(x) fails in R if x is NULL.
-
-Some functions used `break' where `return()' was meant: this does not
-work in R.
-
-The uses of unix() and assign() needed revising.
-
-detach() named objects seemed to fail, so I used pos= instead.
-
-BDR 99/02/20

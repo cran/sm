@@ -5,7 +5,7 @@
 \title{Yield-density relationship for Brown Imperial Spanish onions}
 
 \description{
-These data were colllected in a study of the relationship between the
+These data were collected in a study of the relationship between the
 yield of Brown Imperial Spanish onion plants and the density of planting.
 
 The variables are:
