@@ -75,8 +75,8 @@ are also returned.
 a plot on the current graphical device is produced, unless \code{display="none"}
 }
 \details{
-see Sections 6.4 and 6.5 of the book by Bowman \& Azzalini, and
-the papers by Young \& Bowman listed below.
+see Sections 6.4 and 6.5 of the book by Bowman & Azzalini, and
+the papers by Young & Bowman listed below.
 This function is a developed version of code originally written by Stuart Young.
 }
 \references{

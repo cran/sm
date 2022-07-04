@@ -1,5 +1,5 @@
 7555e62b2f78e21c4fe2421de9c904e9 *ChangeLog
-c323a85b1fdc8cf5e1e1b82cabd2014c *DESCRIPTION
+545dda96cdfe5ca4960c83d3329de1f2 *DESCRIPTION
 36128133045efeb0fabc4abf4b84d9ac *NAMESPACE
 5b09398cb5221935c79a47bde6d8d962 *NEWS.md
 b1c0be3283f34d3b8df4af7bb2fddd63 *R/ancova.r
@@ -12,11 +12,11 @@ bd6cf90c8fbbbead5ec16e493ce2188b *R/glm.r
 467f10cc62682cd119a2568954f4c1d0 *R/ps-normal.r
 063cd395a89edfde65dfb7a24b0ad26e *R/regression.r
 5f430339b0ab9ff420bc5b973412ad3f *R/rpanel.r
-55746c572357257a5a3345b24ad406fb *R/sm.r
+7451131c0b88fe2619e2e37c11b66766 *R/sm.r
 3fc95761d3a67b6d8bdbbcc777bf8508 *R/sphere.r
 f044ed7d790dd89af28c8ef9abf83457 *R/survival.r
 5a4838807f8064f5d8826e3a2696b017 *R/utilities.r
-a40a42f7cd644a2683dcc482f84dc393 *R/variogram.r
+4a507919071cf82f62ccecd54232267f *R/variogram.r
 e9ff1bce747db2a48fe7b64a346fda87 *R/zzz.R
 2adb64c8e856f6367c806993979144ac *data/aircraft.rda
 ca1386a986a51ab9cb8abb4363fb2673 *data/airpc.rda
@@ -29,7 +29,7 @@ cd5afaa15649a88ee31b2cfffebedb97 *data/coalash.rda
 56e642fe3f1704f579daf5ded4b47118 *data/dogs.rda
 72dbe71a11191af4d4319d07cb90eeb0 *data/follicle.rda
 0a4394287ff1a533185d030297544ce2 *data/geys3d.rda
-0b247c4faca947d14f00e69aa78e5039 *data/geyser.tab
+98b422bbac933b73998d775982c594a2 *data/geyser.tab.gz
 15de7a46319ec1554e24287173a47cfb *data/lcancer.rda
 9936554a9782c5c507917d76fc427d2c *data/mackerel.rda
 2b4573cf5a89636bb31400f291ebc507 *data/magrem.rda
@@ -214,13 +214,13 @@ df92cb28c013b23b2366168613bb148b *man/provide.data.Rd
 4a4994a4365bc098acefcb9daef8616d *man/sig.trace.Rd
 479235458a5a73dd5b9c8e51d8b511d7 *man/sm-internal.Rd
 5ae1a7393157440efd1ded51149f20c4 *man/sm.Rd
-03dd91ba0b6f1f3f58970025dfe72d41 *man/sm.ancova.Rd
+267442310c996547666dfd25ff83d741 *man/sm.ancova.Rd
 ea20163062c9e452bea4b3b7934b51b7 *man/sm.autoregression.Rd
 6ebe6595a79c5bb77f612c518e4461a6 *man/sm.binomial.Rd
 0697eb7b8e86266b5ad7b34497424660 *man/sm.binomial.bootstrap.Rd
 54e29fd661171dd70a6db6904a720391 *man/sm.density.Rd
 9440022c6f7985ca5989bcba3a454710 *man/sm.density.compare.Rd
-50e314f14e9496ae6ad6c1778d18014a *man/sm.discontinuity.Rd
+6c6919b95354b9f38058b493f6c3872f *man/sm.discontinuity.Rd
 250add6d8ea3fc7eee0bd9a65b2a2887 *man/sm.monotonicity.Rd
 b23c695cd0faec1e12ccc2226354c8ca *man/sm.options.Rd
 20b869b7b4759c869984359ef251175a *man/sm.pca.Rd
@@ -230,8 +230,8 @@ f2312409129da7f30166c914077a9d2b *man/sm.poisson.Rd
 bae9697d0ce71d91680037ec1d518a67 *man/sm.regression.autocor.Rd
 b60a62560fd2dddc4a842edee340e5b5 *man/sm.rm.Rd
 0186bfb9ccbb37f33357f8087fd524d8 *man/sm.script.Rd
-addd459f820b0b0ad4862836c26f1f9a *man/sm.sigma.Rd
-b3dff66a7f4eed91ffc6d77318084934 *man/sm.sigma2.compare.Rd
+5311e1d06f5ea5e1b50eb9837527de2a *man/sm.sigma.Rd
+9ac1d4401071327d65f8e00a2e79df5f *man/sm.sigma2.compare.Rd
 9a4f5e1491f10e5adf959ff7874d0481 *man/sm.sphere.Rd
 11c40a2aab77a6e8fc84a2207609a691 *man/sm.surface3d.Rd
 d3fcd9d0f8c41c4df35ea713df6d1f7e *man/sm.survival.Rd

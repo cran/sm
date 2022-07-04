@@ -1,16 +1,16 @@
 "sm.variogram" <- function(x, y, h,
-                       df.se = "automatic", max.dist = NA, n.zero.dist = 1, original.scale = TRUE, 
+                       df.se = "automatic", max.dist = NA, n.zero.dist = 1, original.scale = TRUE,
                        varmat = FALSE, ...) {
 
    type     <- "binned"
    bin.type <- "log"
    type.se  <- "smooth-monotonic-original"
-   
+
    if ("geodata" %in% class(x)) {
       y <- x$data
       x <- x$coords
       }
-   
+
    opt     <- sm.options(list(...))
    data    <- sm.check.data(x = x, y = y, ...)
    x       <- data$x
@@ -19,7 +19,7 @@
    ndim    <- data$ndim
    opt     <- data$options
    # rawdata <- list(x = x, y = y, nbins = opt$nbins, nobs = n, ndim = ndim)
-   
+
    model <- opt$model
    if (!(model %in% c("none", "independent", "isotropic", "stationary"))) {
       cat("The 'model' argument is not recognised - reverting to 'none'.\n")
@@ -80,23 +80,23 @@
    i1    <- (as.vector(imat))[ind > 0]
    i2    <- (as.vector(t(imat)))[ind > 0]
    ipair <- cbind(i1, i2)
-   
+
    # if (!is.na(max.dist)) {
    #    ind   <- (hall <= max.dist)
    #    hall  <- hall[ind]
    #    dall  <- dall[ind]
    #    ipair <- ipair[ind, ]
    #    }
-   
+
    results <- list(distance = hall, sqrtdiff = dall, ipair = ipair)
-   
-   
+
+
 #------------------------------------------------------------
 #                   Bin the differences
 #------------------------------------------------------------
 
    if (!(model %in% c("isotropic", "stationary"))) {
-      
+
       if (bin.type == "regular") {
          bins   <- binning(hall, dall, nbins = opt$nbins)
          hh     <- bins$x
@@ -125,7 +125,7 @@
          dd            <- tapply(dall, ibin, mean)
          # hh            <- breaks[-1] - diff(breaks) / 2
          hh            <- tapply(results$distance, ibin, mean)
-         wts           <- table(ibin) 
+         wts           <- table(ibin)
       }
       else if (bin.type == "unique") {
          hh   <- sort(unique(signif(hall, 6)))
@@ -138,7 +138,7 @@
          ind    <- (hall < 2 * .Machine$double.eps)
          nzero  <- length(which(ind))
          if (nzero >= max(n.zero.dist, 1)) breaks <- c(breaks, 2 * .Machine$double.eps)
-         breaks <- c(breaks, exp(min(log(hall[!ind])) + 
+         breaks <- c(breaks, exp(min(log(hall[!ind])) +
                             (1:opt$nbins) * diff(range(log(hall[!ind]))) / opt$nbins))
          nbrks  <- length(breaks)
          breaks[nbrks] <- breaks[nbrks] + 1
@@ -159,7 +159,7 @@
       results$ibin          <- ibin
       results$breaks        <- breaks
       results$nbins         <- length(hh)
-      
+
       nbins <- length(results$sqrtdiff.mean)
       if (!is.numeric(df.se)) df.se <- round(0.8 * nbins)
 
@@ -173,7 +173,7 @@
          gamma.hat <- dd
       }
       else {
-         if (missing(h)) h <- h.select(hh, dd, weights = wts, 
+         if (missing(h)) h <- h.select(hh, dd, weights = wts,
                             nbins = 0, df = df.se, method = opt$method)
          replace.na(opt, eval.points, seq(min(hall), max(hall), length = opt$ngrid))
          ev        <- opt$eval.points
@@ -196,14 +196,14 @@
          if (type.se == "cressie")
             gamma.hat.V <- 0.5 * dd^4 / (0.457 + 0.494 / wts)
          if (type.se == "smooth-monotonic-original") {
-            sm.model            <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts, 
+            sm.model            <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts,
                                        eval.points = hh, increasing = TRUE,
                                        display = "none")
             gamma.hat.V         <- sm.model$estimate
             # results$gamma.hat.V <- gamma.hat.V
          }
          if (type.se == "smooth-original") {
-            sm.model            <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts, 
+            sm.model            <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts,
                                        eval.points = hh, increasing = FALSE,
                                        display = "none")
             gamma.hat.V         <- sm.model$estimate
@@ -212,12 +212,12 @@
          if (type.se %in% c("smooth", "smooth-monotonic", "smooth-w", "smooth-monotonic-w")) {
             # ind                 <- (hh <= max.dist)
             # gamma.hat.V         <- rep(0, length(hh))
-            # gamma.hat.V[ind]    <- sm.regression(hh, dd, weights = wts, eval.points = hh[ind], 
+            # gamma.hat.V[ind]    <- sm.regression(hh, dd, weights = wts, eval.points = hh[ind],
             #                          display = "none")$estimate
             # gamma.hat.V[!ind]   <- gamma.hat.V[hh == max(hh[ind])]
             inc <- (type.se %in% c("smooth-monotonic", "smooth-monotonic-w"))
             wp  <- (type.se %in% c("smooth-w", "smooth-monotonic-w"))
-            sm.model            <- ps.normal(hh, dd, df = df.se, weights = wts, 
+            sm.model            <- ps.normal(hh, dd, df = df.se, weights = wts,
                                        eval.points = hh, increasing = inc, kappa = 1e8,
                                        weights.penalty = wp, display = "none")
             gamma.hat.V         <- sm.model$estimate
@@ -246,12 +246,12 @@
                                    # messages = FALSE)
             # gamma.hat.V <- variofit(vgm.emp, ini = c(var(y), 0.2), fix.nugget = TRUE, fix.kappa = TRUE,
                                    # max.dist = max.dist, messages = FALSE)
-            # results$cov.pars  <- gamma.hat.V$cov.pars 
+            # results$cov.pars  <- gamma.hat.V$cov.pars
             # results$kappa     <- gamma.hat.V$kappa
             # # plot(vgm.emp)
             # # lines(gamma.hat)
-            # gamma.hat.V <- gamma.hat.V$cov.pars[1] - 
-                # cov.spatial(results$distance.mean, cov.pars = gamma.hat.V$cov.pars, 
+            # gamma.hat.V <- gamma.hat.V$cov.pars[1] -
+                # cov.spatial(results$distance.mean, cov.pars = gamma.hat.V$cov.pars,
                 # kappa = gamma.hat.V$kappa)
          # }
          #    Smoothing - small df and tilted to small distances
@@ -260,9 +260,9 @@
          # gamma.hat <- sm.regression(hh, dd, df = 4, weights = wts, h.weights = hw,
          #                    eval.points = hh, display = "none")$estimate
          # gamma.hat <- (gamma.hat / 0.977741)^4
-      
+
          gamma.hat.V <- pmax(gamma.hat.V, 0)
-         
+
          if (type == "binned") {
             se <- rep(0, nbins)
 # LAST MODIFICATION
@@ -292,8 +292,8 @@
            # for (i in 1:nbins) {
 	     #      # if (opt$verbose > 0) cat(i, "")
            #    for (j in i:nbins){
-           #      # ib      <- sort(unique(results$ibin))[i]	        
-           #       # jb      <- sort(unique(results$ibin))[j]	        
+           #      # ib      <- sort(unique(results$ibin))[i]
+           #       # jb      <- sort(unique(results$ibin))[j]
 	     #         V[i, j] <- cov.bin.fun(i, j, results, gamma.hat.V)
 	     #         if (j > i) V[j, i] <- V[i, j]
            #    }
@@ -324,7 +324,7 @@
 #------------------------------------------------------------
 
    if (model == "independent") {
-   	
+
       vv    <- 0.1724
       cv    <- 0.03144
       Sigma <- table(c(igp, igp), c(i1, i2))
@@ -345,12 +345,12 @@
          A    <- t(diag(nb) - A) %*% diag(wts) %*% (diag(nb) - A)
          A    <- A - (1 + tobs) * t(diag(nb) - W) %*% diag(wts) %*% (diag(nb) - W)
          pval <- p.quad.moment(A, Sigma, 0, 0)
-         if (opt$verbose > 0) 
+         if (opt$verbose > 0)
             cat("Test of spatial independence: p = ",round(pval, 3), "\n")
          results$h <- h
          results$p <- pval
       }
-         
+
    }
 
 #------------------------------------------------------------
@@ -358,9 +358,9 @@
 #------------------------------------------------------------
 
    if ((opt$display != "none") & !(model %in% c("isotropic", "stationary"))) {
-   	
+
       fn <- if (original.scale) function(x) (x / 0.977741)^4 else I
-      
+
       if (opt$display %in% c("bins", "means")) {
          xx <- hh
          yy <- fn(dd)
@@ -369,9 +369,9 @@
          xx <- hall
          yy <- if (original.scale) dall^4 else dall
       }
-      
+
    	  if (!opt$add) {
-   	  	
+
       	 replace.na(opt, xlab, "Distance")
       	 replace.na(opt, ylab, if (original.scale) " Squared difference" else "Square-root abs. difference")
           replace.na(opt, xlim, range(xx))
@@ -418,7 +418,7 @@
 #            lines(ev, gamma.hat - 2 * se, lty = 2, col = opt$col)
 #         }
 #      }
-      
+
    }
 
 #------------------------------------------------------------
@@ -432,7 +432,7 @@
       amat   <- atan2(t(x2mat) - x2mat, t(x1mat) - x1mat)
       amat[amat < 0] <- amat[amat < 0] + pi
       angles <- (as.vector(amat))[ind > 0]
-      
+
       centres1 <- seq(0, pi, length = opt$nbins + 1)
       centres1 <- centres1[-1] - diff(centres1) / 2
       ind      <- (hall < 2 * .Machine$double.eps)
@@ -450,7 +450,7 @@
          if (length(ind.pt) > 1) ind.pt <- ind.pt[gpt[, 2] == min(gpt[, 2])]
          ind.pt
          }
-      ibin  <- apply(cbind(angles, hall), 1, identify.grid, centres)   
+      ibin  <- apply(cbind(angles, hall), 1, identify.grid, centres)
       ibin  <- match(ibin, unique(ibin))
       dd    <- as.vector(tapply(dall,   ibin, mean))
       dd0   <- as.vector(tapply(dall0,  ibin, mean))
@@ -461,10 +461,10 @@
 
       # sm.regression(cbind(hh, ang), dd, df = 12, weights = wts, nbins = 0, display = "rgl",
       #         col.points = "red", alpha = 0.7, size = 2, period = c(NA, pi))
-         
+
       h <- h.select(cbind(hh, ang), dd, weights = wts, df = opt$df, nbins = 0, period = c(NA, pi))
       if (!is.numeric(df.se)) df.se <- round(0.8 * opt$nbins)
-      
+
       results$distance.mean <- hh
       results$sqrtdiff.mean <- dd
       results$angles        <- angles
@@ -472,36 +472,36 @@
       results$weights       <- wts
       results$ibin          <- ibin
       results$h             <- h
-      
+
       if (is.na(max.dist)) max.dist <- max(hh) + 1
       ind <- (hh <= max.dist)
       gamma.hat.V <- rep(0, length(hh))
-      
+
       if (type.se == "binned")
          gg <- dd[ind]
       else if (type.se == "smooth")
-         gg <- sm.regression(hh, dd, weights = wts, eval.points = hh[ind], 
+         gg <- sm.regression(hh, dd, weights = wts, eval.points = hh[ind],
                                      display = "none", nbins = 0)$estimate
       else if (type.se == "smooth-monotonic")
          gg <- ps.normal(hh, dd, df = df.se, weights = wts, eval.points = hh[ind],
                             increasing = TRUE, weights.penalty = FALSE, display = "none")$estimate
       else if (type.se == "smooth-monotonic-original")
-         gg <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts, 
+         gg <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts,
                             negative = FALSE, increasing = TRUE,
                             eval.points = hh[ind], display = "none")$estimate
-      
+
       gamma.hat.V[ind]    <- pmax(gg, 0)
       gamma.hat.V[!ind]   <- gamma.hat.V[hh == max(hh[ind])]
       # results$gamma.hat.V <- gamma.hat.V
       if (type.se != "smooth-monotonic-original")
          gamma.hat.V <- (gamma.hat.V / 0.977741)^4
-               
+
 #      plot(hh, dd)
 #      plot(hh, 0.5 * dd0)
 #      ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts, negative = FALSE, increasing = TRUE)
 #      print(cbind(hh, gamma.hat.V))
 #      stop()
-      
+
       V <- matrix(0, nrow = nbins, ncol = nbins)
 
 
@@ -512,8 +512,8 @@
 #      for (i in 1:nbins) {
 #	     if (opt$verbose > 0) cat(i, "")
 #         for (j in i:nbins){
-#            # ib      <- sort(unique(results$ibin))[i]	        
-#            # jb      <- sort(unique(results$ibin))[j]	 
+#            # ib      <- sort(unique(results$ibin))[i]
+#            # jb      <- sort(unique(results$ibin))[j]
 #	        V[i, j] <- cov.bin.fun(i, j, results, gamma.hat.V)
 #	        if (j > i) V[j, i] <- V[i, j]
 #            }
@@ -532,11 +532,11 @@
       V <- matrix(data=output$res, nrow=length(gamma.hat.V), ncol=length(gamma.hat.V), byrow= TRUE)
 
       # if (opt$verbose > 0) cat("\n")
-      
+
       opt$period <- c(NA, pi)
-      
+
       if (opt$test | (opt$display != "none")) {
-         mdl1  <- sm(dd ~ s(cbind(hh, ang), df = opt$df, period = opt$period), 
+         mdl1  <- sm(dd ~ s(cbind(hh, ang), df = opt$df, period = opt$period),
                      weights = wts, display = "none")
          df0   <- ceiling(sqrt(opt$df))
          mdl0  <- sm(dd ~ s(hh, df = df0), weights = wts, display = "none")
@@ -544,16 +544,16 @@
          # mdl0  <- sm(dd ~ s(hh, df = opt$df / 2), weights = wts, display = "none")
          # mdl0  <- sm(dd ~ s(hh, df = opt$df / 3), weights = wts, display = "none")
          # mdl0  <- sm(dd ~ s(hh, df = 4), weights = wts, display = "none")
-         # mdl0  <- sm(dd ~ s(hh, lambda = mdl$lambda[[1]][1] * (mdl$nseg[[1]][1] + 3)), 
+         # mdl0  <- sm(dd ~ s(hh, lambda = mdl$lambda[[1]][1] * (mdl$nseg[[1]][1] + 3)),
          #                 weights = wts, display = "none")
       }
-      
+
       if (opt$test) {
-         
+
          # save(model, V, wts, dd, hh, ang, h, opt, file = "temp.dmp")
-         
+
          S1  <- mdl1$B %*% mdl1$B1 %*% t(mdl1$B * wts)
-         S0  <- mdl0$B %*% mdl0$B1 %*% t(mdl0$B * wts)  
+         S0  <- mdl0$B %*% mdl0$B1 %*% t(mdl0$B * wts)
          # est1  <- S0 %*% dd
 
 #        S1   <- S0 - S1
@@ -562,8 +562,8 @@
 #        ds   <- S1 %*% dd
 #        tobs <- c(t(ds) %*% V1 %*% ds)
 #        pval1 <- p.quad.moment.adjusted(t(S1) %*% V1 %*% S1, V, tobs)
-#         
-      	# S0   <- sm.weight(hh, hh, h[1], weights = wts) 
+#
+      	# S0   <- sm.weight(hh, hh, h[1], weights = wts)
          # S1   <- sm.weight2(cbind(hh, ang), cbind(hh, ang), h, weights = wts, options = opt)
          # cat("traces:", round(sum(diag(S0))), round(sum(diag(S1))), "\n")
 #        est0 <- S0 %*% dd
@@ -587,10 +587,10 @@
          ds   <- S1 %*% dd
          tobs <- c(t(ds) %*% V1 %*% ds)
          pval <- p.quad.moment.adjusted(t(S1) %*% V1 %*% S1, V, tobs)
-         
+
          # cat(round(pval, 3), round(pval1, 3), "\n")
-         
-#        mdl <- sm(dd ~ s(hh, df = 4) * s(ang, df = 4, period = pi), 
+
+#        mdl <- sm(dd ~ s(hh, df = 4) * s(ang, df = 4, period = pi),
 #                  weights = wts, display = "none")
 #        # save(model, V, wts, file = "temp.dmp")
 #        ind  <- c(mdl$b.ind[[2]], mdl$b.ind[[3]])
@@ -599,7 +599,7 @@
 #        I.i[ind] <- 1
 #        A    <- mdl$B1 %*% t(mdl$B * wts)
 #        pval <- p.quad.moment.adjusted(t(A) %*% diag(I.i) %*% A, V, tobs)
-         
+
          if (opt$verbose > 0) cat("Test of isotropy: p = ", round(pval, 3), "\n")
          results$h <- h
          results$p <- pval
@@ -615,33 +615,33 @@
       replace.na(op, zlab, "Square-root difference")
       replace.na(op, ylab, "Angle")
       op$display <- "none"
-      
+
       u     <- list(length = 2)
       for (j in 1:2)
          u[[j]] <- seq(mdl1$xrange[[1]][j, 1], mdl1$xrange[[1]][j, 2], length = opt$ngrid)
       U     <- as.matrix(expand.grid(u))
       mask  <- sm.mask(cbind(hh, ang), cbind(u[[1]], u[[2]]), mask.method = opt$mask.method)
-      
+
       B1    <- ps.matrices(U, mdl1$xrange[[1]], 2, nseg = mdl1$nseg[[1]], period = mdl1$period[[1]])$B
       B1    <- cbind(1, B1)
       S1    <- B1 %*% mdl1$B1 %*% t(mdl1$B * wts)
       est1  <- matrix(S1 %*% dd, nrow = opt$ngrid) * mask
-      
+
       B0    <- ps.matrices(as.matrix(U[ , 1]), mdl0$xrange[[1]], 1, nseg = mdl0$nseg[[1]])$B
       B0    <- cbind(1, B0)
       S0    <- B0 %*% mdl0$B1 %*% t(mdl0$B * wts)
       est0  <- matrix(S0 %*% dd, nrow = opt$ngrid) * mask
-      
+
       stde  <- sqrt(diag((S1 - S0) %*% V %*% t(S1 - S0)))
       sdiff <- (est1 - est0) / matrix(stde, ncol = opt$ngrid)
       ev        <- u
       gamma.hat <- est1
-      
+
       results$eval.points <- u
       results$estimate    <- est1
       results$sdiff       <- sdiff
 
-      # surf <- sm.regression.2d(cbind(hh, ang), dd, h, model = "isotropic", weights = wts, 
+      # surf <- sm.regression.2d(cbind(hh, ang), dd, h, model = "isotropic", weights = wts,
       #                      rawdata = list(x = cbind(hh, ang), y = dd), options = op)
       # ngrid   <- nrow(surf$eval.points)
       # ev      <- rep(surf$eval.points[, 1], ngrid)
@@ -655,7 +655,7 @@
          #          alpha = 0.5, alpha.mesh = 0)
       }
       else if (opt$display == "image") {
-      	 if (!requireNamespace("akima", quietly = TRUE)) stop("this option requires the akima package.")
+      	 if (!requireNamespace("interp", quietly = TRUE)) stop("this option requires the interp package.")
          a     <- U
          a     <- rbind(a, cbind(a[ , 1], a[ , 2] + pi))
          a1    <- a[ , 1] * cos(a[ , 2])
@@ -663,8 +663,8 @@
          b     <- rep(c(est1), 2)
          sdiff <- rep(c(sdiff), 2)
          ind   <- !is.na(b) & !duplicated(cbind(a1, a2))
-         inte  <- akima::interp(a1[ind], a2[ind], b[ind])
-         ints  <- akima::interp(a1[ind], a2[ind], sdiff[ind])
+         inte  <- interp::interp(a1[ind], a2[ind], b[ind])
+         ints  <- interp::interp(a1[ind], a2[ind], sdiff[ind])
          cts   <- contourLines(ints)
          lvls  <- rep(0, length(cts))
          for (i in 1:length(cts)) lvls[i] <- cts[[i]]$level
@@ -676,7 +676,7 @@
                axis(2)
                # op <- opt
                # op$display <- "none"
-               # surf  <- sm.regression.2d(cbind(hh, ang), dd, h, model = "isotropic", weights = wts, 
+               # surf  <- sm.regression.2d(cbind(hh, ang), dd, h, model = "isotropic", weights = wts,
                #             rawdata = list(x = cbind(hh, ang), y = dd), options = op)
                if (length(lvls) > 0) contour(ints, levels = lvls, add = TRUE, col = "red")
 #         a    <- as.matrix(expand.grid(surf$eval.points[ , 1], surf$eval.points[ , 2]))
@@ -693,7 +693,7 @@
 #               axis(2)
 #               op <- opt
 #               op$display <- "none"
-#               surf  <- sm.regression.2d(cbind(hh, ang), dd, h, model = "isotropic", weights = wts, 
+#               surf  <- sm.regression.2d(cbind(hh, ang), dd, h, model = "isotropic", weights = wts,
 #                           rawdata = list(x = cbind(hh, ang), y = dd), options = op)
 #               sdiff <- rep(c(surf$sdiff), 2)
 #               cts   <- contourLines(interp(a1[ind], a2[ind], sdiff[ind]))
@@ -704,7 +704,7 @@
             }
          )
       }
-      
+
       }
 
 #------------------------------------------------------------
@@ -739,7 +739,7 @@
          if (length(ind.pt) > 1) ind.pt <- ind.pt[gpt[, 3] == min(gpt[, 3])]
          ind.pt
          }
-      ibin  <- apply(cbind(av1, av2, hall), 1, identify.grid, centres)   
+      ibin  <- apply(cbind(av1, av2, hall), 1, identify.grid, centres)
       ibin  <- match(ibin, unique(ibin))
       dd    <- as.vector(tapply(dall,  ibin, mean))
       dd0   <- as.vector(tapply(dall0, ibin, mean))
@@ -748,7 +748,7 @@
       a2    <- as.vector(tapply(av2,   ibin, mean))
       wts   <- as.vector(table(ibin))
       nbins <- length(unique(ibin))
-      
+
       # h <- h.select(cbind(hh, ang), dd, weights = wts, df = opt$df, nbins = 0, period = c(NA, pi))
       if (!is.numeric(df.se)) df.se <- round(0.8 * opt$nbins)
 
@@ -760,32 +760,32 @@
       # results$a2            <- a2
       results$weights       <- wts
       results$ibin          <- ibin
-      
+
       xx <- cbind(x = a1, y = a2, Distance = hh)
-      
+
       if (is.na(max.dist)) max.dist <- max(hh) + 1
       ind <- (hh <= max.dist)
       gamma.hat.V <- rep(0, length(hh))
-      
+
       if (type.se == "binned")
          gg <- dd[ind]
       else if (type.se == "smooth")
-         gg <- sm.regression(hh, dd, weights = wts, eval.points = hh[ind], 
+         gg <- sm.regression(hh, dd, weights = wts, eval.points = hh[ind],
                                      display = "none", nbins = 0)$estimate
       else if (type.se == "smooth-monotonic")
          gg <- ps.normal(hh, dd, df = df.se, weights = wts, eval.points = hh,
                             increasing = TRUE, weights.penalty = FALSE, display = "none")$estimate
       else if (type.se == "smooth-monotonic-original")
-         gg <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts, 
+         gg <- ps.normal(hh, 0.5 * dd0, df = df.se, weights = wts,
                             negative = FALSE, increasing = TRUE,
                             eval.points = hh[ind], display = "none")$estimate
-      
+
       gamma.hat.V[ind]    <- pmax(gg, 0)
       gamma.hat.V[!ind]   <- gamma.hat.V[hh == max(hh[ind])]
       # results$gamma.hat.V <- gamma.hat.V
       if (type.se != "smooth-monotonic-original")
          gamma.hat.V <- (gamma.hat.V / 0.977741)^4
-               
+
 
       V <- matrix(0, nrow = nbins, ncol = nbins)
       # if (opt$verbose > 0) cat(nbins, ": ")
@@ -817,13 +817,13 @@
       # if (opt$verbose > 0) cat("\n")
 
       model1 <- sm(dd ~ s(xx, df = opt$df), weights = wts, display = "none")
-            
+
       if (opt$test) {
       	df0 <- ceiling(opt$df^(1/3))
       	# df0 <- ceiling(opt$df / 3)
       	# df0 <- ceiling(opt$df / 2)
       	model0 <- sm(dd ~ s(hh, df = df0), weights = wts, display = "none")
-         # mdl0  <- sm(dd ~ s(hh, lambda = mdl$lambda[[1]][1] * (mdl$nseg[[1]][1] + 3)^2), 
+         # mdl0  <- sm(dd ~ s(hh, lambda = mdl$lambda[[1]][1] * (mdl$nseg[[1]][1] + 3)^2),
          #                 weights = wts, display = "none")
       	# model0 <- sm(dd ~ s(hh, df = 3), weights = wts, display = "none")
          S0     <- model0$B %*% model0$B1 %*% t(model0$B * wts)
@@ -832,7 +832,7 @@
          S0     <- t(S0 - S1) %*% V1 %*% (S0 - S1)
          tobs   <- c(dd %*% S0 %*% dd)
          pval   <- p.quad.moment.adjusted(S0, V, tobs)
-         if (opt$verbose > 0) 
+         if (opt$verbose > 0)
             cat("Test of stationarity: p = ", round(pval, 3), "\n")
          results$p   <- pval
          # results$df0 <- df0
@@ -841,18 +841,18 @@
       u     <- list(length = 3)
       for (j in 1:3)
          u[[j]] <- seq(model1$xrange[[1]][j, 1], model1$xrange[[1]][j, 2], length = opt$ngrid)
-      U     <- as.matrix(expand.grid(u))      
+      U     <- as.matrix(expand.grid(u))
 
       B1    <- ps.matrices(U, model1$xrange[[1]], 3, nseg = model1$nseg[[1]], period = model1$period[[1]])$B
       B1    <- cbind(1, B1)
       S1    <- B1 %*% model1$B1 %*% t(model1$B * wts)
       est1  <- S1 %*% dd
-      
+
       B0    <- ps.matrices(as.matrix(U[ , 3]), model0$xrange[[1]], 1, nseg = model0$nseg[[1]])$B
       B0    <- cbind(1, B0)
       S0    <- B0 %*% model0$B1 %*% t(model0$B * wts)
       est0  <- S0 %*% dd
-      
+
       stde  <- diag((S1 - S0) %*% V %*% t(S1 - S0))
       stde[stde < 0] <- NA
       stde  <- sqrt(stde)
@@ -865,14 +865,14 @@
       #  Add V into the estimated surface.
       #  Return the estimate from the fitted surface.
       # plot(model1)
-      
+
       # replace.na(opt, xlab, "Distance")
       # replace.na(opt, zlab, "Square-root difference")
       # replace.na(opt, ylab, "Angle")
       gamma.hat <- model1$fitted
       ev <- xx
       # results$model <- model1
-      
+
       names(u) <- c("x1", "x2", "distance")
       results$eval.points <- u
       results$estimate    <- array(est1, dim = rep(opt$ngrid, 3))
@@ -889,12 +889,12 @@
    # results$estimate    <- gamma.hat
    # results$gamma.hat.V <- gamma.hat.V
    results$df    <- opt$df
-      
+
    if (opt$se & model == "none")            results$se <- se
    if ((model == "independent") & opt$band) results$se.band <- se.band
    if (varmat | model %in% c("isotropic", "stationary")) results$V <- V
    invisible(results)
-   
+
    }
 
 

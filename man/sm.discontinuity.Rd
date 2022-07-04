@@ -96,7 +96,7 @@ and \code{h} will be reset to the same value.
    Bowman, A.W., Pope, A. and Ismail, B. (2006).
    Detecting discontinuities in nonparametric regression curves and
    surfaces.
-   \emph{Statistics \& Computing}, 16, 377--390.
+   \emph{Statistics & Computing}, 16, 377--390.
 }
 \seealso{
 \code{\link{sm.regression}}, \code{\link{sm.options}}
