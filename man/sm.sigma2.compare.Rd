@@ -24,7 +24,7 @@
 
 \details{see the reference below.}
 
-\references{Bock, M., Bowman, A.W.\ & Ismail, B. (2007).
+\references{Bock, M., Bowman, A.W. & Ismail, B. (2007).
            Estimation and inference for error variance in bivariate 
            nonparametric regression.
            \emph{Statistics & Computing}, to appear.}

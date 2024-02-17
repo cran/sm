@@ -20,6 +20,7 @@
 \alias{plot2d}
 \alias{replace.na}
 \alias{sj}
+\alias{sm.check.data}
 \alias{sm.density.1d}
 \alias{sm.density.2d}
 \alias{sm.density.3d}

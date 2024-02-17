@@ -655,7 +655,8 @@
          #          alpha = 0.5, alpha.mesh = 0)
       }
       else if (opt$display == "image") {
-      	 if (!requireNamespace("interp", quietly = TRUE)) stop("this option requires the interp package.")
+      	if (!requireNamespace("interp", quietly = TRUE))
+      	   stop("this option requires the interp package.")
          a     <- U
          a     <- rbind(a, cbind(a[ , 1], a[ , 2] + pi))
          a1    <- a[ , 1] * cos(a[ , 2])
@@ -663,6 +664,9 @@
          b     <- rep(c(est1), 2)
          sdiff <- rep(c(sdiff), 2)
          ind   <- !is.na(b) & !duplicated(cbind(a1, a2))
+         # interp can't handle collinear points so jitter slightly
+         a1[ind] <- jitter(a1[ind], factor = 0.1)
+         a2[ind] <- jitter(a2[ind], factor = 0.1)
          inte  <- interp::interp(a1[ind], a2[ind], b[ind])
          ints  <- interp::interp(a1[ind], a2[ind], sdiff[ind])
          cts   <- contourLines(ints)
@@ -933,3 +937,51 @@ p.quad.moment.adjusted <- function (A, Sigma, tobs) {
    # # gamma(0.75)^2 * ((1 - rho^2) * hypergeo(0.75, 0.75, 0.5, rho^2) - 1) / (sqrt(pi) - gamma(0.75)^2)
    # gamma(0.75)^2 * ((1 - rho^2) * hg(rho^2) - 1) / (sqrt(pi) - gamma(0.75)^2)
    # }
+
+#----------------------------------------------------------------------------
+#                                  sm.mask
+#----------------------------------------------------------------------------
+
+sm.mask <- function(x, eval.points, mask.method = "hull") {
+   
+   ngrid       <- nrow(eval.points)
+   grid.points <- cbind(rep(eval.points[, 1], ngrid),
+                        rep(eval.points[, 2], rep(ngrid, ngrid)))
+   
+   if (mask.method == "hull") {
+      hull.points <- as.matrix(x[order(x[, 1], x[, 2]), ])
+      dh          <- diff(hull.points)
+      hull.points <- hull.points[c(TRUE, !((dh[, 1] == 0) & (dh[, 2] == 0))), ]
+      hull.points <- hull.points[chull(hull.points), ]
+      nh          <- nrow(hull.points)
+      gstep       <- matrix(rep(eval.points[2, ] - eval.points[1, ], nh),
+                            ncol = 2, byrow = TRUE)
+      hp.start    <- matrix(rep(eval.points[1, ], nh), ncol = 2, byrow = TRUE)
+      hull.points <- hp.start + gstep * round((hull.points - hp.start)/gstep)
+      hull.points <- hull.points[chull(hull.points), ]
+      D           <- diff(rbind(hull.points, hull.points[1, ]))
+      temp        <- D[, 1]
+      D[, 1]      <- D[, 2]
+      D[, 2]      <- (-temp)
+      C           <- as.vector((hull.points * D) %*% rep(1, 2))
+      C           <- matrix(rep(C, ngrid^2), nrow = ngrid^2, byrow = TRUE)
+      D           <- t(D)
+      wy          <- ((grid.points %*% D) >= C)
+      wy          <- apply(wy, 1, all)
+      wy[wy]      <- 1
+      wy[!wy]     <- NA
+      mask        <- matrix(wy, ncol = ngrid)
+   }
+   else if (mask.method == "near") {
+      del1  <- eval.points[2, 1] - eval.points[1, 1]
+      del2  <- eval.points[2, 2] - eval.points[1, 2]
+      mask  <- apply(grid.points, 1,
+                     function(z) any(((z[1] - x[,1])/del1)^2 + ((z[2] - x[,2])/del2)^2 < 4^2))
+      mask  <- matrix(as.numeric(mask), ncol = ngrid)
+      mask[mask == 0] <- NA
+   }
+   else
+      mask <- matrix(1, ncol = ngrid, nrow = ngrid)
+   
+   return(invisible(mask))
+}

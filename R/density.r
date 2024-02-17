@@ -52,7 +52,7 @@
     if (opt$panel) {
        pack.rp <- requireNamespace("rpanel",  quietly = TRUE)
        pack.tk <- requireNamespace("tkrplot", quietly = TRUE)
-       pack.tc <- requireNamespace("tcltk",   quietly = TRUE)
+       pack.tc <- requireNamespace("tcltk",  quietly = TRUE)
        if (opt$verbose > 0) {
           if (!pack.rp) cat("The rpanel package is not available.\n")
           if (!pack.tk) cat("The tkrplot package is not available.\n")

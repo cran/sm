@@ -43,8 +43,8 @@ Datasets of arbitrary size can be handled by the current version of
 binning operations. 
 }
 \section{Requirements}{
-R version >= 3.1.0. Packages \code{gam} and \code{akima} are used by
-some of the scripts launched via \code{sm.script}, but they are not
+R version >= 3.1.0. The \code{gam} package is used by
+some of the scripts launched via \code{sm.script}, but it is not
 used by the functions of this package.
 }
 \section{Version}{

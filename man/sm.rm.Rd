@@ -46,7 +46,7 @@ the maximum value of the above interval.
   other optional parameters are passed to the \code{sm.options}
   function, through a mechanism which limits their effect only to this
   call of the function; those relevant for this function are the following:
-  \itemize{
+  \describe{
     \item{add}{
       logical value, default is \code{add=FALSE}. If \code{add=TRUE} and
       display is not set to \code{"none"}, then graphical output added
@@ -64,7 +64,10 @@ the maximum value of the above interval.
     \item{poly.index}{
       overall degree  of  locally-fitted  polynomial, as used by
       \code{sm.regression}. Default: \code{ngrid=1}.
-}}}}
+    }
+  }
+}
+}
 \value{
 a list containing the returned value produced by \code{sm.regression} when 
 smoothing the mean response value at each given observation time, 

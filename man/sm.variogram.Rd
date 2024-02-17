@@ -92,19 +92,12 @@ This parameter has no effect when \code{model = "isotropic"} or \code{model = "s
   \item{\code{ipair}}{the indices of the original observations used to construct each pair}
 
   When \code{model = "isotropic"} or \code{model = "stationary"} the following components may also be returned, depending on the arguments passed in \ldots or the settings in \code{sm.options}:
-  \item{\code{p}}{the p-value of the test}
-  \item{\code{se}}{the standard errors of the binned values 
-  		(if the argument \code{se} was set to \code{TRUE})}
-  \item{\code{se.band}}{when an independence model is examined, this gives the 
-  	    standard error of the difference between the smooth estimate and the mean 
-  	    of all the data points, if a reference band has been requested}
-  \item{\code{V}}{the variance matrix of the binned variogram.  When \code{model} is set to
-  		\code{"isotropic"} or \code{"stationary"}, the variance matrix is computed
-  		under those assumptions.}
-  \item{\code{sdiff}}{the standardised difference between the estimate of the variogram
-  	    and the reference model, evaluated at \code{eval.points}}
-  \item{\code{levels}}{the levels of standarised difference at which contours are drawn 
-  	    in the case of \code{model = "isotropy"}.}
+\item{\code{p}}{the p-value of the test}
+\item{\code{se}}{the standard errors of the binned values (if the argument \code{se} was set to \code{TRUE})}
+\item{\code{se.band}}{when an independence model is examined, this gives the standard error of the difference between the smooth estimate and the mean of all the data points, if a reference band has been requested}
+\item{\code{V}}{the variance matrix of the binned variogram.  When \code{model} is set to \code{"isotropic"} or \code{"stationary"}, the variance matrix is computed under those assumptions.}
+\item{\code{sdiff}}{the standardised difference between the estimate of the variogram and the reference model, evaluated at \code{eval.points}}
+\item{\code{levels}}{the levels of standardised difference at which contours are drawn in the case of \code{model = "isotropy"}.}
 }
 \section{Side Effects}{
   a plot on the current graphical device is produced, unless the option \code{display = "none"} is set.  

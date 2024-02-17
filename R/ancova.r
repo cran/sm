@@ -17,7 +17,7 @@ opt    <- data$options
 if(missing(h))
    h <- h.select(x, y, weights = weights, group = group, ...)
 else 
-   {if(length(h)!=ndim) stop("length(h) does not match size of x")}
+   {if(length(h)!=ndim) stop("length of h does not match size of x")}
 
 covar.set <- FALSE
 if (!missing(covar)) {

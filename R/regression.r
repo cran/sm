@@ -437,7 +437,10 @@
 
       #  This function adds a surface to the current rgl plot.
       
-      if (!is.function(scaling))
+   if (!is.matrix(surf))
+      stop("'surf' is not a matrix.")
+   
+   if (!is.function(scaling))
          stop("a scaling must be specified.")
       
       if (all(is.na(col)))                  col   <- "green"

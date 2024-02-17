@@ -5,8 +5,7 @@
 \title{Human parasitic worm infections}
 
 \description{
-These data record the occurence of a human parasitic worm infection 
-in residents of a rural community in China. 
+These data record the occurrence of a human parasitic worm infection in residents of a rural community in China. 
 
 The variables are:
 \tabular{ll}{

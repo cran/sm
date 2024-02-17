@@ -1,3 +1,5 @@
+Version 2.2-6.0 2024-02-17  Minor bug fixes.
+
 Version 2.2-5.7 2021-09-13  Minor bug fixes.  Package can also be installed when the
                             tcltk package is not available.
 

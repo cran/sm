@@ -7,7 +7,19 @@ export(binning, britmap, hcv, hnorm, hsj, nise, nmise, nnbr,
        sm.poisson.bootstrap, sm.regression, sm.regression.autocor,
        sm.rm, sm.script, sm.sphere, sm.survival, sm.ts.pdf, sm.weight,
        sm.weight2, sm.surface3d, h.select, sm.sigma, sm.sigma2.compare,
-       sm.variogram, sm.discontinuity, sm.monotonicity, sm.pca)
+       sm.variogram, sm.discontinuity, sm.monotonicity, sm.pca
+       # The following two lines should be commented out for CRAN release.
+       # sm, s, plot.pam, anova.pam, summary.pam, predict.pam,
+       # fitted.pam, residuals.pam
+       )
+
+# These lines should be commented out for CRAN release.
+# S3method("plot",      "pam")
+# S3method("anova",     "pam")
+# S3method("summary",   "pam")
+# S3method("predict",   "pam")
+# S3method("fitted",    "pam")
+# S3method("residuals", "pam")
 
   importFrom("grDevices", "chull", "col2rgb", "contourLines", "rainbow",
              "rgb", "topo.colors")
@@ -19,7 +31,7 @@ export(binning, britmap, hcv, hnorm, hsj, nise, nmise, nnbr,
              "dnorm", "fitted", "glm.fit", "model.matrix", "na.omit",
              "nobs", "optim", "optimise", "pchisq", "poisson", "poly",
              "qchisq", "quantile", "rbeta", "rbinom", "residuals",
-             "rgamma", "rpois", "sd", "terms", "uniroot", "var")
+             "rgamma", "rpois", "sd", "terms", "uniroot", "var", "pf")
   importFrom("utils", "menu")
 # import(tcltk)
 # import(tkrplot)

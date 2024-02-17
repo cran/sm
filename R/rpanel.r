@@ -1,4 +1,4 @@
-plot.smooth1 <- function(panel) {
+plott.smooth1 <- function(panel) {
    if (panel$method == "manual") panel$h <- panel$h.manual
    panel$opt$se   <- panel$se
    panel$opt$test <- panel$test
@@ -25,18 +25,18 @@ set.bandwidth <- function(panel) {
       }
    if (is.matrix(panel$x)) ndim <- 2 else ndim <- 1
    if (panel$opt$panel.plot) {
-      if (ndim == 1) rpanel::rp.do(panel, replot.smooth1)
-      else           rpanel::rp.do(panel, replot.smooth2)
+      if (ndim == 1) rpanel::rp.do(panel, replott.smooth1)
+      else           rpanel::rp.do(panel, replott.smooth2)
    }
    else {
-      if (ndim == 1) rpanel::rp.do(panel, plot.smooth1)
-      else           rpanel::rp.do(panel, plot.smooth2)
+      if (ndim == 1) rpanel::rp.do(panel, plott.smooth1)
+      else           rpanel::rp.do(panel, plott.smooth2)
       }
    
    panel
    }
 
-replot.smooth1 <- function(panel) {
+replott.smooth1 <- function(panel) {
    rpanel::rp.tkrreplot(panel, plot)
    panel
    }
@@ -66,12 +66,12 @@ rp.smooth1 <- function(x, y, h, design.mat, model, weights, rawdata, opt) {
                       opt = opt, hvec = hvec, dfvec = dfvec, h.manual = h,
                       method = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
-      rpanel::rp.tkrplot(smooth.panel, plot, plot.smooth1, pos = "right",
+      rpanel::rp.tkrplot(smooth.panel, plot, plott.smooth1, pos = "right",
                  hscale = opt$hscale, vscale = opt$vscale)
-      plotfun <- replot.smooth1
+      plotfun <- replott.smooth1
       }
    else
-      plotfun <- plot.smooth1
+      plotfun <- plott.smooth1
    rpanel::rp.radiogroup(smooth.panel, method,
                       c("aicc", "cv", "manual"), title = "Choice of bandwidth",
                       action = set.bandwidth)
@@ -87,7 +87,7 @@ rp.smooth1 <- function(x, y, h, design.mat, model, weights, rawdata, opt) {
    }
 
 
-plot.smooth2 <- function(panel) {
+plott.smooth2 <- function(panel) {
 	
    if (panel$method != panel$method.old) {
       if (panel$method != "manual") {
@@ -127,7 +127,7 @@ plot.smooth2 <- function(panel) {
                     panel$rawdata, panel$opt)
    if (panel$display == "rgl") {
       if (!is.na(sum(panel$surf.ids)))
-         rgl::rgl.pop(id = panel$surf.ids)
+         rgl::pop3d(id = panel$surf.ids)
       panel$surf.ids <- result$surf.ids
    }
    if (panel$display == "rgl" & !panel$opt$add) panel$opt$scaling <- result$scaling
@@ -152,7 +152,7 @@ plot.smooth2 <- function(panel) {
    panel
    }
    
-replot.smooth2 <- function(panel) {
+replott.smooth2 <- function(panel) {
    rpanel::rp.tkrreplot(panel, smplot)
    panel
    }
@@ -200,12 +200,12 @@ rp.smooth2 <- function(x, y, h, model, weights, rawdata, opt) {
                       theta = opt$theta, phi = opt$phi,
                       method = "manual", method.old = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
-      rpanel::rp.tkrplot(smooth.panel, smplot, plot.smooth2, pos = "right",
+      rpanel::rp.tkrplot(smooth.panel, smplot, plott.smooth2, pos = "right",
                  hscale = opt$hscale, vscale = opt$vscale)
-      plotfun <- replot.smooth2
+      plotfun <- replott.smooth2
       }
    else
-      plotfun <- plot.smooth2
+      plotfun <- plott.smooth2
    rpanel::rp.radiogroup(smooth.panel, method,
                       c("aicc", "cv", "manual"), title = "Choice of bandwidth",
                       action = plotfun)
@@ -233,7 +233,7 @@ rp.smooth2 <- function(x, y, h, model, weights, rawdata, opt) {
 
 #     Density estimation
 
-plot.density1 <- function(panel) {
+plott.density1 <- function(panel) {
    if (panel$method == "manual") panel$h <- panel$h.manual
    panel$opt$se   <- panel$se
    if (panel$se & panel$model == "normal") 
@@ -256,19 +256,19 @@ set.bandwidth.d <- function(panel) {
    if (is.matrix(panel$x)) ndim <- ncol(panel$x)
       else                 ndim <- 1
    if (panel$opt$panel.plot) {
-      if      (ndim == 1) rpanel::rp.do(panel, replot.density1)
-      else if (ndim == 2) rpanel::rp.do(panel, replot.density2)
-      else                rpanel::rp.do(panel, replot.density3)
+      if      (ndim == 1) rpanel::rp.do(panel, replott.density1)
+      else if (ndim == 2) rpanel::rp.do(panel, replott.density2)
+      else                rpanel::rp.do(panel, replott.density3)
    }
    else {
-      if      (ndim == 1) rpanel::rp.do(panel, plot.density1)
-      else if (ndim == 2) rpanel::rp.do(panel, plot.density2)
-      else                rpanel::rp.do(panel, plot.density3)
+      if      (ndim == 1) rpanel::rp.do(panel, plott.density1)
+      else if (ndim == 2) rpanel::rp.do(panel, plott.density2)
+      else                rpanel::rp.do(panel, plott.density3)
       }
    panel
    }
 
-replot.density1 <- function(panel) {
+replott.density1 <- function(panel) {
    rpanel::rp.tkrreplot(panel, plot)
    panel
    }
@@ -288,12 +288,12 @@ rp.density1 <- function(x, h, model, weights, rawdata, opt) {
                       opt = opt, h.manual = h,
                       method = "manual", se = opt$se)
    if (opt$panel.plot) {
-      rpanel::rp.tkrplot(smooth.panel, plot, plot.density1, pos = "right",
+      rpanel::rp.tkrplot(smooth.panel, plot, plott.density1, pos = "right",
                  hscale = opt$hscale, vscale = opt$vscale)
-      plotfun <- replot.density1
+      plotfun <- replott.density1
       }
    else
-      plotfun <- plot.density1
+      plotfun <- plott.density1
    rpanel::rp.radiogroup(smooth.panel, method,
                       c("normal", "sj", "cv", "manual"), title = "Choice of bandwidth",
                       action = set.bandwidth.d)
@@ -307,7 +307,7 @@ rp.density1 <- function(x, h, model, weights, rawdata, opt) {
    }
 
 
-plot.density2 <- function(panel) {
+plott.density2 <- function(panel) {
 
    if (panel$method != panel$method.old) {
       if (panel$method != "manual") {
@@ -346,7 +346,7 @@ plot.density2 <- function(panel) {
    result <- sm.density.2d(panel$x, h2, panel$weights, panel$rawdata, panel$opt)
    if (panel$display == "rgl") {
       if (!is.na(sum(panel$surf.ids)))
-         rgl::rgl.pop(id = panel$surf.ids)
+         rgl::pop3d(id = panel$surf.ids)
       panel$surf.ids <- result$surf.ids
    }
 
@@ -363,7 +363,7 @@ plot.density2 <- function(panel) {
    panel
    }
    
-replot.density2 <- function(panel) {
+replott.density2 <- function(panel) {
    rpanel::rp.tkrreplot(panel, smplot)
    panel
    }
@@ -392,12 +392,12 @@ rp.density2 <- function(x, h, model, weights, rawdata, opt) {
                       method = "manual", method.old = "manual", se = opt$se, test = opt$test)
 
    if (opt$panel.plot) {
-      rpanel::rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right",
+      rpanel::rp.tkrplot(smooth.panel, smplot, plott.density2, pos = "right",
                  hscale = opt$hscale, vscale = opt$vscale)
-      plotfun <- replot.density2
+      plotfun <- replott.density2
       }
    else
-      plotfun <- plot.density2
+      plotfun <- plott.density2
    rpanel::rp.radiogroup(smooth.panel, method,
                       c("normal", "cv", "manual"), title = "Choice of bandwidth",
                       action = plotfun)
@@ -422,7 +422,7 @@ rp.density2 <- function(x, h, model, weights, rawdata, opt) {
    }
 
 
-plot.density3 <- function(panel) {
+plott.density3 <- function(panel) {
    if (panel$method != panel$method.old) {
       if (panel$method != "manual") {
          panel$h <- h.select(panel$x, panel$y, panel$weights, method = panel$method)
@@ -454,7 +454,7 @@ plot.density3 <- function(panel) {
    panel
    }
    
-replot.density3 <- function(panel) {
+replott.density3 <- function(panel) {
    rpanel::rp.tkrreplot(panel, smplot)
    panel
    }
@@ -478,12 +478,12 @@ rp.density3 <- function(x, h, model, weights, rawdata, opt) {
                       theta = opt$theta, phi = opt$phi, surf.ids = NA,
                       method = "manual", method.old = "manual", se = opt$se, test = opt$test)
    if (opt$panel.plot) {
-      rpanel::rp.tkrplot(smooth.panel, smplot, plot.density2, pos = "right",
+      rpanel::rp.tkrplot(smooth.panel, smplot, plott.density2, pos = "right",
                  hscale = opt$hscale, vscale = opt$vscale)
-      plotfun <- replot.density3
+      plotfun <- replott.density3
       }
    else
-      plotfun <- plot.density3
+      plotfun <- plott.density3
    rpanel::rp.radiogroup(smooth.panel, method,
                       c("normal", "manual"), title = "Choice of bandwidth",
                       action = plotfun)
